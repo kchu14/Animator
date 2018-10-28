@@ -40,7 +40,7 @@ public class AnimatorModelImpl implements AnimatorModel{
   }
 
   @Override
-  public void addShape(AShape s) {
+  public void addShape(SimpleShape s) {
     shapes.put(s.name, s);
   }
 }

@@ -14,7 +14,7 @@ public interface IShape {
    * @param x the desired x coordinate of the shape
    * @param y the desired y coordinate of the shape
    */
-  void move(double x, double y);
+  void move(int x, int y);
 
   /**
    * Changes the color of this shape to a new one.
@@ -27,13 +27,13 @@ public interface IShape {
    * @param hShift the desired amount of horizontal shift
    * @param vShift the desired amount of vertical shift
    */
-  void changeSize(double hShift, double vShift);
+  void changeSize(int hShift, int vShift);
 
-  /**
-   * Rotates this shape by the specified degrees.
-   * @param angleDegrees the desired amount of angular shift
-   */
-  void rotate(double angleDegrees);
+//  /**
+//   * Rotates this shape by the specified degrees.
+//   * @param angleDegrees the desired amount of angular shift
+//   */
+//  void rotate(double angleDegrees);
 
   /**
    * Deletes this shape.

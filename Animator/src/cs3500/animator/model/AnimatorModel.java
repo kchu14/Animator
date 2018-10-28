@@ -24,6 +24,6 @@ public interface AnimatorModel {
    * Adds a shape to the map of shapes inside of the animator model.
    * @param s The shape that is to be added
    */
-  void addShape(AShape s);
+  void addShape(SimpleShape s);
 
 }
