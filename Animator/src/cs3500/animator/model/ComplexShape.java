@@ -3,10 +3,13 @@ package cs3500.animator.model;
 import java.awt.Color;
 
 public class ComplexShape implements IShape {
-  String name;
-  int[] x, y;
-  int sides;
-  Color color;
+  private String name;
+  private int[] x, y;
+  private int sides;
+  private Color color;
+
+
+
   /**
    * Constructs a complex shape out of two arrays of integers representing vertices.
    *
@@ -16,6 +19,7 @@ public class ComplexShape implements IShape {
    * @param color The color of the shape.
    */
   //maybe use enums to represent shape for view instead of weird name thing
+  // getters and setters for shapes
   public ComplexShape(String name, int[] x, int[] y, Color color) {
     this.name = "polygon" + name;
     this.x = x;
@@ -51,5 +55,44 @@ public class ComplexShape implements IShape {
   public void delete() {
     this.x = new int[]{};
     this.y = new int[]{};
+  }
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public int[] getX() {
+    return x;
+  }
+
+  public void setX(int[] x) {
+    this.x = x;
+  }
+
+  public int[] getY() {
+    return y;
+  }
+
+  public void setY(int[] y) {
+    this.y = y;
+  }
+
+  public int getSides() {
+    return sides;
+  }
+
+  public void setSides(int sides) {
+    this.sides = sides;
+  }
+
+  public Color getColor() {
+    return color;
+  }
+
+  public void setColor(Color color) {
+    this.color = color;
   }
 }

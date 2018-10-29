@@ -11,10 +11,10 @@ import java.awt.geom.Ellipse2D.Double;
  */
 public class SimpleShape implements IShape {
 
-  String name;
-  int x, y, width, height;
-  int sides;
-  Color color;
+  private String name;
+  private int x, y, width, height;
+  private int sides;
+  private Color color;
 
 
   /**
@@ -29,6 +29,7 @@ public class SimpleShape implements IShape {
    * @param color The color of the shape.
    */
   //maybe use enums to represent shape for view instead of weird name thing
+  // getters and setters for shapes
   public SimpleShape(String name, int sides, int x, int y, int width, int height,
       Color color) {
 

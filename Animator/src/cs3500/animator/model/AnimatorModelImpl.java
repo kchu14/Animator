@@ -11,8 +11,12 @@ import java.util.Map;
 public class AnimatorModelImpl implements AnimatorModel{
 
   Map<String, IShape> shapes;
+  Map<String, IShape> commands;
+  // have model be able to have commands added to it like shapes. Model would then execute the commands
+  // it would check the tick and call shape.move or something
   int tick;
   int tickRate;
+  boolean isRunning;
 
   /**
    * Constructs an animator model implementation.
@@ -23,6 +27,8 @@ public class AnimatorModelImpl implements AnimatorModel{
     this.tick = tick;
     this.tickRate = tickRate;
     this.shapes = new HashMap<>();
+    this.isRunning = true;
+
   }
 
   @Override
@@ -36,7 +42,7 @@ public class AnimatorModelImpl implements AnimatorModel{
 
   @Override
   public boolean isAnimationOver() {
-    return false;
+    return this.isRunning;
   }
 
   @Override
