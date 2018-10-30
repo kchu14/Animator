@@ -88,6 +88,23 @@ public class AnimatorModelImpl implements AnimatorModel{
   public Map<Integer, List<ICommand>> getCommands() {
     return this.commands;
   }
+
+  @Override
+  public String getModelState() {
+    StringBuilder result = "";
+    for (Map.Entry<String, IShape> shape : shapes.entrySet()) {
+      String key = shape.getKey();
+      IShape value = shape.getValue();
+      String shapeType = "";
+      if(key.startsWith("r")) shapeType = "rectangle";
+      if(key.startsWith("o")) shapeType = "oval";
+      if(key.startsWith("p")) shapeType = "polygon";
+      result.append("shape " + value.getName() + " " + shapeType);
+
+    }
+    return result.toString();
+  }
+
 }
 
 

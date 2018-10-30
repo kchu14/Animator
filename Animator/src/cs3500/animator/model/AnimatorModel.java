@@ -47,4 +47,12 @@ public interface AnimatorModel {
    * @return The treemap of commands in this animator model.
    */
   Map<Integer, List<ICommand>> getCommands();
+
+  /**
+   * This method prints out the state of the model.
+   * (shape, name, type of shape)
+   * (motion, name, x, y, w, h, r, g, b) for start and end
+   * @return the string representation of the animation
+   */
+  String getModelState();
 }

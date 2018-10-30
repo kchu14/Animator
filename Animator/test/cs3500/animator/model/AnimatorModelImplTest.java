@@ -65,4 +65,10 @@ public class AnimatorModelImplTest {
     initData();
     assertEquals(2,m.getShapes().size());
   }
+
+  @Test
+  public void testGetModelState() {
+    initData();
+    m.getModelState();
+  }
 }
