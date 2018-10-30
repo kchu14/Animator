@@ -32,17 +32,14 @@ public class SimpleShape implements IShape {
   // getters and setters for shapes
   public SimpleShape(String name, int sides, int x, int y, int width, int height,
       Color color) {
-
-    this.sides = sides;
-    if(sides == 4) {
-      this.name = "rectangle" + name;
-    }
-    if(sides == 1) {
-      this.name = "oval" + name;
-    }
-    else {
+    if (sides == 4) {
+      this.name = "r" + name;
+    } else if (sides == 1) {
+      this.name = "o" + name;
+    } else {
       throw new IllegalArgumentException("given input is not a simple shape (not rectangle, oval)");
     }
+    this.sides = sides;
     this.x = x;
     this.y = y;
     this.width = width;
@@ -51,13 +48,20 @@ public class SimpleShape implements IShape {
   }
 
   @Override
-  public void move(int x, int y, int totalTicks) {
-    this.x += (this.x - x) / totalTicks;
-    this.y += (this.y - y) / totalTicks;
+  public void move(int x, int y, int totalTicks) throws IllegalArgumentException {
+    if (totalTicks <= 0) {
+      throw new IllegalArgumentException("invalid tick duration");
+    }
+
+    this.x += (x - this.x) / totalTicks;
+    this.y += (y - this.y) / totalTicks;
   }
 
   @Override
-  public void changeColor(Color color, int totalTicks) {
+  public void changeColor(Color color, int totalTicks) throws IllegalArgumentException {
+    if (totalTicks <= 0) {
+      throw new IllegalArgumentException("invalid tick duration");
+    }
     int redDelta = (color.getRed() - this.color.getRed()) / totalTicks;
     int greenDelta = (color.getGreen() - this.color.getGreen()) / totalTicks;
     int blueDelta = (color.getBlue() - this.color.getBlue()) / totalTicks;
@@ -66,17 +70,43 @@ public class SimpleShape implements IShape {
   }
 
   @Override
-  public void changeSize(int hDelta, int vDelta, int totalTicks) {
-    this.width += (this.width - width) / totalTicks;
-    this.height += (this.height - height) / totalTicks;
+  public void changeSize(int width, int height, int totalTicks) throws IllegalArgumentException {
+    if (totalTicks <= 0) {
+      throw new IllegalArgumentException("invalid tick duration");
+    }
+    this.width += (width - this.width) / totalTicks;
+    this.height += (height - this.height) / totalTicks;
   }
-
-
 
 
   @Override
   public String getName() {
     return name;
+  }
+
+  @Override
+  public Color getColor() {
+    return color;
+  }
+
+  @Override
+  public int getX() {
+    return x;
+  }
+
+  @Override
+  public int getY() {
+    return y;
+  }
+
+  @Override
+  public int getWidth() {
+    return width;
+  }
+
+  @Override
+  public int getHeight() {
+    return height;
   }
 
 

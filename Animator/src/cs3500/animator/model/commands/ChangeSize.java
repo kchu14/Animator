@@ -5,11 +5,18 @@ import cs3500.animator.model.ICommand;
 
 public class ChangeSize implements ICommand {
   String shapeName;
-  int hDelta, vDelta, totalTicks;
+  int width, height, totalTicks;
+
+  public ChangeSize(String shapeName, int width, int height, int totalTicks) {
+    this.shapeName = shapeName;
+    this.width = width;
+    this.height = height;
+    this.totalTicks = totalTicks;
+  }
 
   @Override
   public void apply(AnimatorModel a) {
-    a.getShapes().get(shapeName).changeSize(hDelta, vDelta, totalTicks);
+    a.getShapes().get(shapeName).changeSize(width, height, totalTicks);
   }
 
 }

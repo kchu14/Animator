@@ -9,6 +9,12 @@ public class ChangeColor implements ICommand {
   Color color;
   int totalTicks;
 
+  public ChangeColor(String shapeName, Color color, int totalTicks) {
+    this.shapeName = shapeName;
+    this.color = color;
+    this.totalTicks = totalTicks;
+  }
+
   @Override
   public void apply(AnimatorModel a) {
     a.getShapes().get(shapeName).changeColor(color, totalTicks);

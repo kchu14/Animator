@@ -17,33 +17,36 @@ public class AnimatorModelImpl implements AnimatorModel{
   // it would check the tick and call shape.move or something
   int tick;
   int tickRate;
-  boolean isRunning;
+  boolean isOver;
 
   /**
    * Constructs an animator model implementation.
    * @param tickRate  The rate of ticks per second on the animation.
    */
-  AnimatorModelImpl(int tickRate) {
+  public AnimatorModelImpl(int tickRate) {
     this.tick = 0;
     this.tickRate = tickRate;
     this.shapes = new HashMap<>();
     this.commands = new TreeMap<>();
-    this.isRunning = true;
+    this.isOver = false;
   }
 
   @Override
   public List<IShape> tickResult() {
     List<IShape> result = new ArrayList<>();
+    go();
     for (IShape s : shapes.values()) {
       result.add(s);
     }
+
     this.tick += tickRate;
     return result;
   }
 
   @Override
   public boolean isAnimationOver() {
-    return this.isRunning;
+    // unsure of when to conclude animation model (when they close the window?)
+    return this.isOver;
   }
 
   @Override
@@ -65,16 +68,25 @@ public class AnimatorModelImpl implements AnimatorModel{
     }
   }
 
-  @Override
-  public void go() {
-    for(ICommand c : commands.get(tick)) {
-      c.apply(this);
+  /**
+   * This method executes all of the commands given on this tick.
+   */
+  private void go() {
+    if(commands.containsKey(tick)) {
+      for (ICommand c : commands.get(tick)) {
+        c.apply(this);
+      }
     }
   }
 
   @Override
   public Map<String, IShape> getShapes() {
     return this.shapes;
+  }
+
+  @Override
+  public Map<Integer, List<ICommand>> getCommands() {
+    return this.commands;
   }
 }
 

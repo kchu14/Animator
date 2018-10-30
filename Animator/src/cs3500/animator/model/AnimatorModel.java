@@ -35,14 +35,16 @@ public interface AnimatorModel {
    */
   void addCommand(List<ICommand> c, int start, int end);
 
-  /**
-   * This method executes all of the commands given on this tick.
-   */
-  void go();
 
   /**
    * This method gets the hashmap of shapes in the model.
    * @return The hashmap of shapes in this animator model.
    */
   Map<String, IShape> getShapes();
+
+  /**
+   * This method gets the treemap of commands in the model.
+   * @return The treemap of commands in this animator model.
+   */
+  Map<Integer, List<ICommand>> getCommands();
 }
