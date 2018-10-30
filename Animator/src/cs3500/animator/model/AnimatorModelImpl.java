@@ -51,14 +51,24 @@ public class AnimatorModelImpl implements AnimatorModel {
   }
 
   @Override
-  public void addShape(IShape s) {
+  public void addShape(IShape s) throws IllegalArgumentException {
+    if (shapes.containsKey(s.getName())) {
+      throw new IllegalArgumentException("Shape names have to be unique.");
+    }
     shapes.put(s.getName(), s);
   }
 
   @Override
-  public void addCommand(List<ICommand> c, int start, int end) {
+  public void addCommand(List<ICommand> c, int start, int end) throws IllegalArgumentException {
     for (int i = start; i < end; i++) {
       if (commands.containsKey(i)) {
+        for (Map.Entry<Integer, List<ICommand>> com : commands.entrySet()) {
+          int key = com.getKey();
+          List<ICommand> value = com.getValue();
+          if (key >= start && key < end && value.contains(overlap with c)) {
+            throw new IllegalArgumentException("can't have overlapping motions for same shape");
+          }
+        }
         List<ICommand> oldAndNewComs = commands.get(i);
         oldAndNewComs.addAll(c);
         commands.put(i, oldAndNewComs);

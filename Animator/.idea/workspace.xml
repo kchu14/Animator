@@ -3,31 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="4b5f6a14-0478-41db-b647-f5d3d597cf23" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/AnimatorModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/AnimatorModel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/AnimatorModelImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/AnimatorModelImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/ComplexShape.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/ComplexShape.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/ICommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/ICommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/IShape.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/IShape.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/SimpleShape.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/SimpleShape.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/commands/ChangeColor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/commands/ChangeColor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/commands/ChangeSize.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/commands/ChangeSize.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/commands/Delete.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/commands/Delete.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/commands/Move.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Animator/cs3500/animator/model/commands/Move.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/test/Animator/cs3500/animator/model/AnimatorModelImplTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Animator/cs3500/animator/model/AnimatorModelImplTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Animator/cs3500/animator/model/ComplexShapeTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Animator/cs3500/animator/model/ComplexShapeTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModelImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModelImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cs3500/animator/model/ComplexShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cs3500/animator/model/ComplexShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cs3500/animator/model/ICommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cs3500/animator/model/ICommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cs3500/animator/model/IShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cs3500/animator/model/IShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cs3500/animator/model/SimpleShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cs3500/animator/model/SimpleShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cs3500/animator/model/commands/ChangeColor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cs3500/animator/model/commands/ChangeColor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cs3500/animator/model/commands/ChangeSize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cs3500/animator/model/commands/ChangeSize.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cs3500/animator/model/commands/Delete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cs3500/animator/model/commands/Delete.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cs3500/animator/model/commands/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cs3500/animator/model/commands/Move.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/cs3500/animator/model/AnimatorModelImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/cs3500/animator/model/AnimatorModelImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/cs3500/animator/model/ComplexShapeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/cs3500/animator/model/ComplexShapeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/cs3500/animator/model/SimpleShapeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/cs3500/animator/model/SimpleShapeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/cs3500/animator/model/commands/CommandsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/cs3500/animator/model/commands/CommandsTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -60,12 +46,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="8076" />
+          <entry key="java" value="8462" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="8076" />
+          <entry key="JAVA" value="8462" />
         </counts>
       </usages-collector>
     </session>
@@ -75,18 +61,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModelImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
+            <state relative-caret-position="320">
+              <caret line="73" column="34" selection-start-line="73" selection-start-column="34" selection-end-line="73" selection-end-column="34" />
               <folding>
-                <element signature="e#1354#1355#0" expanded="true" />
-                <element signature="e#1390#1391#0" expanded="true" />
-                <element signature="e#2028#2029#0" expanded="true" />
-                <element signature="e#2056#2057#0" expanded="true" />
-                <element signature="e#2123#2124#0" expanded="true" />
-                <element signature="e#2153#2154#0" expanded="true" />
+                <element signature="e#2286#2287#0" expanded="true" />
+                <element signature="e#2314#2315#0" expanded="true" />
+                <element signature="e#2381#2382#0" expanded="true" />
+                <element signature="e#2411#2412#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -119,8 +103,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/cs3500/animator/model/AnimatorModelImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="88" column="17" selection-start-line="88" selection-start-column="17" selection-end-line="88" selection-end-column="17" />
+            <state relative-caret-position="385">
+              <caret line="98" column="6" selection-start-line="98" selection-start-column="6" selection-end-line="98" selection-end-column="6" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -137,11 +121,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/cs3500/animator/model/SimpleShapeTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-340">
-              <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+            <state relative-caret-position="920">
+              <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
             </state>
           </provider>
         </entry>
@@ -158,8 +142,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+            <state relative-caret-position="120">
+              <caret line="39" column="87" selection-start-line="39" selection-start-column="87" selection-end-line="39" selection-end-column="87" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -208,17 +192,17 @@
         <option value="$PROJECT_DIR$/src/cs3500/animator/model/SimpleShape.java" />
         <option value="$PROJECT_DIR$/src/cs3500/animator/model/IShape.java" />
         <option value="$PROJECT_DIR$/src/cs3500/animator/model/ICommand.java" />
-        <option value="$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModel.java" />
         <option value="$PROJECT_DIR$/src/cs3500/animator/model/commands/ChangeSize.java" />
         <option value="$PROJECT_DIR$/src/cs3500/animator/model/commands/ChangeColor.java" />
         <option value="$PROJECT_DIR$/src/cs3500/animator/model/commands/Delete.java" />
         <option value="$PROJECT_DIR$/src/cs3500/animator/model/commands/Move.java" />
-        <option value="$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModelImpl.java" />
         <option value="$PROJECT_DIR$/src/cs3500/animator/model/ComplexShape.java" />
         <option value="$PROJECT_DIR$/test/cs3500/animator/model/commands/CommandsTest.java" />
-        <option value="$PROJECT_DIR$/test/cs3500/animator/model/AnimatorModelImplTest.java" />
         <option value="$PROJECT_DIR$/test/cs3500/animator/model/ComplexShapeTest.java" />
         <option value="$PROJECT_DIR$/test/cs3500/animator/model/SimpleShapeTest.java" />
+        <option value="$PROJECT_DIR$/test/cs3500/animator/model/AnimatorModelImplTest.java" />
+        <option value="$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModel.java" />
+        <option value="$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModelImpl.java" />
       </list>
     </option>
   </component>
@@ -259,13 +243,6 @@
             <path>
               <item name="Animator" type="b2602c69:ProjectViewProjectNode" />
               <item name="Animator" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Animator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Animator" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -273,13 +250,6 @@
               <item name="Animator" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Animator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Animator" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -295,7 +265,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540939077526" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540941843124" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="create.test.in.the.same.root" value="true" />
@@ -323,7 +293,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.AnimatorModelImplTest.testGetModelState">
+  <component name="RunManager" selected="JUnit.AnimatorModelImplTest.addShape">
     <configuration name="AnimatorModelImplTest.addCommand" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Animator" />
       <extension name="coverage">
@@ -351,6 +321,22 @@
       <option name="PACKAGE_NAME" value="cs3500.animator.model" />
       <option name="MAIN_CLASS_NAME" value="cs3500.animator.model.AnimatorModelImplTest" />
       <option name="METHOD_NAME" value="addShape" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AnimatorModelImplTest.emptyAnimation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Animator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cs3500.animator.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="cs3500.animator.model" />
+      <option name="MAIN_CLASS_NAME" value="cs3500.animator.model.AnimatorModelImplTest" />
+      <option name="METHOD_NAME" value="emptyAnimation" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -388,34 +374,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ComplexShapeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Animator" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cs3500.animator.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="cs3500.animator.model" />
-      <option name="MAIN_CLASS_NAME" value="cs3500.animator.model.ComplexShapeTest" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="JUnit.ComplexShapeTest" />
       <item itemvalue="JUnit.AnimatorModelImplTest.addShape" />
       <item itemvalue="JUnit.CommandsTest.testApply" />
       <item itemvalue="JUnit.AnimatorModelImplTest.addCommand" />
       <item itemvalue="JUnit.AnimatorModelImplTest.testGetModelState" />
+      <item itemvalue="JUnit.AnimatorModelImplTest.emptyAnimation" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.AnimatorModelImplTest.testGetModelState" />
         <item itemvalue="JUnit.AnimatorModelImplTest.addShape" />
+        <item itemvalue="JUnit.AnimatorModelImplTest.emptyAnimation" />
+        <item itemvalue="JUnit.AnimatorModelImplTest.testGetModelState" />
         <item itemvalue="JUnit.AnimatorModelImplTest.addCommand" />
         <item itemvalue="JUnit.CommandsTest.testApply" />
-        <item itemvalue="JUnit.ComplexShapeTest" />
       </list>
     </recent_temporary>
   </component>
@@ -429,26 +401,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1540770787592</updated>
-      <workItem from="1540770790248" duration="26122000" />
+      <workItem from="1540770790248" duration="28674000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="AnimatorModelImplTest_testGetModelState - 2018.10.30 at 17h 47m 59s.xml">
-      <configuration name="AnimatorModelImplTest.testGetModelState" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AnimatorModelImplTest_testGetModelState - 2018.10.30 at 17h 48m 23s.xml">
-      <configuration name="AnimatorModelImplTest.testGetModelState" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AnimatorModelImplTest_testGetModelState - 2018.10.30 at 17h 48m 41s.xml">
-      <configuration name="AnimatorModelImplTest.testGetModelState" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AnimatorModelImplTest_testGetModelState - 2018.10.30 at 17h 48m 47s.xml">
-      <configuration name="AnimatorModelImplTest.testGetModelState" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AnimatorModelImplTest_testGetModelState - 2018.10.30 at 17h 48m 53s.xml">
-      <configuration name="AnimatorModelImplTest.testGetModelState" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="AnimatorModelImplTest_testGetModelState - 2018.10.30 at 17h 49m 05s.xml">
       <configuration name="AnimatorModelImplTest.testGetModelState" configurationId="JUnit" />
     </history-entry>
@@ -464,9 +421,24 @@
     <history-entry file="AnimatorModelImplTest_testGetModelState - 2018.10.30 at 18h 27m 12s.xml">
       <configuration name="AnimatorModelImplTest.testGetModelState" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="AnimatorModelImplTest_emptyAnimation - 2018.10.30 at 18h 44m 15s.xml">
+      <configuration name="AnimatorModelImplTest.emptyAnimation" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AnimatorModelImplTest_addShape - 2018.10.30 at 18h 45m 11s.xml">
+      <configuration name="AnimatorModelImplTest.addShape" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AnimatorModelImplTest_addShape - 2018.10.30 at 18h 45m 51s.xml">
+      <configuration name="AnimatorModelImplTest.addShape" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AnimatorModelImplTest_addShape - 2018.10.30 at 18h 46m 25s.xml">
+      <configuration name="AnimatorModelImplTest.addShape" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AnimatorModelImplTest_addShape - 2018.10.30 at 18h 49m 20s.xml">
+      <configuration name="AnimatorModelImplTest.addShape" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26122000" />
+    <option name="totallyTimeSpent" value="28674000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -598,31 +570,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModelImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
-          <folding>
-            <element signature="e#1354#1355#0" expanded="true" />
-            <element signature="e#1390#1391#0" expanded="true" />
-            <element signature="e#2028#2029#0" expanded="true" />
-            <element signature="e#2056#2057#0" expanded="true" />
-            <element signature="e#2123#2124#0" expanded="true" />
-            <element signature="e#2153#2154#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/cs3500/animator/model/ComplexShape.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -664,16 +611,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/cs3500/animator/model/AnimatorModelImplTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="88" column="17" selection-start-line="88" selection-start-column="17" selection-end-line="88" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/cs3500/animator/model/ComplexShapeTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
@@ -683,8 +620,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/cs3500/animator/model/SimpleShapeTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-340">
-          <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+        <state relative-caret-position="920">
+          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/cs3500/animator/model/AnimatorModelImplTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="98" column="6" selection-start-line="98" selection-start-column="6" selection-end-line="98" selection-end-column="6" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="39" column="87" selection-start-line="39" selection-start-column="87" selection-end-line="39" selection-end-column="87" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs3500/animator/model/AnimatorModelImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="73" column="34" selection-start-line="73" selection-start-column="34" selection-end-line="73" selection-end-column="34" />
+          <folding>
+            <element signature="e#2286#2287#0" expanded="true" />
+            <element signature="e#2314#2315#0" expanded="true" />
+            <element signature="e#2381#2382#0" expanded="true" />
+            <element signature="e#2411#2412#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -28,7 +28,7 @@ public interface AnimatorModel {
    *
    * @param s The shape that is to be added
    */
-  void addShape(IShape s);
+  void addShape(IShape s) throws IllegalArgumentException;
 
   /**
    * Adds a command to the map of commands inside of the animator model.
@@ -37,7 +37,7 @@ public interface AnimatorModel {
    * @param start The beginning tick that the command will execute.
    * @param end The tick after this command has finished.
    */
-  void addCommand(List<ICommand> c, int start, int end);
+  void addCommand(List<ICommand> c, int start, int end) throws IllegalArgumentException;
 
 
   /**

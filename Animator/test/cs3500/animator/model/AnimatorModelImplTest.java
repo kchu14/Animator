@@ -53,14 +53,19 @@ public class AnimatorModelImplTest {
   }
 
   @Test
+  public void emptyAnimation() {
+
+    assertEquals("", m.getModelState());
+    assertEquals(0, m.getShapes().size());
+    assertEquals(0, m.getCommands().size());
+
+  }
+
+  @Test
   public void addShape() {
     initData();
     assertEquals(2, m.getShapes().size());
-    List<IShape> ls = new ArrayList<IShape>();
-    ls.add(new SimpleShape("o", 1, 200, 200, 50, 100, new Color(255, 0, 0)));
-    ls.add(new SimpleShape("r", 4, 200, 200, 50, 100, new Color(255, 0, 0)));
 
-    // assertEquals(ls.toArray()[0]., m.tickResult().toArray()[0]);
   }
 
   @Test
@@ -75,6 +80,24 @@ public class AnimatorModelImplTest {
   public void getShapes() {
     initData();
     assertEquals(2, m.getShapes().size());
+  }
+
+  @Test
+  public void testTickResult() {
+    initData();
+    List<ICommand> c = initCommands2();
+    m.addCommand(c, 1, 5);
+    /**
+     *
+     * asdfasdf
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
   }
 
   @Test
