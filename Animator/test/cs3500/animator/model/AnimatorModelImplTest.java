@@ -59,9 +59,6 @@ public class AnimatorModelImplTest {
     assertEquals(4, m.getCommands().get(5).size());
   }
 
-  @Test
-  public void go() {
-  }
 
   @Test
   public void getShapes() {
