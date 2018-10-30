@@ -51,31 +51,32 @@ public class SimpleShape implements IShape {
   }
 
   @Override
-  public void move(int x, int y) {
-    this.x = x;
-    this.y = y;
+  public void move(int x, int y, int totalTicks) {
+    this.x += (this.x - x) / totalTicks;
+    this.y += (this.y - y) / totalTicks;
   }
 
   @Override
-  public void changeColor(Color color) {
-    this.color = color;
+  public void changeColor(Color color, int totalTicks) {
+    int redDelta = (color.getRed() - this.color.getRed()) / totalTicks;
+    int greenDelta = (color.getGreen() - this.color.getGreen()) / totalTicks;
+    int blueDelta = (color.getBlue() - this.color.getBlue()) / totalTicks;
+    this.color = new Color(this.color.getRed() + redDelta, this.color.getGreen() + greenDelta,
+        this.color.getBlue() + blueDelta);
   }
 
   @Override
-  public void changeSize(int hShift, int vShift) {
-    this.width *= hShift;
-    this.height *= vShift;
+  public void changeSize(int hDelta, int vDelta, int totalTicks) {
+    this.width += (this.width - width) / totalTicks;
+    this.height += (this.height - height) / totalTicks;
   }
 
-//  @Override
-//  public void rotate(int angleDegrees) {
-//
-//  }
+
+
 
   @Override
-  public void delete() {
-    this.x = -1000;
-    this.y = -1000;
+  public String getName() {
+    return name;
   }
 
 

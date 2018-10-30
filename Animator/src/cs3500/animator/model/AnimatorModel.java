@@ -1,6 +1,7 @@
 package cs3500.animator.model;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * This interface specifies the operations of an AnimatorModel.
@@ -12,7 +13,7 @@ public interface AnimatorModel {
    * This method enumerates all of the shapes in the model to one list to be visualized.
    * @return a list of all of the shapes that exist inside of this model
    */
-  List<IShape> draw();
+  List<IShape> tickResult();
 
   /**
    * Checks to see if the animation has been completed.
@@ -24,6 +25,24 @@ public interface AnimatorModel {
    * Adds a shape to the map of shapes inside of the animator model.
    * @param s The shape that is to be added
    */
-  void addShape(SimpleShape s);
+  void addShape(IShape s);
 
+  /**
+   * Adds a command to the map of commands inside of the animator model.
+   * @param c The commands that will be executed between the given ticks.
+   * @param start The beginning tick that the command will execute.
+   * @param end The tick after this command has finished.
+   */
+  void addCommand(List<ICommand> c, int start, int end);
+
+  /**
+   * This method executes all of the commands given on this tick.
+   */
+  void go();
+
+  /**
+   * This method gets the hashmap of shapes in the model.
+   * @return The hashmap of shapes in this animator model.
+   */
+  Map<String, IShape> getShapes();
 }

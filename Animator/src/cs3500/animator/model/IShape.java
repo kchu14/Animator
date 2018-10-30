@@ -14,29 +14,26 @@ public interface IShape {
    * @param x the desired x coordinate of the shape
    * @param y the desired y coordinate of the shape
    */
-  void move(int x, int y);
+  void move(int x, int y, int totalTicks);
 
   /**
    * Changes the color of this shape to a new one.
    * @param color the desired r,g,b color
+   * @param totalTicks the length of the animation for this shape
    */
-  void changeColor(Color color);
+  void changeColor(Color color, int totalTicks);
 
   /**
    * Changes the size of this shape.
-   * @param hShift the desired amount of horizontal shift
-   * @param vShift the desired amount of vertical shift
+   * @param hDelta the desired amount of horizontal shift
+   * @param vDelta the desired amount of vertical shift
    */
-  void changeSize(int hShift, int vShift);
+  void changeSize(int hDelta, int vDelta, int totalTicks);
 
-//  /**
-//   * Rotates this shape by the specified degrees.
-//   * @param angleDegrees the desired amount of angular shift
-//   */
-//  void rotate(double angleDegrees);
 
   /**
-   * Deletes this shape.
+   * Returns the shape's name.
+   * @return the shape's name.
    */
-  void delete();
+  String getName();
 }
