@@ -3,10 +3,22 @@ package cs3500.animator.model.commands;
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.ICommand;
 
+/**
+ * This class represents a move function object command and implements apply.
+ */
 public class Move implements ICommand {
+
   String shapeName;
   int x, y, totalTicks;
 
+  /**
+   * Constructs a move object to be used in the model.
+   *
+   * @param shapeName the given shape name.
+   * @param x the desired x coord
+   * @param y the desired y coord
+   * @param totalTicks the total duration of the animation
+   */
   public Move(String shapeName, int x, int y, int totalTicks) {
     this.shapeName = shapeName;
     this.x = x;

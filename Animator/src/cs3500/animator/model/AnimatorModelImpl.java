@@ -9,7 +9,7 @@ import java.util.TreeMap;
 /**
  * This class represents an animator model and implements all of its associated operations.
  */
-public class AnimatorModelImpl implements AnimatorModel{
+public class AnimatorModelImpl implements AnimatorModel {
 
   Map<String, IShape> shapes;
   Map<Integer, List<ICommand>> commands;
@@ -21,7 +21,8 @@ public class AnimatorModelImpl implements AnimatorModel{
 
   /**
    * Constructs an animator model implementation.
-   * @param tickRate  The rate of ticks per second on the animation.
+   *
+   * @param tickRate The rate of ticks per second on the animation.
    */
   public AnimatorModelImpl(int tickRate) {
     this.tick = 0;
@@ -55,14 +56,13 @@ public class AnimatorModelImpl implements AnimatorModel{
   }
 
   @Override
-  public void addCommand(List<ICommand> c, int start, int end){
+  public void addCommand(List<ICommand> c, int start, int end) {
     for (int i = start; i < end; i++) {
-      if(commands.containsKey(i)) {
+      if (commands.containsKey(i)) {
         List<ICommand> oldAndNewComs = commands.get(i);
         oldAndNewComs.addAll(c);
         commands.put(i, oldAndNewComs);
-      }
-      else {
+      } else {
         commands.put(i, c);
       }
     }
@@ -72,7 +72,7 @@ public class AnimatorModelImpl implements AnimatorModel{
    * This method executes all of the commands given on this tick.
    */
   private void go(int tick) {
-    if(commands.containsKey(tick)) {
+    if (commands.containsKey(tick)) {
       for (ICommand c : commands.get(tick)) {
         c.apply(this);
       }
@@ -96,26 +96,33 @@ public class AnimatorModelImpl implements AnimatorModel{
       String key = shape.getKey();
       IShape value = shape.getValue();
       String shapeType = "";
-      if(key.startsWith("r")) shapeType = "rectangle";
-      if(key.startsWith("o")) shapeType = "oval";
-      if(key.startsWith("p")) shapeType = "polygon";
-      result.append("shape " + value.getName().substring(1, value.getName().length()) + " " + shapeType + "\n");
+      if (key.startsWith("r")) {
+        shapeType = "rectangle";
+      }
+      if (key.startsWith("o")) {
+        shapeType = "oval";
+      }
+      if (key.startsWith("p")) {
+        shapeType = "polygon";
+      }
+      result.append(
+          "shape " + value.getName().substring(1, value.getName().length()) + " " + shapeType
+              + "\n");
       //do commands for this shape here (maybe helper)
-      System.out.println(commands);
-      for(Map.Entry<Integer, List<ICommand>> command : commands.entrySet()) {
+      for (Map.Entry<Integer, List<ICommand>> command : commands.entrySet()) {
         int tick = command.getKey();
         List<ICommand> lCommands = command.getValue();
-        for(ICommand c : lCommands) {
-          if(key.equals(c.getShapeName())) result.append(shapes.get(key).getShapeState(tick));
+        for (ICommand c : lCommands) {
+          if (key.equals(c.getShapeName()) && shapes.get(key) != null) {
+            result.append(shapes.get(key).getShapeState(tick));
+            go(tick);
+          }
         }
-        go(tick);
         // we might want to hav another map with <shape, commands>
         // we are going through each command for each tick and checking if the name is the same
         // to print which is weird
       }
     }
-
-
 
     return result.toString();
   }

@@ -92,42 +92,42 @@ public class SimpleShapeTest {
     assertEquals(199, simpleShape.getY());
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void invalidColorChange() {
     SimpleShape simpleShape =
         new SimpleShape("o", 1, 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.changeColor(new Color(255, 255,255), -10);
+    simpleShape.changeColor(new Color(255, 255, 255), -10);
   }
 
   @Test
   public void changeColor() {
     SimpleShape simpleShape =
         new SimpleShape("o", 1, 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.changeColor(new Color(255, 255,255), 1);
-    assertEquals(new Color(255, 255,255), simpleShape.getColor());
+    simpleShape.changeColor(new Color(255, 255, 255), 1);
+    assertEquals(new Color(255, 255, 255), simpleShape.getColor());
   }
 
   @Test
   public void changeColorMoreThanOneTick() {
     SimpleShape simpleShape =
         new SimpleShape("o", 1, 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.changeColor(new Color(255, 255,255), 255);
-    assertEquals(new Color(255, 1,1), simpleShape.getColor());
+    simpleShape.changeColor(new Color(255, 255, 255), 255);
+    assertEquals(new Color(255, 1, 1), simpleShape.getColor());
   }
 
   @Test
   public void changeColorDecreaseColors() {
     SimpleShape simpleShape =
         new SimpleShape("o", 1, 200, 200, 50, 100, new Color(255, 255, 255));
-    simpleShape.changeColor(new Color(200, 200,200), 55);
-    assertEquals(new Color(254, 254,254), simpleShape.getColor());
+    simpleShape.changeColor(new Color(200, 200, 200), 55);
+    assertEquals(new Color(254, 254, 254), simpleShape.getColor());
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void invalidSizeChange() {
     SimpleShape simpleShape =
         new SimpleShape("o", 1, 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.changeSize(10 , 10, -10);
+    simpleShape.changeSize(10, 10, -10);
   }
 
   @Test

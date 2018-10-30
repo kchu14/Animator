@@ -114,7 +114,8 @@ public class SimpleShape implements IShape {
     StringBuilder result = new StringBuilder("");
     result.append(
         "motion " + name.substring(1, name.length()) + " " + tick + " " + x + " " + y + " " + width
-            + " " + height + " " + color +
+            + " " + height + " " + color.getRed() + " " + color.getBlue() + " " + color.getGreen()
+            + " " +
             "\n");
 
     return result.toString();

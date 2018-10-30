@@ -29,9 +29,9 @@ public class CommandsTest {
     assertEquals(100, m.getShapes().get("rr").getX());
     assertEquals(100, m.getShapes().get("rr").getY());
 
-    ICommand changeColor = new ChangeColor("rr", new Color(255,255,255), 1);
+    ICommand changeColor = new ChangeColor("rr", new Color(255, 255, 255), 1);
     changeColor.apply(m);
-    assertEquals(new Color(255,255,255), m.getShapes().get("rr").getColor());
+    assertEquals(new Color(255, 255, 255), m.getShapes().get("rr").getColor());
 
     ICommand changeSize = new ChangeSize("oo", 2, 3, 1);
     changeSize.apply(m);
@@ -40,6 +40,6 @@ public class CommandsTest {
 
     ICommand delete = new Delete("rr");
     delete.apply(m);
-    assertEquals(1,m.getShapes().size());
+    assertEquals(1, m.getShapes().size());
   }
 }

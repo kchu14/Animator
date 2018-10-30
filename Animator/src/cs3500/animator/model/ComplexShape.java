@@ -2,6 +2,10 @@ package cs3500.animator.model;
 
 import java.awt.Color;
 
+/**
+ * This class represents ComplexShape (n-gon, polygons) and implements all of the associated shape
+ * operations.
+ */
 public class ComplexShape implements IShape {
 
   private String name;
@@ -31,7 +35,9 @@ public class ComplexShape implements IShape {
   // moving to point based off of first given coordinate of the polygon.
   @Override
   public void move(int x, int y, int totalTicks) throws IllegalArgumentException {
-    if(totalTicks <= 0) {throw new IllegalArgumentException("invalid tick duration");}
+    if (totalTicks <= 0) {
+      throw new IllegalArgumentException("invalid tick duration");
+    }
     int xdif = (x - this.x[0]) / totalTicks;
     int ydif = (y - this.y[0]) / totalTicks;
     for (int i = 0; i < sides; i++) {
@@ -41,8 +47,10 @@ public class ComplexShape implements IShape {
   }
 
   @Override
-  public void changeColor(Color color, int totalTicks) throws IllegalArgumentException{
-    if(totalTicks <= 0) {throw new IllegalArgumentException("invalid tick duration");}
+  public void changeColor(Color color, int totalTicks) throws IllegalArgumentException {
+    if (totalTicks <= 0) {
+      throw new IllegalArgumentException("invalid tick duration");
+    }
     int redDelta = (color.getRed() - this.color.getRed()) / totalTicks;
     int greenDelta = (color.getGreen() - this.color.getGreen()) / totalTicks;
     int blueDelta = (color.getBlue() - this.color.getBlue()) / totalTicks;
@@ -54,7 +62,9 @@ public class ComplexShape implements IShape {
   // unsure of how to designate the width and height of a complex shape (n-gon, octagon etc.).
   @Override
   public void changeSize(int width, int height, int totalTicks) throws IllegalArgumentException {
-    if(totalTicks <= 0) {throw new IllegalArgumentException("invalid tick duration");}
+    if (totalTicks <= 0) {
+      throw new IllegalArgumentException("invalid tick duration");
+    }
     for (int i = 0; i < sides; i++) {
       this.x[i] *= width;
       this.y[i] *= height;
@@ -103,7 +113,8 @@ public class ComplexShape implements IShape {
   public String getShapeState(int tick) {
     StringBuilder result = new StringBuilder("");
     result.append(
-        "motion " + name.substring(1, name.length()) + " " + tick + " " + x + " " + y +  " " + color +
+        "motion " + name.substring(1, name.length()) + " " + tick + " " + x + " " + y + " " + color
+            .getRed() + " " + color.getBlue() + " " + color.getGreen() + " " +
             "\n");
 
     return result.toString();

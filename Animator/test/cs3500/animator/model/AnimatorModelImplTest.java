@@ -24,7 +24,7 @@ public class AnimatorModelImplTest {
 
   private List<ICommand> initCommands() {
     ICommand move = new Move("rr", 100, 100, 1);
-    ICommand changeColor = new ChangeColor("rr", new Color(255,255,255), 1);
+    ICommand changeColor = new ChangeColor("rr", new Color(255, 255, 255), 1);
     ICommand changeSize = new ChangeSize("oo", 2, 3, 1);
     ICommand delete = new Delete("rr");
     List<ICommand> result = new ArrayList<>();
@@ -35,6 +35,17 @@ public class AnimatorModelImplTest {
     return result;
   }
 
+
+  private List<ICommand> initCommands2() {
+    ICommand move = new Move("rr", 100, 100, 1);
+    ICommand changeColor = new ChangeColor("rr", new Color(255, 255, 255), 1);
+    ICommand changeSize = new ChangeSize("oo", 2, 3, 1);
+    List<ICommand> result = new ArrayList<>();
+    result.add(move);
+    result.add(changeColor);
+    result.add(changeSize);
+    return result;
+  }
 
   @Test
   public void isAnimationOver() {
@@ -49,7 +60,7 @@ public class AnimatorModelImplTest {
     ls.add(new SimpleShape("o", 1, 200, 200, 50, 100, new Color(255, 0, 0)));
     ls.add(new SimpleShape("r", 4, 200, 200, 50, 100, new Color(255, 0, 0)));
 
-   // assertEquals(ls.toArray()[0]., m.tickResult().toArray()[0]);
+    // assertEquals(ls.toArray()[0]., m.tickResult().toArray()[0]);
   }
 
   @Test
@@ -63,15 +74,28 @@ public class AnimatorModelImplTest {
   @Test
   public void getShapes() {
     initData();
-    assertEquals(2,m.getShapes().size());
+    assertEquals(2, m.getShapes().size());
   }
 
   @Test
   public void testGetModelState() {
     initData();
-    List<ICommand> c = initCommands();
+    List<ICommand> c = initCommands2();
     m.addCommand(c, 1, 5);
-    assertEquals("", m.getModelState());
+    assertEquals("shape r rectangle\n"
+        + "motion r 1 200 200 50 100 255 0 0 \n"
+        + "motion r 1 100 100 50 100 255 255 255 \n"
+        + "motion r 2 100 100 50 100 255 255 255 \n"
+        + "motion r 2 100 100 50 100 255 255 255 \n"
+        + "motion r 3 100 100 50 100 255 255 255 \n"
+        + "motion r 3 100 100 50 100 255 255 255 \n"
+        + "motion r 4 100 100 50 100 255 255 255 \n"
+        + "motion r 4 100 100 50 100 255 255 255 \n"
+        + "shape o oval\n"
+        + "motion o 1 200 200 2 3 255 0 0 \n"
+        + "motion o 2 200 200 2 3 255 0 0 \n"
+        + "motion o 3 200 200 2 3 255 0 0 \n"
+        + "motion o 4 200 200 2 3 255 0 0 \n", m.getModelState());
 
   }
 }
