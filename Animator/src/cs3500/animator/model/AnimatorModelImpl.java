@@ -91,7 +91,7 @@ public class AnimatorModelImpl implements AnimatorModel{
 
   @Override
   public String getModelState() {
-    StringBuilder result = "";
+    StringBuilder result = new StringBuilder();
     for (Map.Entry<String, IShape> shape : shapes.entrySet()) {
       String key = shape.getKey();
       IShape value = shape.getValue();
@@ -99,9 +99,22 @@ public class AnimatorModelImpl implements AnimatorModel{
       if(key.startsWith("r")) shapeType = "rectangle";
       if(key.startsWith("o")) shapeType = "oval";
       if(key.startsWith("p")) shapeType = "polygon";
-      result.append("shape " + value.getName() + " " + shapeType);
-
+      result.append("shape " + value.getName() + " " + shapeType + "\n");
+      //do commands for this shape here (maybe helper)
+      for(Map.Entry<Integer, List<ICommand>> command : commands.entrySet()) {
+        int tick = command.getKey();
+        List<ICommand> lCommands = command.getValue();
+        for(ICommand c : lCommands) {
+          if(key.equals(c.getShapeName())) result.append(shapes.get(key).getShapeState(tick));
+        }
+        // we might want to hav another map with <shape, commands>
+        // we are going through each command for each tick and checking if the name is the same
+        // to print which is weird
+      }
     }
+
+
+
     return result.toString();
   }
 

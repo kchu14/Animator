@@ -109,5 +109,16 @@ public class SimpleShape implements IShape {
     return height;
   }
 
+  @Override
+  public String getShapeState(int tick) {
+    StringBuilder result = new StringBuilder("");
+    result.append(
+        "motion " + name.substring(1, name.length()) + " " + tick + " " + x + " " + y + " " + width
+            + " " + height + " " + color +
+            "\n");
+
+    return result.toString();
+  }
+
 
 }

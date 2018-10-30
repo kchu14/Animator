@@ -9,4 +9,10 @@ public interface ICommand {
    */
   void apply(AnimatorModel a);
 
+  /**
+   * Gets the name of the shape that this command is executing on.
+   * @return The name of the shape being altered.
+   */
+  String getShapeName();
+
 }

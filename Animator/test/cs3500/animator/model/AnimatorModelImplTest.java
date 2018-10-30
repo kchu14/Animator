@@ -69,6 +69,7 @@ public class AnimatorModelImplTest {
   @Test
   public void testGetModelState() {
     initData();
-    m.getModelState();
+    assertEquals("", m.getModelState());
+
   }
 }

@@ -19,4 +19,9 @@ public class ChangeSize implements ICommand {
     a.getShapes().get(shapeName).changeSize(width, height, totalTicks);
   }
 
+  @Override
+  public String getShapeName() {
+    return shapeName;
+  }
+
 }

@@ -48,4 +48,7 @@ public interface IShape {
   int getWidth();
 
   int getHeight();
+
+  String getShapeState(int tick);
+
 }

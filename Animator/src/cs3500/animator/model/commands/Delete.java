@@ -15,4 +15,9 @@ public class Delete implements ICommand {
     a.getShapes().remove(shapeName);
   }
 
+  @Override
+  public String getShapeName() {
+    return shapeName;
+  }
+
 }

@@ -20,4 +20,9 @@ public class ChangeColor implements ICommand {
     a.getShapes().get(shapeName).changeColor(color, totalTicks);
   }
 
+  @Override
+  public String getShapeName() {
+    return shapeName;
+  }
+
 }

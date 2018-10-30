@@ -19,4 +19,9 @@ public class Move implements ICommand {
     a.getShapes().get(shapeName).move(x, y, totalTicks);
   }
 
+  @Override
+  public String getShapeName() {
+    return shapeName;
+  }
+
 }
