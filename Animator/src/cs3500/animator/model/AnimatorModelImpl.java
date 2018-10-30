@@ -34,7 +34,7 @@ public class AnimatorModelImpl implements AnimatorModel{
   @Override
   public List<IShape> tickResult() {
     List<IShape> result = new ArrayList<>();
-    go();
+    go(tick);
     for (IShape s : shapes.values()) {
       result.add(s);
     }
@@ -71,7 +71,7 @@ public class AnimatorModelImpl implements AnimatorModel{
   /**
    * This method executes all of the commands given on this tick.
    */
-  private void go() {
+  private void go(int tick) {
     if(commands.containsKey(tick)) {
       for (ICommand c : commands.get(tick)) {
         c.apply(this);
@@ -99,14 +99,16 @@ public class AnimatorModelImpl implements AnimatorModel{
       if(key.startsWith("r")) shapeType = "rectangle";
       if(key.startsWith("o")) shapeType = "oval";
       if(key.startsWith("p")) shapeType = "polygon";
-      result.append("shape " + value.getName() + " " + shapeType + "\n");
+      result.append("shape " + value.getName().substring(1, value.getName().length()) + " " + shapeType + "\n");
       //do commands for this shape here (maybe helper)
+      System.out.println(commands);
       for(Map.Entry<Integer, List<ICommand>> command : commands.entrySet()) {
         int tick = command.getKey();
         List<ICommand> lCommands = command.getValue();
         for(ICommand c : lCommands) {
           if(key.equals(c.getShapeName())) result.append(shapes.get(key).getShapeState(tick));
         }
+        go(tick);
         // we might want to hav another map with <shape, commands>
         // we are going through each command for each tick and checking if the name is the same
         // to print which is weird

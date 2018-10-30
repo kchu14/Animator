@@ -69,6 +69,8 @@ public class AnimatorModelImplTest {
   @Test
   public void testGetModelState() {
     initData();
+    List<ICommand> c = initCommands();
+    m.addCommand(c, 1, 5);
     assertEquals("", m.getModelState());
 
   }
