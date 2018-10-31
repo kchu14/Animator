@@ -9,7 +9,10 @@ import cs3500.animator.model.ICommand;
 public class Move implements ICommand {
 
   String shapeName;
-  int x, y, totalTicks;
+  String commandType;
+  int x;
+  int y;
+  int totalTicks;
 
   /**
    * Constructs a move object to be used in the model.
@@ -24,6 +27,7 @@ public class Move implements ICommand {
     this.x = x;
     this.y = y;
     this.totalTicks = totalTicks;
+    this.commandType = "move";
   }
 
   @Override
@@ -34,6 +38,11 @@ public class Move implements ICommand {
   @Override
   public String getShapeName() {
     return shapeName;
+  }
+
+  @Override
+  public String getCommandType() {
+    return commandType;
   }
 
 }

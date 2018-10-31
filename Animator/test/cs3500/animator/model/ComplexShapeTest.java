@@ -1,6 +1,6 @@
 package cs3500.animator.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.awt.Color;
 import org.junit.Test;
@@ -97,6 +97,7 @@ public class ComplexShapeTest {
     IShape c =
         new ComplexShape("o", new int[]{0, 0, 1}, new int[]{0, 2, 1}, new Color(255, 255, 255));
     c.changeSize(10, 55, 1);
+    assertEquals(c.getWidth(), 0);
   }
 
   @Test
@@ -106,5 +107,6 @@ public class ComplexShapeTest {
     IShape c =
         new ComplexShape("o", new int[]{0, 0, 1}, new int[]{0, 2, 1}, new Color(255, 255, 255));
     c.changeSize(10, 55, 100);
+    assertEquals(c.getWidth(), 0);
   }
 }

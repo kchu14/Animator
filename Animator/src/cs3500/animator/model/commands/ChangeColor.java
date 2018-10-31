@@ -10,6 +10,7 @@ import java.awt.Color;
 public class ChangeColor implements ICommand {
 
   String shapeName;
+  String commandType;
   Color color;
   int totalTicks;
 
@@ -24,6 +25,7 @@ public class ChangeColor implements ICommand {
     this.shapeName = shapeName;
     this.color = color;
     this.totalTicks = totalTicks;
+    this.commandType = "changecolor";
   }
 
   @Override
@@ -34,6 +36,11 @@ public class ChangeColor implements ICommand {
   @Override
   public String getShapeName() {
     return shapeName;
+  }
+
+  @Override
+  public String getCommandType() {
+    return commandType;
   }
 
 }

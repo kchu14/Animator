@@ -21,4 +21,9 @@ public interface ICommand {
    */
   String getShapeName();
 
+  /**
+   * Gets the type of command that is being executed.
+   * @return The name of this command.
+   */
+  String getCommandType();
 }

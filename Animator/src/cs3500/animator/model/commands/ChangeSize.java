@@ -9,7 +9,10 @@ import cs3500.animator.model.ICommand;
 public class ChangeSize implements ICommand {
 
   String shapeName;
-  int width, height, totalTicks;
+  String commandType;
+  int width;
+  int height;
+  int totalTicks;
 
   /**
    * Constructs a change size object to be used in the model.
@@ -24,6 +27,7 @@ public class ChangeSize implements ICommand {
     this.width = width;
     this.height = height;
     this.totalTicks = totalTicks;
+    this.commandType = "changesize";
   }
 
   @Override
@@ -34,6 +38,11 @@ public class ChangeSize implements ICommand {
   @Override
   public String getShapeName() {
     return shapeName;
+  }
+
+  @Override
+  public String getCommandType() {
+    return commandType;
   }
 
 }

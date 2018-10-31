@@ -1,6 +1,6 @@
 package cs3500.animator.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.awt.Color;
 import org.junit.Test;

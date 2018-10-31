@@ -9,7 +9,8 @@ import java.awt.Color;
 public class ComplexShape implements IShape {
 
   private String name;
-  private int[] x, y;
+  private int[] x;
+  private int[] y;
   private int sides;
   private Color color;
 

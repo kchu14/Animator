@@ -13,7 +13,8 @@ public class AnimatorModelImpl implements AnimatorModel {
 
   Map<String, IShape> shapes;
   Map<Integer, List<ICommand>> commands;
-  // have model be able to have commands added to it like shapes. Model would then execute the commands
+  // have model be able to have commands added to it like shapes. Model would then execute
+  // the commands
   // it would check the tick and call shape.move or something
   int tick;
   int tickRate;
@@ -25,7 +26,7 @@ public class AnimatorModelImpl implements AnimatorModel {
    * @param tickRate The rate of ticks per second on the animation.
    */
   public AnimatorModelImpl(int tickRate) {
-    this.tick = 0;
+    this.tick = 1;
     this.tickRate = tickRate;
     this.shapes = new HashMap<>();
     this.commands = new TreeMap<>();
@@ -35,7 +36,7 @@ public class AnimatorModelImpl implements AnimatorModel {
   @Override
   public List<IShape> tickResult() {
     List<IShape> result = new ArrayList<>();
-    go(tick);
+    execute(tick);
     for (IShape s : shapes.values()) {
       result.add(s);
     }
@@ -62,12 +63,15 @@ public class AnimatorModelImpl implements AnimatorModel {
   public void addCommand(List<ICommand> c, int start, int end) throws IllegalArgumentException {
     for (int i = start; i < end; i++) {
       if (commands.containsKey(i)) {
-        for (Map.Entry<Integer, List<ICommand>> com : commands.entrySet()) {
-          int key = com.getKey();
-          List<ICommand> value = com.getValue();
-          if (key >= start && key < end && value.contains(overlap with c)) {
-            throw new IllegalArgumentException("can't have overlapping motions for same shape");
+        for (ICommand com : c) {
+          for (ICommand com2 : commands.get(i)) {
+            if (com.getShapeName().equals(com2.getShapeName()) && com.getCommandType()
+                .equals(com2.getCommandType())) {
+              throw new IllegalArgumentException(
+                  "Can't perform multiple motions of the same action on same shape at same time.");
+            }
           }
+
         }
         List<ICommand> oldAndNewComs = commands.get(i);
         oldAndNewComs.addAll(c);
@@ -81,7 +85,7 @@ public class AnimatorModelImpl implements AnimatorModel {
   /**
    * This method executes all of the commands given on this tick.
    */
-  private void go(int tick) {
+  private void execute(int tick) {
     if (commands.containsKey(tick)) {
       for (ICommand c : commands.get(tick)) {
         c.apply(this);
@@ -118,19 +122,15 @@ public class AnimatorModelImpl implements AnimatorModel {
       result.append(
           "shape " + value.getName().substring(1, value.getName().length()) + " " + shapeType
               + "\n");
-      //do commands for this shape here (maybe helper)
       for (Map.Entry<Integer, List<ICommand>> command : commands.entrySet()) {
         int tick = command.getKey();
         List<ICommand> lCommands = command.getValue();
         for (ICommand c : lCommands) {
           if (key.equals(c.getShapeName()) && shapes.get(key) != null) {
             result.append(shapes.get(key).getShapeState(tick));
-            go(tick);
+            execute(tick);
           }
         }
-        // we might want to hav another map with <shape, commands>
-        // we are going through each command for each tick and checking if the name is the same
-        // to print which is weird
       }
     }
 

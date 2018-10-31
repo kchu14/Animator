@@ -1,10 +1,6 @@
 package cs3500.animator.model;
 
 import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Ellipse2D.Double;
 
 /**
  * This class represents a generic shape and implements all of its associated operations.
@@ -12,8 +8,10 @@ import java.awt.geom.Ellipse2D.Double;
 public class SimpleShape implements IShape {
 
   private String name;
-  private int x, y, width, height;
-  private int sides;
+  private int x;
+  private int y;
+  private int width;
+  private int height;
   private Color color;
 
 
@@ -39,7 +37,6 @@ public class SimpleShape implements IShape {
     } else {
       throw new IllegalArgumentException("given input is not a simple shape (not rectangle, oval)");
     }
-    this.sides = sides;
     this.x = x;
     this.y = y;
     this.width = width;

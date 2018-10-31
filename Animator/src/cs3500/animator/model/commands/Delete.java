@@ -9,6 +9,7 @@ import cs3500.animator.model.ICommand;
 public class Delete implements ICommand {
 
   String shapeName;
+  String commandType;
 
   /**
    * Constructs a delete object to be used in the model.
@@ -17,6 +18,7 @@ public class Delete implements ICommand {
    */
   public Delete(String shapeName) {
     this.shapeName = shapeName;
+    this.commandType = "delete";
   }
 
   @Override
@@ -27,6 +29,11 @@ public class Delete implements ICommand {
   @Override
   public String getShapeName() {
     return shapeName;
+  }
+
+  @Override
+  public String getCommandType() {
+    return commandType;
   }
 
 }

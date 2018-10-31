@@ -1,6 +1,6 @@
 package cs3500.animator.model.commands;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.AnimatorModelImpl;
