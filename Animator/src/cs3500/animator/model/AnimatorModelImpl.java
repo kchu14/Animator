@@ -2,10 +2,17 @@ package cs3500.animator.model;
 
 import cs3500.animator.util.AnimationBuilder;
 import java.awt.Color;
+import java.awt.Shape;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -14,6 +21,7 @@ import java.util.TreeMap;
 public final class AnimatorModelImpl implements AnimatorModel {
 
   Map<String, IShape> shapes;
+  Map<String, List<Motion>> nameMotion;
   Map<String, String> nameType;
   Map<Integer, List<ICommand>> commands;
   // have model be able to have commands added to it like shapes. Model would then execute
@@ -146,15 +154,46 @@ public final class AnimatorModelImpl implements AnimatorModel {
     return result.toString();
   }
 
+  public void checkOverlaps() {
+    Set<Integer> tickSet = new HashSet<>();
+    for (List<Motion> listOfMotion : nameMotion.values()) {
+      for (Motion m : listOfMotion) {
+        for (int i = m.startTime; i < m.endTime; i++) {
+          if (!tickSet.add(i)) {
+            throw new IllegalArgumentException("added an overlapping motion");
+          }
+        }
+      }
+      int n = tickSet.size();
+      int tickArr[] = new int[n];
+
+      int i = 0;
+      for (int x : tickSet) {
+        tickArr[i++] = x;
+      }
+
+      Arrays.sort(tickArr);
+      int prev = 0;
+      for (int y : tickArr) {
+        if (Math.abs(tickArr[y] - prev) >= 0) {
+          throw new IllegalArgumentException("can't have gaps in motion");
+        }
+      }
+    }
+  }
+
+  // todo
+  // motion overlap check start and end positions
+  // change the shape constructor x y w h color
+  // view
+  // print model output (motion)
 
   public static final class Builder implements AnimationBuilder<AnimatorModel> {
 
     Map<String, IShape> shapes;
+    Map<String, List<Motion>> nameMotion;
     Map<String, String> nameType;
     Map<Integer, List<ICommand>> commands;
-    // have model be able to have commands added to it like shapes. Model would then execute
-    // the commands
-    // it would check the tick and call shape.move or something
     int tick;
     int tickRate;
     boolean isOver;
@@ -185,8 +224,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
       }
       if (this.nameType.containsKey(name)) {
         throw new IllegalArgumentException("Shape names have to be unique");
-      }
-      else {
+      } else {
         this.nameType.put(name, type);
         return this;
       }
@@ -197,14 +235,22 @@ public final class AnimatorModelImpl implements AnimatorModel {
         int h1, int r1, int g1, int b1, int t2, int x2, int y2, int w2, int h2, int r2, int g2,
         int b2) {
 
-      if (this.shapes == null) {
-        this.shapes = new HashMap<>();
+      if (this.nameMotion == null) {
+        this.nameMotion = new LinkedHashMap<>();
       }
 
       try {
-        this.shapes.put(name,
-            new SimpleShape(name, nameType.get(name), t1, x1, y1, w1, h1, new Color(r1, g1, b1), t2,
-                x2, y2, w2, h2, new Color(r2, g2, b2)));
+        if (nameMotion.containsKey(name)) {
+          this.nameMotion.get(name).add(
+              new Motion(name, nameType.get(name), t1, x1, y1, w1, h1, new Color(r1, g1, b1), t2,
+                  x2, y2, w2, h2, new Color(r2, g2, b2)));
+        } else {
+          List<Motion> listOfMotion = new ArrayList<>();
+          listOfMotion.add(
+              new Motion(name, nameType.get(name), t1, x1, y1, w1, h1, new Color(r1, g1, b1), t2,
+                  x2, y2, w2, h2, new Color(r2, g2, b2)));
+          this.nameMotion.put(name, listOfMotion);
+        }
       } catch (NullPointerException e) {
         throw new IllegalArgumentException("Trying to perform motion on non-existing shape");
       }
