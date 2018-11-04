@@ -19,7 +19,7 @@ public class Motion {
   protected int endHeight;
   protected Color endColor;
 
-  public Motion(String name, String type, int startTime, int startX, int startY,
+  Motion(String name, String type, int startTime, int startX, int startY,
       int startWidth,
       int startHeight, Color startColor, int endTime, int endX, int endY, int endWidth,
       int endHeight, Color endColor) {
@@ -39,8 +39,17 @@ public class Motion {
     this.endColor = endColor;
   }
 
-  public void addShape() {
+  // execute the motion on a shape
+  // create a hashmap of ticks and shape objects
 
+  String getTextResult() {
+    return String.format(
+             "motion %s %d %d %d %d %d %d %d %d "
+            + "%d %d %d %d %d %d %d %d \n",
+        name, startTime, startX, startY, startWidth, startHeight, startColor.getRed(),
+        startColor.getBlue(), startColor.getGreen(),
+        endTime, endX, endY, endWidth, endHeight, endColor.getRed(),
+        endColor.getBlue(), endColor.getGreen());
   }
 
 }

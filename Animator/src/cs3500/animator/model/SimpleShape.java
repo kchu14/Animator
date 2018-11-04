@@ -10,61 +10,16 @@ public class SimpleShape implements IShape {
 
   protected String name;
   protected String type;
-  protected int startTime;
-  protected int startX;
-  protected int startY;
-  protected int startWidth;
-  protected int startHeight;
-  protected Color startColor;
-  protected int endTime;
-  protected int endX;
-  protected int endY;
-  protected int endWidth;
-  protected int endHeight;
-  protected Color endColor;
+  protected int x;
+  protected int y;
+  protected int width;
+  protected int height;
+  protected Color color;
 
-  public SimpleShape(String name, String type, int startTime, int startX, int startY,
-      int startWidth,
-      int startHeight, Color startColor, int endTime, int endX, int endY, int endWidth,
-      int endHeight, Color endColor) {
+  public SimpleShape(String name, String type, int x, int y, int width, int height,
+      Color color) {
     this.name = name;
     this.type = type;
-    this.startTime = startTime;
-    this.startX = startX;
-    this.startY = startY;
-    this.startWidth = startWidth;
-    this.startHeight = startHeight;
-    this.startColor = startColor;
-    this.endTime = endTime;
-    this.endX = endX;
-    this.endY = endY;
-    this.endWidth = endWidth;
-    this.endHeight = endHeight;
-    this.endColor = endColor;
-  }
-
-  /**
-   * Constructs a shape.
-   *
-   * @param name The identifier for the shape.
-   * @param sides The number of sides on the shape
-   * @param x The x coordinate of the shape.
-   * @param y The y coordinate of the shape.
-   * @param width The width of the shape.
-   * @param height The height of the shape.
-   * @param color The color of the shape.
-   */
-  //maybe use enums to represent shape for view instead of weird name thing
-  // getters and setters for shapes
-  public SimpleShape(String name, int sides, int x, int y, int width, int height,
-      Color color) {
-    if (sides == 4) {
-      this.name = "r" + name;
-    } else if (sides == 1) {
-      this.name = "o" + name;
-    } else {
-      throw new IllegalArgumentException("given input is not a simple shape (not rectangle, oval)");
-    }
     this.x = x;
     this.y = y;
     this.width = width;
@@ -104,17 +59,6 @@ public class SimpleShape implements IShape {
   }
 
 
-  @Override
-  public String getShapeState(int tick) {
-    StringBuilder result = new StringBuilder("");
-    result.append(
-        "motion " + name.substring(1, name.length()) + " " + tick + " " + x + " " + y + " " + width
-            + " " + height + " " + color.getRed() + " " + color.getBlue() + " " + color.getGreen()
-            + " " +
-            "\n");
-
-    return result.toString();
-  }
 
 
 }

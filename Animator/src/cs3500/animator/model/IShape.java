@@ -33,53 +33,7 @@ public interface IShape {
   void changeSize(int width, int height, int totalTicks) throws IllegalArgumentException;
 
 
-  /**
-   * Returns the shape's name.
-   *
-   * @return the shape's name.
-   */
-  String getName();
 
-  /**
-   * Returns the shapes color.
-   *
-   * @return The shapes color.
-   */
-  Color getColor();
 
-  /**
-   * Returns the shapes x position.
-   *
-   * @return The shapes x position.
-   */
-  int getX();
-
-  /**
-   * Returns the shapes y position.
-   *
-   * @return The shapes y position.
-   */
-  int getY();
-
-  /**
-   * Returns the shapes width position.
-   *
-   * @return The shapes width position.
-   */
-  int getWidth();
-
-  /**
-   * Returns the shapes height position.
-   *
-   * @return The shapes height position.
-   */
-  int getHeight();
-
-  /**
-   * Returns the shapes console output used in getModelState.
-   *
-   * @return The shapes console output used in getModelState.
-   */
-  String getShapeState(int tick);
 
 }

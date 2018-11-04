@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -20,13 +21,13 @@ import java.util.TreeMap;
  */
 public final class AnimatorModelImpl implements AnimatorModel {
 
+  // shape name, shape object
   Map<String, IShape> shapes;
+  // shape name, list of motions for the shape
   Map<String, List<Motion>> nameMotion;
+  // shape name, shape type
   Map<String, String> nameType;
   Map<Integer, List<ICommand>> commands;
-  // have model be able to have commands added to it like shapes. Model would then execute
-  // the commands
-  // it would check the tick and call shape.move or something
   int tick;
   int tickRate;
   boolean isOver;
@@ -35,124 +36,117 @@ public final class AnimatorModelImpl implements AnimatorModel {
   int animationWidth;
   int animationHeight;
 
-  /**
-   * Constructs an animator model implementation.
-   *
-   * @param tickRate The rate of ticks per second on the animation.
-   */
-  public AnimatorModelImpl(int tickRate) {
-    this.tick = 1;
+  private AnimatorModelImpl(Map<String, IShape> shapes,
+      Map<String, List<Motion>> nameMotion,
+      Map<String, String> nameType,
+      Map<Integer, List<ICommand>> commands, int tick, int tickRate, boolean isOver, int leftMostX,
+      int topMostY, int animationWidth, int animationHeight) {
+    this.shapes = shapes;
+    this.nameMotion = nameMotion;
+    this.nameType = nameType;
+    this.commands = commands;
+    this.tick = tick;
     this.tickRate = tickRate;
-    this.shapes = new HashMap<>();
-    this.commands = new TreeMap<>();
-    this.isOver = false;
+    this.isOver = isOver;
+    this.leftMostX = leftMostX;
+    this.topMostY = topMostY;
+    this.animationWidth = animationWidth;
+    this.animationHeight = animationHeight;
   }
 
-  @Override
-  public List<IShape> tickResult() {
-    List<IShape> result = new ArrayList<>();
-    execute(tick);
-    for (IShape s : shapes.values()) {
-      result.add(s);
-    }
+  //  @Override
+//  public List<IShape> tickResult() {
+//    List<IShape> result = new ArrayList<>();
+//    execute(tick);
+//    for (IShape s : shapes.values()) {
+//      result.add(s);
+//    }
+//
+//    this.tick += tickRate;
+//    return result;
+//  }
 
-    this.tick += tickRate;
-    return result;
-  }
-
-  @Override
+  // @Override
   public boolean isAnimationOver() {
     // unsure of when to conclude animation model (when they close the window?)
     return this.isOver;
   }
 
-  @Override
-  public void addShape(IShape s) throws IllegalArgumentException {
-    if (shapes.containsKey(s.getName())) {
-      throw new IllegalArgumentException("Shape names have to be unique.");
-    }
-    shapes.put(s.getName(), s);
-  }
+//  @Override
+//  public void addShape(IShape s) throws IllegalArgumentException {
+//    if (shapes.containsKey(s.getName())) {
+//      throw new IllegalArgumentException("Shape names have to be unique.");
+//    }
+//    shapes.put(s.getName(), s);
+//  }
 
-  @Override
-  public void addCommand(List<ICommand> c, int start, int end) throws IllegalArgumentException {
-    for (int i = start; i < end; i++) {
-      if (commands.containsKey(i)) {
-        for (ICommand com : c) {
-          for (ICommand com2 : commands.get(i)) {
-            if (com.getShapeName().equals(com2.getShapeName()) && com.getCommandType()
-                .equals(com2.getCommandType())) {
-              throw new IllegalArgumentException(
-                  "Can't perform multiple motions of the same action on same shape at same time.");
-            }
-          }
+//  @Override
+//  public void addCommand(List<ICommand> c, int start, int end) throws IllegalArgumentException {
+//    for (int i = start; i < end; i++) {
+//      if (commands.containsKey(i)) {
+//        for (ICommand com : c) {
+//          for (ICommand com2 : commands.get(i)) {
+//            if (com.getShapeName().equals(com2.getShapeName()) && com.getCommandType()
+//                .equals(com2.getCommandType())) {
+//              throw new IllegalArgumentException(
+//                  "Can't perform multiple motions of the same action on same shape at same time.");
+//            }
+//          }
+//
+//        }
+//        List<ICommand> oldAndNewComs = commands.get(i);
+//        oldAndNewComs.addAll(c);
+//        commands.put(i, oldAndNewComs);
+//      } else {
+//        commands.put(i, c);
+//      }
+//    }
+//  }
+//
+//  /**
+//   * This method executes all of the commands given on this tick.
+//   */
+//  private void execute(int tick) {
+//    if (commands.containsKey(tick)) {
+//      for (ICommand c : commands.get(tick)) {
+//        c.apply(this);
+//      }
+//    }
+//  }
 
-        }
-        List<ICommand> oldAndNewComs = commands.get(i);
-        oldAndNewComs.addAll(c);
-        commands.put(i, oldAndNewComs);
-      } else {
-        commands.put(i, c);
-      }
-    }
-  }
-
-  /**
-   * This method executes all of the commands given on this tick.
-   */
-  private void execute(int tick) {
-    if (commands.containsKey(tick)) {
-      for (ICommand c : commands.get(tick)) {
-        c.apply(this);
-      }
-    }
-  }
-
-  @Override
-  public Map<String, IShape> getShapes() {
-
-    return this.shapes;
-
-  }
-
-  @Override
-  public Map<Integer, List<ICommand>> getCommands() {
-    return this.commands;
-  }
-
-  @Override
-  public String getModelState() {
-    StringBuilder result = new StringBuilder();
-    for (Map.Entry<String, IShape> shape : shapes.entrySet()) {
-      String key = shape.getKey();
-      IShape value = shape.getValue();
-      String shapeType = "";
-      if (key.startsWith("r")) {
-        shapeType = "rectangle";
-      }
-      if (key.startsWith("o")) {
-        shapeType = "oval";
-      }
-      if (key.startsWith("p")) {
-        shapeType = "polygon";
-      }
-      result.append(
-          "shape " + value.getName().substring(1, value.getName().length()) + " " + shapeType
-              + "\n");
-      for (Map.Entry<Integer, List<ICommand>> command : commands.entrySet()) {
-        int tick = command.getKey();
-        List<ICommand> lCommands = command.getValue();
-        for (ICommand c : lCommands) {
-          if (key.equals(c.getShapeName()) && shapes.get(key) != null) {
-            result.append(shapes.get(key).getShapeState(tick));
-            execute(tick);
-          }
-        }
-      }
-    }
-
-    return result.toString();
-  }
+//  @Override
+//  public String getModelState() {
+//    StringBuilder result = new StringBuilder();
+//    for (Map.Entry<String, IShape> shape : shapes.entrySet()) {
+//      String key = shape.getKey();
+//      IShape value = shape.getValue();
+//      String shapeType = "";
+//      if (key.startsWith("r")) {
+//        shapeType = "rectangle";
+//      }
+//      if (key.startsWith("o")) {
+//        shapeType = "oval";
+//      }
+//      if (key.startsWith("p")) {
+//        shapeType = "polygon";
+//      }
+//      result.append(
+//          "shape " + value.getName().substring(1, value.getName().length()) + " " + shapeType
+//              + "\n");
+//      for (Map.Entry<Integer, List<ICommand>> command : commands.entrySet()) {
+//        int tick = command.getKey();
+//        List<ICommand> lCommands = command.getValue();
+//        for (ICommand c : lCommands) {
+//          if (key.equals(c.getShapeName()) && shapes.get(key) != null) {
+//            result.append(shapes.get(key).getShapeState(tick));
+//            execute(tick);
+//          }
+//        }
+//      }
+//    }
+//
+//    return result.toString();
+//  }
 
   public void checkOverlaps() {
     Set<Integer> tickSet = new HashSet<>();
@@ -164,29 +158,44 @@ public final class AnimatorModelImpl implements AnimatorModel {
           }
         }
       }
+
+      // converts set into array
       int n = tickSet.size();
       int tickArr[] = new int[n];
-
       int i = 0;
       for (int x : tickSet) {
         tickArr[i++] = x;
       }
 
+      // checks if there's more than a difference of one between ticks
       Arrays.sort(tickArr);
       int prev = 0;
       for (int y : tickArr) {
-        if (Math.abs(tickArr[y] - prev) >= 0) {
+        if (Math.abs(tickArr[y] - prev) > 1) {
           throw new IllegalArgumentException("can't have gaps in motion");
         }
+        prev = y;
       }
     }
   }
 
+  @Override
+  public String produceTextView() {
+    StringBuilder result = new StringBuilder();
+    for (Entry<String, List<Motion>> set : nameMotion.entrySet()) {
+      String key = set.getKey();
+      List<Motion> value = set.getValue();
+      result.append("Shape " + key + " " + nameType.get(key) + "\n");
+      for (Motion m : value) {
+        result.append(m.getTextResult());
+      }
+    }
+    return result.toString();
+  }
+
   // todo
   // motion overlap check start and end positions
-  // change the shape constructor x y w h color
   // view
-  // print model output (motion)
 
   public static final class Builder implements AnimationBuilder<AnimatorModel> {
 
@@ -205,7 +214,8 @@ public final class AnimatorModelImpl implements AnimatorModel {
 
     @Override
     public AnimatorModel build() {
-      return null;
+      return new AnimatorModelImpl(shapes, nameMotion, nameType, commands, tick, tickRate, false,
+          leftMostX, topMostY, animationWidth, animationHeight);
     }
 
     @Override
@@ -265,8 +275,6 @@ public final class AnimatorModelImpl implements AnimatorModel {
     }
     // FILL IN HERE
   }
-
-
 }
 
 

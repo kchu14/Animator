@@ -72,43 +72,43 @@ public class ComplexShape implements IShape {
     }
   }
 
-  @Override
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public Color getColor() {
-    return color;
-  }
-
-  @Override
-  public int getX() {
-    // need more information about animating complex polygons before implementing.
-    // currently implemented to only return one coordinate of the polygon
-    return x[0];
-  }
-
-  @Override
-  public int getY() {
-    // need more information about animating complex polygons before implementing.
-    // currently implemented to only return one coordinate of the polygon
-    return y[0];
-  }
-
-  @Override
-  public int getWidth() {
-    // need more information about animating complex polygons before implementing.
-    // unsure of what the definition of width will be in a complex polygon
-    return 0;
-  }
-
-  @Override
-  public int getHeight() {
-    // need more information about animating complex polygons before implementing.
-    // unsure of what the definition of height will be in a complex polygon
-    return 0;
-  }
+//  @Override
+//  public String getName() {
+//    return name;
+//  }
+//
+//  @Override
+//  public Color getColor() {
+//    return color;
+//  }
+//
+//  @Override
+//  public int getX() {
+//    // need more information about animating complex polygons before implementing.
+//    // currently implemented to only return one coordinate of the polygon
+//    return x[0];
+//  }
+//
+//  @Override
+//  public int getY() {
+//    // need more information about animating complex polygons before implementing.
+//    // currently implemented to only return one coordinate of the polygon
+//    return y[0];
+//  }
+//
+//  @Override
+//  public int getWidth() {
+//    // need more information about animating complex polygons before implementing.
+//    // unsure of what the definition of width will be in a complex polygon
+//    return 0;
+//  }
+//
+//  @Override
+//  public int getHeight() {
+//    // need more information about animating complex polygons before implementing.
+//    // unsure of what the definition of height will be in a complex polygon
+//    return 0;
+//  }
 
   @Override
   public String getShapeState(int tick) {
