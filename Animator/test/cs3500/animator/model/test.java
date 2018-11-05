@@ -5,13 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertArrayEquals;
 
 
-import cs3500.animator.model.commands.ChangeColor;
-import cs3500.animator.model.commands.ChangeSize;
-import cs3500.animator.model.commands.Delete;
-import cs3500.animator.model.commands.Move;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.Test;
 
 public class test {
@@ -50,7 +43,7 @@ public class test {
         .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
             10, 200, 200, 50, 100, 255, 0, 0)
         .build();
-    m.checkOverlaps();
+    m.checkForValidMotions();
     assertEquals("", m.produceTextView());
   }
 
@@ -62,7 +55,7 @@ public class test {
         .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
             9, 200, 200, 50, 100, 255, 0, 0)
         .build();
-    m.checkOverlaps();
+    m.checkForValidMotions();
     assertEquals("", m.produceTextView());
   }
 
@@ -74,7 +67,7 @@ public class test {
         .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
             10, 200, 200, 50, 100, 255, 0, 0)
         .build();
-    m.checkOverlaps();
+    m.checkForValidMotions();
     assertEquals("", m.produceTextView());
   }
 }

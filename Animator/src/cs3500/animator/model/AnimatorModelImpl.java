@@ -46,7 +46,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
   }
 
 
-  public void checkOverlaps() {
+  public void checkForValidMotions() {
     for (List<Motion> listOfMotion : nameMotion.values()) {
       Collections.sort(listOfMotion);
       this.addShape(listOfMotion.get(0));
@@ -101,7 +101,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
 
 // todo
 // view
-  // key frame
+// key frame
 
   public static final class Builder implements AnimationBuilder<AnimatorModel> {
 

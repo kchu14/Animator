@@ -12,5 +12,5 @@ public interface AnimatorModel {
 
    String produceTextView();
 
-   void checkOverlaps();
+   void checkForValidMotions();
 }
