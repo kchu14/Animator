@@ -1,5 +1,6 @@
 package cs3500.animator.view;
 
+import cs3500.animator.model.AnimatorModel;
 import java.awt.event.ActionListener;
 import java.util.List;
 
@@ -25,4 +26,5 @@ public interface AnimatorView {
    */
   void refresh();
 
+  void playAnimation(AnimatorModel model);
 }

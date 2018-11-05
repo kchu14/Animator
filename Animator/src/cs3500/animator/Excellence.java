@@ -5,6 +5,8 @@ import cs3500.animator.model.AnimatorModelImpl;
 import cs3500.animator.util.AnimationBuilder;
 import cs3500.animator.util.AnimationReader;
 import cs3500.animator.view.AnimatorView;
+import cs3500.animator.view.SvgView;
+import cs3500.animator.view.TextView;
 import cs3500.animator.view.VisualGraphicsView;
 import java.io.File;
 import java.io.FileReader;
@@ -39,19 +41,31 @@ public final class Excellence {
       throw new IllegalArgumentException("need to specify file name and view type");
     }
 
-    
-
+    AnimatorModel model;
     try {
       FileReader fr =
           new FileReader(fileName);
-      AnimatorModel model = AnimationReader
+       model = AnimationReader
           .parseFile(fr, new AnimatorModelImpl.Builder());
       model.checkForValidMotions();
     } catch (Exception e) {
       throw new IllegalArgumentException("given file doesn't exist");
     }
 
-    AnimatorView view = new VisualGraphicsView(speed);
+    AnimatorView view = null;
+    if(viewType.equals("text")) {
+      view = new TextView();
+    }
+
+    if(viewType.equals("svg")) {
+      view = new SvgView();
+    }
+
+    if(viewType.equals("visual")) {
+      view = new VisualGraphicsView();
+    }
+
+    view.playAnimation(model);
 //    IController controller = new MVCCommandController(model, view);
 //    controller.go();
 
