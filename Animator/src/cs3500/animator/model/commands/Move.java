@@ -32,7 +32,7 @@ public class Move implements ICommand {
 
   @Override
   public void apply(AnimatorModel a) {
-    a.getShapes().get(shapeName).move(x, y, totalTicks);
+   // a.getShapes().get(shapeName).move(x, y, totalTicks);
   }
 
   @Override

@@ -2,7 +2,7 @@ package cs3500.animator.model;
 
 import java.awt.Color;
 
-public class Motion {
+public class Motion implements Comparable<Motion>{
 
   protected String name;
   protected String type;
@@ -52,4 +52,8 @@ public class Motion {
         endColor.getBlue(), endColor.getGreen());
   }
 
+  @Override
+  public int compareTo(Motion m) {
+      return this.startTime - m.startTime;
+  }
 }

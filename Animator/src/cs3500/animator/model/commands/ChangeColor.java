@@ -30,7 +30,7 @@ public class ChangeColor implements ICommand {
 
   @Override
   public void apply(AnimatorModel a) {
-    a.getShapes().get(shapeName).changeColor(color, totalTicks);
+   // a.getShapes().get(shapeName).changeColor(color, totalTicks);
   }
 
   @Override

@@ -27,10 +27,6 @@ public final class AnimatorModelImpl implements AnimatorModel {
   Map<String, List<Motion>> nameMotion;
   // shape name, shape type
   Map<String, String> nameType;
-  Map<Integer, List<ICommand>> commands;
-  int tick;
-  int tickRate;
-  boolean isOver;
   int leftMostX;
   int topMostY;
   int animationWidth;
@@ -38,146 +34,56 @@ public final class AnimatorModelImpl implements AnimatorModel {
 
   private AnimatorModelImpl(Map<String, IShape> shapes,
       Map<String, List<Motion>> nameMotion,
-      Map<String, String> nameType,
-      Map<Integer, List<ICommand>> commands, int tick, int tickRate, boolean isOver, int leftMostX,
+      Map<String, String> nameType, int leftMostX,
       int topMostY, int animationWidth, int animationHeight) {
     this.shapes = shapes;
     this.nameMotion = nameMotion;
     this.nameType = nameType;
-    this.commands = commands;
-    this.tick = tick;
-    this.tickRate = tickRate;
-    this.isOver = isOver;
     this.leftMostX = leftMostX;
     this.topMostY = topMostY;
     this.animationWidth = animationWidth;
     this.animationHeight = animationHeight;
   }
 
-  //  @Override
-//  public List<IShape> tickResult() {
-//    List<IShape> result = new ArrayList<>();
-//    execute(tick);
-//    for (IShape s : shapes.values()) {
-//      result.add(s);
-//    }
-//
-//    this.tick += tickRate;
-//    return result;
-//  }
-
-  // @Override
-  public boolean isAnimationOver() {
-    // unsure of when to conclude animation model (when they close the window?)
-    return this.isOver;
-  }
-
-//  @Override
-//  public void addShape(IShape s) throws IllegalArgumentException {
-//    if (shapes.containsKey(s.getName())) {
-//      throw new IllegalArgumentException("Shape names have to be unique.");
-//    }
-//    shapes.put(s.getName(), s);
-//  }
-
-//  @Override
-//  public void addCommand(List<ICommand> c, int start, int end) throws IllegalArgumentException {
-//    for (int i = start; i < end; i++) {
-//      if (commands.containsKey(i)) {
-//        for (ICommand com : c) {
-//          for (ICommand com2 : commands.get(i)) {
-//            if (com.getShapeName().equals(com2.getShapeName()) && com.getCommandType()
-//                .equals(com2.getCommandType())) {
-//              throw new IllegalArgumentException(
-//                  "Can't perform multiple motions of the same action on same shape at same time.");
-//            }
-//          }
-//
-//        }
-//        List<ICommand> oldAndNewComs = commands.get(i);
-//        oldAndNewComs.addAll(c);
-//        commands.put(i, oldAndNewComs);
-//      } else {
-//        commands.put(i, c);
-//      }
-//    }
-//  }
-//
-//  /**
-//   * This method executes all of the commands given on this tick.
-//   */
-//  private void execute(int tick) {
-//    if (commands.containsKey(tick)) {
-//      for (ICommand c : commands.get(tick)) {
-//        c.apply(this);
-//      }
-//    }
-//  }
-
-//  @Override
-//  public String getModelState() {
-//    StringBuilder result = new StringBuilder();
-//    for (Map.Entry<String, IShape> shape : shapes.entrySet()) {
-//      String key = shape.getKey();
-//      IShape value = shape.getValue();
-//      String shapeType = "";
-//      if (key.startsWith("r")) {
-//        shapeType = "rectangle";
-//      }
-//      if (key.startsWith("o")) {
-//        shapeType = "oval";
-//      }
-//      if (key.startsWith("p")) {
-//        shapeType = "polygon";
-//      }
-//      result.append(
-//          "shape " + value.getName().substring(1, value.getName().length()) + " " + shapeType
-//              + "\n");
-//      for (Map.Entry<Integer, List<ICommand>> command : commands.entrySet()) {
-//        int tick = command.getKey();
-//        List<ICommand> lCommands = command.getValue();
-//        for (ICommand c : lCommands) {
-//          if (key.equals(c.getShapeName()) && shapes.get(key) != null) {
-//            result.append(shapes.get(key).getShapeState(tick));
-//            execute(tick);
-//          }
-//        }
-//      }
-//    }
-//
-//    return result.toString();
-//  }
 
   public void checkOverlaps() {
-    Set<Integer> tickSet = new HashSet<>();
     for (List<Motion> listOfMotion : nameMotion.values()) {
+      Collections.sort(listOfMotion);
+      this.addShape(listOfMotion.get(0));
+      int prevEndTime = listOfMotion.get(0).startTime;
+      int prevX = listOfMotion.get(0).startX;
+      int prevY = listOfMotion.get(0).startY;
+      int prevWidth = listOfMotion.get(0).startWidth;
+      int prevHeight = listOfMotion.get(0).startHeight;
+      Color prevColor = listOfMotion.get(0).startColor;
       for (Motion m : listOfMotion) {
-        for (int i = m.startTime; i < m.endTime; i++) {
-          if (!tickSet.add(i)) {
-            throw new IllegalArgumentException("added an overlapping motion");
-          }
+        if (m.startTime != prevEndTime) {
+          throw new IllegalArgumentException("added an overlapping or gaping motion");
         }
-      }
-
-      // converts set into array
-      int n = tickSet.size();
-      int tickArr[] = new int[n];
-      int i = 0;
-      for (int x : tickSet) {
-        tickArr[i++] = x;
-      }
-
-      // checks if there's more than a difference of one between ticks
-      Arrays.sort(tickArr);
-      int prev = 0;
-      for (int y : tickArr) {
-        if (Math.abs(tickArr[y] - prev) > 1) {
-          throw new IllegalArgumentException("can't have gaps in motion");
+        if (m.startX != prevX || m.startY != prevY || m.startWidth != prevWidth ||
+            m.startHeight != prevHeight || !m.startColor.equals(prevColor)) {
+          throw new IllegalArgumentException("shape motion must be continuous");
         }
-        prev = y;
+        prevEndTime = m.endTime;
+        prevX = m.endX;
+        prevY = m.endY;
+        prevWidth = m.endWidth;
+        prevHeight = m.endHeight;
+        prevColor = m.endColor;
       }
     }
   }
+
+
+  private void addShape(Motion m) {
+    String key = m.name;
+    if (!shapes.containsKey(key)) {
+      shapes.put(key,
+          new SimpleShape(key, nameType.get(m.type), m.startX, m.startY, m.startWidth,
+              m.startHeight, m.startColor));
+    }
+  }
+
 
   @Override
   public String produceTextView() {
@@ -193,19 +99,15 @@ public final class AnimatorModelImpl implements AnimatorModel {
     return result.toString();
   }
 
-  // todo
-  // motion overlap check start and end positions
-  // view
+// todo
+// view
+  // key frame
 
   public static final class Builder implements AnimationBuilder<AnimatorModel> {
 
     Map<String, IShape> shapes;
     Map<String, List<Motion>> nameMotion;
     Map<String, String> nameType;
-    Map<Integer, List<ICommand>> commands;
-    int tick;
-    int tickRate;
-    boolean isOver;
     int leftMostX;
     int topMostY;
     int animationWidth;
@@ -214,7 +116,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
 
     @Override
     public AnimatorModel build() {
-      return new AnimatorModelImpl(shapes, nameMotion, nameType, commands, tick, tickRate, false,
+      return new AnimatorModelImpl(shapes, nameMotion, nameType,
           leftMostX, topMostY, animationWidth, animationHeight);
     }
 
@@ -245,10 +147,10 @@ public final class AnimatorModelImpl implements AnimatorModel {
         int h1, int r1, int g1, int b1, int t2, int x2, int y2, int w2, int h2, int r2, int g2,
         int b2) {
 
-      if (this.nameMotion == null) {
+      if (this.nameMotion == null || this.shapes == null) {
         this.nameMotion = new LinkedHashMap<>();
+        this.shapes = new LinkedHashMap<>();
       }
-
       try {
         if (nameMotion.containsKey(name)) {
           this.nameMotion.get(name).add(

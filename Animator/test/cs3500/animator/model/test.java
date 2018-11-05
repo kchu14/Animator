@@ -41,4 +41,40 @@ public class test {
         + "Shape c ellipse\n"
         + "motion c 6 440 70 120 60 0 255 0 20 440 70 120 60 0 255 0 \n", m.produceTextView());
   }
+
+  @Test
+  public void testOverlap() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+            10, 200, 200, 50, 100, 255, 0, 0)
+        .build();
+    m.checkOverlaps();
+    assertEquals("", m.produceTextView());
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testOverlapFail() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+            9, 200, 200, 50, 100, 255, 0, 0)
+        .build();
+    m.checkOverlaps();
+    assertEquals("", m.produceTextView());
+  }
+
+  @Test (expected =  IllegalArgumentException.class)
+  public void testTeleport() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 201, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+            10, 200, 200, 50, 100, 255, 0, 0)
+        .build();
+    m.checkOverlaps();
+    assertEquals("", m.produceTextView());
+  }
 }

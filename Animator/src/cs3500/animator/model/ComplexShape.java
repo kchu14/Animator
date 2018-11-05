@@ -110,15 +110,6 @@ public class ComplexShape implements IShape {
 //    return 0;
 //  }
 
-  @Override
-  public String getShapeState(int tick) {
-    StringBuilder result = new StringBuilder("");
-    result.append(
-        "motion " + name.substring(1, name.length()) + " " + tick + " " + x + " " + y + " " + color
-            .getRed() + " " + color.getBlue() + " " + color.getGreen() + " " +
-            "\n");
 
-    return result.toString();
-  }
 
 }

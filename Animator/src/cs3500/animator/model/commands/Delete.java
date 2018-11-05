@@ -23,7 +23,7 @@ public class Delete implements ICommand {
 
   @Override
   public void apply(AnimatorModel a) {
-    a.getShapes().remove(shapeName);
+    //a.getShapes().remove(shapeName);
   }
 
   @Override

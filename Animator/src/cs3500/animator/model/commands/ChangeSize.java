@@ -32,7 +32,7 @@ public class ChangeSize implements ICommand {
 
   @Override
   public void apply(AnimatorModel a) {
-    a.getShapes().get(shapeName).changeSize(width, height, totalTicks);
+    //a.getShapes().get(shapeName).changeSize(width, height, totalTicks);
   }
 
   @Override
