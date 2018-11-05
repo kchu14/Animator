@@ -29,6 +29,9 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.pack();
 
+    // todo
+    // scroll bars (setBounds model)
+
 
   }
 
@@ -49,6 +52,10 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
 
   @Override
   public void playAnimation(AnimatorModel model) {
+    makeVisible();
+    for() {
+      refresh();
+    }
 
   }
 }
