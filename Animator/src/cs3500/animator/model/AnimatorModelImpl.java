@@ -27,6 +27,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
   Map<String, List<Motion>> nameMotion;
   // shape name, shape type
   Map<String, String> nameType;
+  Map<Integer, List<IShape>> tickShapesList;
   int leftMostX;
   int topMostY;
   int animationWidth;
@@ -35,7 +36,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
   private AnimatorModelImpl(Map<String, IShape> shapes,
       Map<String, List<Motion>> nameMotion,
       Map<String, String> nameType, int leftMostX,
-      int topMostY, int animationWidth, int animationHeight) {
+      int topMostY, int animationWidth, int animationHeight,  Map<Integer, List<IShape>> tickShapesList) {
     this.shapes = shapes;
     this.nameMotion = nameMotion;
     this.nameType = nameType;
@@ -43,6 +44,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
     this.topMostY = topMostY;
     this.animationWidth = animationWidth;
     this.animationHeight = animationHeight;
+    this.tickShapesList = tickShapesList;
   }
 
 
@@ -100,14 +102,16 @@ public final class AnimatorModelImpl implements AnimatorModel {
   }
 
 // todo
-// view
-// key frame
+  // view
+  // key frame
+  // check window bounds
 
   public static final class Builder implements AnimationBuilder<AnimatorModel> {
 
     Map<String, IShape> shapes;
     Map<String, List<Motion>> nameMotion;
     Map<String, String> nameType;
+    Map<Integer, List<IShape>> tickShapeList;
     int leftMostX;
     int topMostY;
     int animationWidth;
@@ -117,7 +121,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
     @Override
     public AnimatorModel build() {
       return new AnimatorModelImpl(shapes, nameMotion, nameType,
-          leftMostX, topMostY, animationWidth, animationHeight);
+          leftMostX, topMostY, animationWidth, animationHeight, tickShapeList);
     }
 
     @Override
@@ -134,6 +138,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
       if (this.nameType == null) {
         this.nameType = new HashMap<>();
       }
+
       if (this.nameType.containsKey(name)) {
         throw new IllegalArgumentException("Shape names have to be unique");
       } else {
@@ -147,10 +152,12 @@ public final class AnimatorModelImpl implements AnimatorModel {
         int h1, int r1, int g1, int b1, int t2, int x2, int y2, int w2, int h2, int r2, int g2,
         int b2) {
 
-      if (this.nameMotion == null || this.shapes == null) {
+      if (this.nameMotion == null || this.shapes == null ||this.tickShapeList == null) {
         this.nameMotion = new LinkedHashMap<>();
         this.shapes = new LinkedHashMap<>();
+        this.tickShapeList = new LinkedHashMap<>();
       }
+
       try {
         if (nameMotion.containsKey(name)) {
           this.nameMotion.get(name).add(
