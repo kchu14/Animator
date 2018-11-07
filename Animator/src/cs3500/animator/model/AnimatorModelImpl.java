@@ -3,6 +3,7 @@ package cs3500.animator.model;
 import cs3500.animator.util.AnimationBuilder;
 import java.awt.Color;
 import java.awt.Shape;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -76,6 +77,17 @@ public final class AnimatorModelImpl implements AnimatorModel {
     }
   }
 
+  public List<IShape> update(int tick) {
+    List<IShape> newShapes = new ArrayList<>();
+    for(List<Motion> lom : nameMotion.values()) {
+      for(Motion m : lom) {
+        if (tick >= m.startTime && tick <= m.endTime) {
+          newShapes.add(m.executeMotion());
+        }
+      }
+    }
+    return newShapes;
+  }
 
   private void addShape(Motion m) {
     String key = m.name;

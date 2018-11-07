@@ -2,6 +2,8 @@ package cs3500.animator.model.commands;
 
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.ICommand;
+import cs3500.animator.model.IShape;
+import cs3500.animator.model.SimpleShape;
 import java.awt.Color;
 
 /**
@@ -9,9 +11,9 @@ import java.awt.Color;
  */
 public class ChangeColor implements ICommand {
 
-  String shapeName;
-  String commandType;
-  Color color;
+  IShape shape;
+  Color futureColor;
+  int startTick;
   int totalTicks;
 
   /**
@@ -29,8 +31,8 @@ public class ChangeColor implements ICommand {
   }
 
   @Override
-  public void apply(AnimatorModel a) {
-   // a.getShapes().get(shapeName).changeColor(color, totalTicks);
+  public IShape apply(AnimatorModel a) {
+   return new SimpleShape( )a.getShapes().get(shapeName).changeColor(color, totalTicks);
   }
 
   @Override

@@ -56,4 +56,15 @@ public class Motion implements Comparable<Motion>{
   public int compareTo(Motion m) {
       return this.startTime - m.startTime;
   }
+
+  public IShape executeMotion() {
+    IShape s = new SimpleShape(this.name, this.type, this.startX, this.startY,
+        this.startWidth, this.startHeight, this.startColor);
+    int totalTicks = endTime - startTime;
+    s.changeColor(endColor, totalTicks);
+    s.changeSize(endWidth,endHeight, totalTicks);
+    s.move(endX, endY, totalTicks);
+    return s;
+  }
+
 }
