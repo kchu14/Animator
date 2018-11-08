@@ -33,7 +33,16 @@ public interface IShape {
    */
   void changeSize(int width, int height, int totalTicks) throws IllegalArgumentException;
 
+  /**
+   * Gets the java Shape object stored inside of this shape that represents its visual aspects.
+   * @return  A Java Shape object that can be drawn.
+   */
   Shape getShape();
+
+  /**
+   * Allows the caller to use the color of this IShape.
+   * @return  The Color of the this IShape.
+   */
   Color getColor();
 
 

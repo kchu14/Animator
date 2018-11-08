@@ -2,6 +2,10 @@ package cs3500.animator.model;
 
 import java.awt.Color;
 
+/**
+ * This class represents a motion object. A motion is defined as a set of two key frames that a
+ * user may input into the animation to cause movement from the first key frame to the next.
+ */
 public class Motion implements Comparable<Motion>{
 
   protected String name;
@@ -19,6 +23,7 @@ public class Motion implements Comparable<Motion>{
   protected int endHeight;
   protected Color endColor;
   protected IShape shape;
+
 
   Motion(String name, String type, int startTime, int startX, int startY,
       int startWidth,
@@ -41,9 +46,10 @@ public class Motion implements Comparable<Motion>{
     this.shape = new SimpleShape(name, type, startX, startY, startWidth, startHeight, startColor);
   }
 
-  // execute the motion on a shape
-  // create a hashmap of ticks and shape objects
-
+  /**
+   * Formats the motion into a readable version that displays each of the factors of the motion.
+   * @return  A string representing the motion.
+   */
   String getTextResult() {
     return String.format(
              "motion %s %d %d %d %d %d %d %d %d "
@@ -59,6 +65,11 @@ public class Motion implements Comparable<Motion>{
       return this.startTime - m.startTime;
   }
 
+  /**
+   * Mutates the IShape associated with this motion to allow it to accurately represent a shape
+   * that is changing as the tick count is rising.
+   * @return An updated shape based on the motion that should be happening at this tick.
+   */
   public IShape executeMotion() {
     int totalTicks = endTime - startTime;
     shape.changeColor(endColor, totalTicks);

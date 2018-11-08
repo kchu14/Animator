@@ -24,8 +24,7 @@ public class ComplexShape implements IShape {
    * @param y The array of y coordinates of the shape.
    * @param color The color of the shape.
    */
-  //maybe use enums to represent shape for view instead of weird name thing
-  // getters and setters for shapes
+
   public ComplexShape(String name, int[] x, int[] y, Color color) {
     this.name = "p" + name;
     this.x = x;

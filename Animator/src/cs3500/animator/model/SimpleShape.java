@@ -76,10 +76,12 @@ public class SimpleShape implements IShape {
     getCurShape();
   }
 
+  @Override
   public Shape getShape() {
     return shape;
   }
 
+  @Override
   public Color getColor() {
     return this.color;
   }
