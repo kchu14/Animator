@@ -1,6 +1,7 @@
 package cs3500.animator.model;
 
 import java.awt.Color;
+import java.awt.Shape;
 
 /**
  * This class represents ComplexShape (n-gon, polygons) and implements all of the associated shape
@@ -70,6 +71,16 @@ public class ComplexShape implements IShape {
       this.x[i] *= width;
       this.y[i] *= height;
     }
+  }
+
+  @Override
+  public Shape getShape() {
+    return null;
+  }
+
+  @Override
+  public Color getColor() {
+    return null;
   }
 
 //  @Override

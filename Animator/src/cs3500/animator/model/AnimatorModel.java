@@ -10,7 +10,11 @@ import java.util.Map;
 public interface AnimatorModel {
 
 
-   String produceTextView();
+  String produceTextView();
 
-   void checkForValidMotions();
+  void checkForValidMotions();
+
+  int getLastTick();
+
+  List<IShape> update(int tick);
 }

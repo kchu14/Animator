@@ -18,6 +18,7 @@ public class Motion implements Comparable<Motion>{
   protected int endWidth;
   protected int endHeight;
   protected Color endColor;
+  protected IShape shape;
 
   Motion(String name, String type, int startTime, int startX, int startY,
       int startWidth,
@@ -37,6 +38,7 @@ public class Motion implements Comparable<Motion>{
     this.endWidth = endWidth;
     this.endHeight = endHeight;
     this.endColor = endColor;
+    this.shape = new SimpleShape(name, type, startX, startY, startWidth, startHeight, startColor);
   }
 
   // execute the motion on a shape
@@ -58,13 +60,12 @@ public class Motion implements Comparable<Motion>{
   }
 
   public IShape executeMotion() {
-    IShape s = new SimpleShape(this.name, this.type, this.startX, this.startY,
-        this.startWidth, this.startHeight, this.startColor);
     int totalTicks = endTime - startTime;
-    s.changeColor(endColor, totalTicks);
-    s.changeSize(endWidth,endHeight, totalTicks);
-    s.move(endX, endY, totalTicks);
-    return s;
+    shape.changeColor(endColor, totalTicks);
+    shape.changeSize(endWidth,endHeight, totalTicks);
+    shape.move(endX, endY, totalTicks);
+    return shape;
+
   }
 
 }

@@ -5,6 +5,8 @@ import cs3500.animator.model.Motion;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,31 +15,32 @@ import javax.swing.JPanel;
 
 public class AnimatorPanel extends JPanel {
 
-  private Map<String, IShape> shapes;
-  // shape name, list of motions for the shape
-  private Map<String, List<Motion>> nameMotion;
+  private List<IShape> shapes;
+
   public AnimatorPanel() {
     super();
-    this.shapes = new HashMap<>();
-    this.shapes = new HashMap<>();
+    this.shapes = new ArrayList<>();
+
   }
 
-  public void setShapes(Map<String, IShape> shapes) {
+  public void setShapes(List<IShape> shapes) {
     this.shapes = shapes;
   }
 
-  public void setNameMotion(
-      Map<String, List<Motion>> nameMotion) {
-    this.nameMotion = nameMotion;
-  }
 
   @Override
   protected void paintComponent(Graphics g) {
     //never forget to call super.paintComponent!
     super.paintComponent(g);
-
     Graphics2D g2d = (Graphics2D) g;
-
-    g2d.setColor(Color.BLACK);
+    AffineTransform originalTransform = g2d.getTransform();
+    for (IShape s : shapes) {
+      g2d.setColor(s.getColor());
+      g2d.fill(s.getShape());
+    }
+    g2d.setTransform(originalTransform);
   }
+
+
 }
+

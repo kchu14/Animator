@@ -2,6 +2,9 @@ package cs3500.animator.model;
 
 import cs3500.animator.util.AnimationBuilder;
 import java.awt.Color;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 
 /**
  * This class represents a generic shape and implements all of its associated operations.
@@ -15,6 +18,7 @@ public class SimpleShape implements IShape {
   protected int width;
   protected int height;
   protected Color color;
+  protected Shape shape;
 
   public SimpleShape(String name, String type, int x, int y, int width, int height,
       Color color) {
@@ -25,6 +29,17 @@ public class SimpleShape implements IShape {
     this.width = width;
     this.height = height;
     this.color = color;
+    getCurShape();
+
+  }
+
+  public void getCurShape() {
+    if (type.equals("rectangle")) {
+      this.shape = new Rectangle(x, y, width, height);
+    }
+    if (type.equals("ellipse")) {
+      this.shape = new Ellipse2D.Double(x, y, width, height);
+    }
   }
 
   @Override
@@ -35,6 +50,7 @@ public class SimpleShape implements IShape {
 
     this.x += (x - this.x) / totalTicks;
     this.y += (y - this.y) / totalTicks;
+    getCurShape();
   }
 
   @Override
@@ -47,6 +63,7 @@ public class SimpleShape implements IShape {
     int blueDelta = (color.getBlue() - this.color.getBlue()) / totalTicks;
     this.color = new Color(this.color.getRed() + redDelta, this.color.getGreen() + greenDelta,
         this.color.getBlue() + blueDelta);
+    getCurShape();
   }
 
   @Override
@@ -56,9 +73,16 @@ public class SimpleShape implements IShape {
     }
     this.width += (width - this.width) / totalTicks;
     this.height += (height - this.height) / totalTicks;
+    getCurShape();
   }
 
+  public Shape getShape() {
+    return shape;
+  }
 
+  public Color getColor() {
+    return this.color;
+  }
 
 
 }

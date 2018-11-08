@@ -1,6 +1,7 @@
 package cs3500.animator.model;
 
 import java.awt.Color;
+import java.awt.Shape;
 
 /**
  * This interface specifies the operations of a shape. A shape is characterized by a name, position
@@ -32,7 +33,8 @@ public interface IShape {
    */
   void changeSize(int width, int height, int totalTicks) throws IllegalArgumentException;
 
-
+  Shape getShape();
+  Color getColor();
 
 
 

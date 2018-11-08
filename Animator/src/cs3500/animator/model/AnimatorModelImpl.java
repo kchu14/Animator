@@ -2,20 +2,14 @@ package cs3500.animator.model;
 
 import cs3500.animator.util.AnimationBuilder;
 import java.awt.Color;
-import java.awt.Shape;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.PriorityQueue;
 
 /**
  * This class represents an animator model and implements all of its associated operations.
@@ -33,11 +27,14 @@ public final class AnimatorModelImpl implements AnimatorModel {
   int topMostY;
   int animationWidth;
   int animationHeight;
+  ArrayList<Integer>  tickList;
+
 
   private AnimatorModelImpl(Map<String, IShape> shapes,
       Map<String, List<Motion>> nameMotion,
       Map<String, String> nameType, int leftMostX,
-      int topMostY, int animationWidth, int animationHeight,  Map<Integer, List<IShape>> tickShapesList) {
+      int topMostY, int animationWidth, int animationHeight,
+      Map<Integer, List<IShape>> tickShapesList, ArrayList<Integer> tickList) {
     this.shapes = shapes;
     this.nameMotion = nameMotion;
     this.nameType = nameType;
@@ -46,6 +43,12 @@ public final class AnimatorModelImpl implements AnimatorModel {
     this.animationWidth = animationWidth;
     this.animationHeight = animationHeight;
     this.tickShapesList = tickShapesList;
+    this.tickList = tickList;
+  }
+
+  public int getLastTick() {
+    Collections.sort(tickList);
+    return tickList.get(tickList.size() - 1);
   }
 
 
@@ -79,9 +82,9 @@ public final class AnimatorModelImpl implements AnimatorModel {
 
   public List<IShape> update(int tick) {
     List<IShape> newShapes = new ArrayList<>();
-    for(List<Motion> lom : nameMotion.values()) {
-      for(Motion m : lom) {
-        if (tick >= m.startTime && tick <= m.endTime) {
+    for (List<Motion> lom : nameMotion.values()) {
+      for (Motion m : lom) {
+        if (tick >= m.startTime && tick < m.endTime) {
           newShapes.add(m.executeMotion());
         }
       }
@@ -93,7 +96,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
     String key = m.name;
     if (!shapes.containsKey(key)) {
       shapes.put(key,
-          new SimpleShape(key, nameType.get(m.type), m.startX, m.startY, m.startWidth,
+          new SimpleShape(key, nameType.get(m.name), m.startX, m.startY, m.startWidth,
               m.startHeight, m.startColor));
     }
   }
@@ -128,12 +131,13 @@ public final class AnimatorModelImpl implements AnimatorModel {
     int topMostY;
     int animationWidth;
     int animationHeight;
+    ArrayList<Integer>  tickList;
 
 
     @Override
     public AnimatorModel build() {
       return new AnimatorModelImpl(shapes, nameMotion, nameType,
-          leftMostX, topMostY, animationWidth, animationHeight, tickShapeList);
+          leftMostX, topMostY, animationWidth, animationHeight, tickShapeList, tickList);
     }
 
     @Override
@@ -163,11 +167,15 @@ public final class AnimatorModelImpl implements AnimatorModel {
     public AnimationBuilder<AnimatorModel> addMotion(String name, int t1, int x1, int y1, int w1,
         int h1, int r1, int g1, int b1, int t2, int x2, int y2, int w2, int h2, int r2, int g2,
         int b2) {
+      if (tickList == null) {
+        tickList = new ArrayList<>();
+      }
+      tickList.add(t1);
+      tickList.add(t2);
 
-      if (this.nameMotion == null || this.shapes == null ||this.tickShapeList == null) {
+      if (this.nameMotion == null || this.shapes == null) {
         this.nameMotion = new LinkedHashMap<>();
         this.shapes = new LinkedHashMap<>();
-        this.tickShapeList = new LinkedHashMap<>();
       }
 
       try {

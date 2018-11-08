@@ -25,16 +25,16 @@ public final class Excellence {
     int speed = 1;
     for (int i = 0; i < args.length; i++) {
       if (args[i].equals("-in")) {
-        fileName = args[i++];
+        fileName = args[i+= 1];
       }
       if (args[i].equals("-view")) {
-        viewType = args[i++];
+        viewType = args[i+= 1];
       }
       if (args[i].equals("-out")) {
-        outType = args[i++];
+        outType = args[i+= 1];
       }
       if (args[i].equals("-speed")) {
-        speed = Integer.parseInt(args[i++]);
+        speed = Integer.parseInt(args[i+= 1]);
       }
     }
     if (fileName.equals("") || viewType.equals("")) {
@@ -49,7 +49,7 @@ public final class Excellence {
           .parseFile(fr, new AnimatorModelImpl.Builder());
       model.checkForValidMotions();
     } catch (Exception e) {
-      throw new IllegalArgumentException("given file doesn't exist");
+      throw new IllegalArgumentException(e.getMessage());
     }
 
     AnimatorView view = null;
@@ -65,6 +65,7 @@ public final class Excellence {
       view = new VisualGraphicsView();
     }
 
+    // make it a read only model
     view.playAnimation(model);
 //    IController controller = new MVCCommandController(model, view);
 //    controller.go();

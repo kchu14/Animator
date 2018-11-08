@@ -27,7 +27,12 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
     this.setTitle("Animator");
     this.setSize(500, 500);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.pack();
+
+    this.setLayout(new BorderLayout());
+    animatorPanel = new AnimatorPanel();
+    animatorPanel.setPreferredSize(new Dimension(500, 500));
+    this.add(animatorPanel, BorderLayout.CENTER);
+    //this.pack();
 
     // todo
     // scroll bars (setBounds model)
@@ -53,8 +58,16 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
   @Override
   public void playAnimation(AnimatorModel model) {
     makeVisible();
-    for() {
+
+    for(int i = 0; i <= model.getLastTick(); i++) {
+      try {
+        Thread.sleep(69);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
       refresh();
+      animatorPanel.setShapes(model.update(i));
     }
 
   }
