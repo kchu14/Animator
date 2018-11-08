@@ -6,10 +6,10 @@ import static org.junit.Assert.assertArrayEquals;
 
 
 
-import cs3500.animator.model.commands.ChangeColor;
+/*import cs3500.animator.model.commands.ChangeColor;
 import cs3500.animator.model.commands.ChangeSize;
 import cs3500.animator.model.commands.Delete;
-import cs3500.animator.model.commands.Move;
+import cs3500.animator.model.commands.Move;*/
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
