@@ -28,7 +28,10 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
   public VisualGraphicsView() {
     super();
 
-    
+    List<String> lines = Arrays.asList("The first line", "The second line");
+    Path file = Paths.get("the-file-name.txt");
+    Files.write(file, lines, Charset.forName("UTF-8"));
+  //Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
   }
 
   @Override
