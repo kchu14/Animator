@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * This class represents a generic shape and implements all of its associated operations.
@@ -13,14 +14,14 @@ public class SimpleShape implements IShape {
 
   protected String name;
   protected String type;
-  protected int x;
-  protected int y;
-  protected int width;
-  protected int height;
+  protected double x;
+  protected double y;
+  protected double width;
+  protected double height;
   protected Color color;
   protected Shape shape;
 
-  public SimpleShape(String name, String type, int x, int y, int width, int height,
+  public SimpleShape(String name, String type, double x, double y, double width, double height,
       Color color) {
     this.name = name;
     this.type = type;
@@ -35,7 +36,8 @@ public class SimpleShape implements IShape {
 
   public void getCurShape() {
     if (type.equals("rectangle")) {
-      this.shape = new Rectangle(x, y, width, height);
+      this.shape = new Rectangle2D.Double( x, y, width, height);
+
     }
     if (type.equals("ellipse")) {
       this.shape = new Ellipse2D.Double(x, y, width, height);
@@ -43,36 +45,60 @@ public class SimpleShape implements IShape {
   }
 
   @Override
-  public void move(int x, int y, int totalTicks) throws IllegalArgumentException {
-    if (totalTicks <= 0) {
-      throw new IllegalArgumentException("invalid tick duration");
-    }
+  public void move(int startX, int startY, int endX, int endY, int totalTicksi, int currentTicki,
+      int startTimei, int endTimei) {
 
-    this.x += (x - this.x) / totalTicks;
-    this.y += (y - this.y) / totalTicks;
+    double totalTicks = (double) totalTicksi;
+    double currentTick = (double) currentTicki;
+    double startTime = (double) startTimei;
+    double endTime = (double) endTimei;
+
+    this.x = (startX * ((endTime - currentTick) / totalTicks)
+        + endX * ((currentTick - startTime) / totalTicks));
+
+    this.y = (startY * ((endTime - currentTick) / totalTicks)
+        + endY * ((currentTick - startTime) / totalTicks));
+    getCurShape();
+
+
+  }
+
+  @Override
+  public void changeColor(Color startColor, Color endColor,int totalTicksi, int currentTicki,
+      int startTimei, int endTimei) {
+
+    double totalTicks = (double) totalTicksi;
+    double currentTick = (double) currentTicki;
+    double startTime = (double) startTimei;
+    double endTime = (double) endTimei;
+
+    int red  = (int) (startColor.getRed() * ((endTime - currentTick) / totalTicks)
+        + endColor.getRed() * ((currentTick - startTime) / totalTicks));
+
+    int green = (int) (startColor.getGreen() * ((endTime - currentTick) / totalTicks)
+        + endColor.getGreen() * ((currentTick - startTime) / totalTicks));
+
+    int blue= (int) (startColor.getBlue() * ((endTime - currentTick) / totalTicks)
+        + endColor.getBlue() * ((currentTick - startTime) / totalTicks));
+
+    this.color = new Color(red, green, blue);
     getCurShape();
   }
 
   @Override
-  public void changeColor(Color color, int totalTicks) throws IllegalArgumentException {
-    if (totalTicks <= 0) {
-      throw new IllegalArgumentException("invalid tick duration");
-    }
-    int redDelta = (color.getRed() - this.color.getRed()) / totalTicks;
-    int greenDelta = (color.getGreen() - this.color.getGreen()) / totalTicks;
-    int blueDelta = (color.getBlue() - this.color.getBlue()) / totalTicks;
-    this.color = new Color(this.color.getRed() + redDelta, this.color.getGreen() + greenDelta,
-        this.color.getBlue() + blueDelta);
-    getCurShape();
-  }
+  public void changeSize(int startWidth, int startHeight, int endWidth, int endHeight, int totalTicksi, int currentTicki,
+      int startTimei, int endTimei) {
 
-  @Override
-  public void changeSize(int width, int height, int totalTicks) throws IllegalArgumentException {
-    if (totalTicks <= 0) {
-      throw new IllegalArgumentException("invalid tick duration");
-    }
-    this.width += (width - this.width) / totalTicks;
-    this.height += (height - this.height) / totalTicks;
+    double totalTicks = (double) totalTicksi;
+    double currentTick = (double) currentTicki;
+    double startTime = (double) startTimei;
+    double endTime = (double) endTimei;
+
+    width  = (startWidth * ((endTime - currentTick) / totalTicks)
+        + endWidth * ((currentTick - startTime) / totalTicks));
+
+    height = (startHeight * ((endTime - currentTick) / totalTicks)
+        + endHeight* ((currentTick - startTime) / totalTicks));
     getCurShape();
   }
 

@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 /**
@@ -21,23 +22,13 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
 
   private AnimatorPanel animatorPanel;
   private JLabel display;
+  private int width;
+  private int height;
 
   public VisualGraphicsView() {
     super();
-    this.setTitle("Animator");
-    this.setSize(500, 500);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    this.setLayout(new BorderLayout());
-    animatorPanel = new AnimatorPanel();
-    animatorPanel.setPreferredSize(new Dimension(500, 500));
-    this.add(animatorPanel, BorderLayout.CENTER);
-    //this.pack();
-
-    // todo
-    // scroll bars (setBounds model)
-
-
+    
   }
 
   @Override
@@ -69,6 +60,23 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
       refresh();
       animatorPanel.setShapes(model.update(i));
     }
+
+  }
+
+
+  @Override
+  public void setWindow(int width, int height, int x, int y) {
+    this.height = height;
+    this.setTitle("Animator");
+    this.setSize(width, height);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setLocation(x, y);
+    this.setLayout(new BorderLayout());
+    animatorPanel = new AnimatorPanel();
+    animatorPanel.setPreferredSize(new Dimension(width, height));
+    JScrollPane pane = new JScrollPane(animatorPanel);
+    this.add(pane, BorderLayout.CENTER);
+    this.pack();
 
   }
 }

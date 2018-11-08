@@ -23,4 +23,10 @@ public class TextView implements AnimatorView {
   public void playAnimation(AnimatorModel model) {
 
   }
+
+  @Override
+  public void setWindow(int width, int height, int x, int y) {
+
+  }
+
 }

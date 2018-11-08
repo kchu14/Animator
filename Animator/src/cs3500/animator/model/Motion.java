@@ -70,11 +70,11 @@ public class Motion implements Comparable<Motion>{
    * that is changing as the tick count is rising.
    * @return An updated shape based on the motion that should be happening at this tick.
    */
-  public IShape executeMotion() {
+  public IShape executeMotion(int tick) {
     int totalTicks = endTime - startTime;
-    shape.changeColor(endColor, totalTicks);
-    shape.changeSize(endWidth,endHeight, totalTicks);
-    shape.move(endX, endY, totalTicks);
+    shape.changeColor(startColor, endColor, totalTicks, tick, startTime, endTime);
+    shape.changeSize(startWidth, startHeight, endWidth,endHeight, totalTicks, tick, startTime, endTime);
+    shape.move(startX, startY, endX, endY, totalTicks, tick, startTime, endTime);
     return shape;
 
   }

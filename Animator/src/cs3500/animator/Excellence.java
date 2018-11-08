@@ -66,6 +66,8 @@ public final class Excellence {
     }
 
     // make it a read only model
+
+    view.setWindow(model.getWidth(), model.getHeight(), model.getWindowX(), model.getWindowY());
     view.playAnimation(model);
 //    IController controller = new MVCCommandController(model, view);
 //    controller.go();

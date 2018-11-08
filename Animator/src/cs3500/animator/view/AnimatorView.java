@@ -27,4 +27,6 @@ public interface AnimatorView {
   void refresh();
 
   void playAnimation(AnimatorModel model);
+
+  void setWindow(int width, int height, int x, int y);
 }

@@ -33,4 +33,10 @@ public interface AnimatorModel {
    * @return  A list of updated IShapes with proper fields that correspond to the current tick.
    */
   List<IShape> update(int tick);
+
+  int getHeight();
+
+  int getWidth();
+  int getWindowX();
+  int getWindowY();
 }

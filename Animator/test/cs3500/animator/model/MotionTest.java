@@ -31,6 +31,6 @@ public class MotionTest {
     Motion m = new Motion("R", "rectangle", 1, 200, 200, 50, 100,
             new Color(255, 0 ,0), 10, 200, 200, 50, 200, new Color(255, 0 , 0));
     assertEquals(new SimpleShape("R", "rectangle", 200,
-            200, 50, 110, new Color(255, 0 ,0)),m.executeMotion());
+            200, 50, 110, new Color(255, 0 ,0)),m.executeMotion(1));
   }
 }

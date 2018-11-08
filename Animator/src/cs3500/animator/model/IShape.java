@@ -15,7 +15,7 @@ public interface IShape {
    * @param x the desired x coordinate of the shape
    * @param y the desired y coordinate of the shape
    */
-  void move(int x, int y, int totalTicks) throws IllegalArgumentException;
+  void move(int startX, int startY, int endX, int endY, int totalTicks, int tick, int startTime, int endTime);
 
   /**
    * Changes the color of this shape to a new one.
@@ -23,7 +23,7 @@ public interface IShape {
    * @param color the desired r,g,b color
    * @param totalTicks the length of the animation for this shape
    */
-  void changeColor(Color color, int totalTicks) throws IllegalArgumentException;
+  void changeColor(Color startColor, Color endColor, int totalTicks, int tick, int startTime, int endTime);
 
   /**
    * Changes the size of this shape.
@@ -31,7 +31,7 @@ public interface IShape {
    * @param width the desired width of the final shape
    * @param height the desired height of the final shape
    */
-  void changeSize(int width, int height, int totalTicks) throws IllegalArgumentException;
+  void changeSize(int startWidth, int startHeight, int endWidth, int endheight, int totalTicks, int tick, int startTime, int endTime);
 
   /**
    * Gets the java Shape object stored inside of this shape that represents its visual aspects.

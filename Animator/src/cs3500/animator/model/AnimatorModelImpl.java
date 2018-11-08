@@ -85,11 +85,31 @@ public final class AnimatorModelImpl implements AnimatorModel {
     for (List<Motion> lom : nameMotion.values()) {
       for (Motion m : lom) {
         if (tick >= m.startTime && tick < m.endTime) {
-          newShapes.add(m.executeMotion());
+          newShapes.add(m.executeMotion(tick));
         }
       }
     }
     return newShapes;
+  }
+
+  @Override
+  public int getHeight() {
+    return animationHeight;
+  }
+
+  @Override
+  public int getWidth() {
+    return animationWidth;
+  }
+
+  @Override
+  public int getWindowX() {
+    return leftMostX;
+  }
+
+  @Override
+  public int getWindowY() {
+    return topMostY;
   }
 
   private void addShape(Motion m) {
