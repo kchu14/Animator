@@ -1,32 +1,25 @@
 package cs3500.animator.view;
 
 import cs3500.animator.model.AnimatorModel;
-import java.awt.event.ActionListener;
-import java.util.List;
 
+/**
+ * This interface represents the operations that can be performed on a view. These actions include
+ * playing the animation and showing error messages.
+ */
 public interface AnimatorView {
 
-  /**
-   * Make the view visible. This is usually called
-   * after the view is constructed
-   */
-  void makeVisible();
-
 
   /**
-   * Transmit an error message to the view, in case
-   * the command could not be processed correctly
-   *
-   * @param error
+   * Transmit an error message to the view, in case the command could not be processed correctly
    */
   void showErrorMessage(String error);
 
   /**
-   * Signal the view to draw itself
+   * This model executes the animation and begins the drawing process.
+   *
+   * @param model the given model to be animated.
    */
-  void refresh();
-
   void playAnimation(AnimatorModel model);
 
-  void setWindow(int width, int height, int x, int y);
+
 }

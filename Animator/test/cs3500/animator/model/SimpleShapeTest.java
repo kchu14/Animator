@@ -8,41 +8,41 @@ import java.awt.geom.Ellipse2D;
 import org.junit.Test;
 
 public class SimpleShapeTest {
+  @Test
+  public void testGetColor() {
+    IShape simpleShape =
+        new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
+    assertEquals(simpleShape.getColor(), new Color(255, 0, 0));
+    IShape ovalShape =
+        new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
+    assertEquals(ovalShape.getColor(), new Color(255, 0, 0));
+  }
 
-//  @Test
-//  public void testGetColor() {
-//    IShape simpleShape =
-//            new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
-//    assertEquals(simpleShape.getColor(), new Color(255, 0, 0));
-//    IShape ovalShape =
-//            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-//    assertEquals(ovalShape.getColor(), new Color(255, 0, 0));
-//  }
-//
-//  @Test
-//  public void testGetShape() {
-//    IShape simpleShape =
-//            new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
-//    assertEquals(simpleShape.getShape(), new Rectangle(200, 200, 50, 100));
-//    IShape ovalShape =
-//            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-//    assertEquals(ovalShape.getShape(), new Ellipse2D.Double(200, 200, 50, 100));
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void invalidMoveRectangleZeroTick() {
-//    IShape simpleShape =
-//            new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
-//    simpleShape.move(100, 100, 0);
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void invalidMoveRectangleNegativeTick() {
-//    IShape simpleShape =
-//            new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
-//    simpleShape.move(100, 100, -10);
-//  }
-/*
+  @Test
+  public void testGetShape() {
+    IShape simpleShape =
+        new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
+    assertEquals(simpleShape.getShape(), new Rectangle(200, 200, 50, 100));
+    IShape ovalShape =
+        new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
+    assertEquals(ovalShape.getShape(), new Ellipse2D.Double(200, 200, 50, 100));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void invalidMoveRectangleZeroTick() {
+    IShape simpleShape =
+        new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
+    simpleShape.move(100, 100, 0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void invalidMoveRectangleNegativeTick() {
+    IShape simpleShape =
+        new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
+    simpleShape.move(100, 100, -10);
+  }
+
+
   @Test
   public void moveRectangleSamePosition() {
     IShape simpleShape =
@@ -51,7 +51,7 @@ public class SimpleShapeTest {
     assertEquals(200, simpleShape.getX());
     assertEquals(200, simpleShape.getY());
   }
-*//*
+
   @Test
   public void moveRectangleOneTick() {
     IShape simpleShape =
@@ -168,6 +168,6 @@ public class SimpleShapeTest {
     simpleShape.changeSize(100, 150, 50);
     assertEquals(51, simpleShape.getWidth());
     assertEquals(101, simpleShape.getHeight());
-  }*/
+  }
 
 }

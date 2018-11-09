@@ -6,42 +6,33 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 
+/**
+ * This is an implementation of the Animator View interface that represents the text view. It outputs our animation to a
+ * text file or to system.out by default.
+ */
 public class TextView implements AnimatorView {
 
   private String fileOutput;
 
+
+  /**
+   * Constructs a text view.
+    * @param fileOutput the output file name.
+   */
   public TextView(String fileOutput) {
     this.fileOutput = fileOutput;
   }
-  @Override
-  public void makeVisible() {
 
-  }
 
   @Override
   public void showErrorMessage(String error) {
 
   }
 
-  @Override
-  public void refresh() {
-
-  }
-
 
   @Override
   public void playAnimation(AnimatorModel model) {
-//    Path file = Paths.get(fileOutput);
-//    String output = model.produceTextView();
-//    Files.write(file, output);
-//    Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
-
     if (this.fileOutput.equals("System.out")) {
       System.out.println(model.produceTextView());
     } else {
@@ -69,9 +60,5 @@ public class TextView implements AnimatorView {
     }
   }
 
-  @Override
-  public void setWindow(int width, int height, int x, int y) {
-
-  }
 
 }

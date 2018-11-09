@@ -15,35 +15,32 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map.Entry;
 
+/**
+ * TThis is an implementation of the Animator View interface that represents the svg view.
+ * It outputs our animation to a svg file that can be played in browser.
+ */
 public class SvgView implements AnimatorView {
 
   private String fileOut;
   private int speed;
+
+  /**
+   * Constructs a svg view.
+   *
+   * @param fileOut the file output name.
+   * @param speed the speed of the animation.
+   */
   public SvgView(String fileOut, int speed) {
     this.fileOut = fileOut;
     this.speed = speed;
   }
 
-  @Override
-  public void makeVisible() {
-
-  }
-
-  @Override
-  public void showErrorMessage(String error) {
-
-  }
-
-  @Override
-  public void refresh() {
-
-  }
 
   @Override
   public void playAnimation(AnimatorModel model) {
     StringBuilder inSvg = new StringBuilder();
     inSvg.append("<svg width=\"" + model.getWidth() + "\" height=\"" + model.getHeight()
-        +"\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n\n");
+        + "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n\n");
     for (Entry<String, IShape> set : model.getShapes().entrySet()) {
       String key = set.getKey();
       IShape value = set.getValue();
@@ -65,7 +62,6 @@ public class SvgView implements AnimatorView {
     }
     inSvg.append("</svg>");
 
-
     byte[] data = inSvg.toString().getBytes();
     Path p = Paths.get("./", this.fileOut);//String.valueOf(outFile));
     try (OutputStream out = new BufferedOutputStream(
@@ -78,10 +74,9 @@ public class SvgView implements AnimatorView {
 
 
   @Override
-  public void setWindow(int width, int height, int x, int y) {
+  public void showErrorMessage(String error) {
 
   }
-
 
 
 }

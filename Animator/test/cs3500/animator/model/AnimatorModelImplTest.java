@@ -1,173 +1,122 @@
 package cs3500.animator.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertArrayEquals;
 
-
-
-/*import cs3500.animator.model.commands.ChangeColor;
-import cs3500.animator.model.commands.ChangeSize;
-import cs3500.animator.model.commands.Delete;
-import cs3500.animator.model.commands.Move;*/
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
 import org.junit.Test;
 
 public class AnimatorModelImplTest {
-//
-//  AnimatorModel m = new AnimatorModelImpl(1);
-//
-//  private void initData() {
-//    m = new AnimatorModelImpl(1);
-//    m.addShape(new SimpleShape("r", 4, 200, 200, 50, 100, new Color(255, 0, 0)));
-//    m.addShape(new SimpleShape("o", 1, 200, 200, 50, 100, new Color(255, 0, 0)));
-//
-//  }
-//
-//  private List<ICommand> initCommands() {
-//    ICommand move = new Move("rr", 100, 100, 1);
-//    ICommand changeColor = new ChangeColor("rr", new Color(255, 255, 255), 1);
-//    ICommand changeSize = new ChangeSize("oo", 2, 3, 1);
-//    ICommand delete = new Delete("rr");
-//    List<ICommand> result = new ArrayList<>();
-//    result.add(move);
-//    result.add(changeColor);
-//    result.add(changeSize);
-//    result.add(delete);
-//    return result;
-//  }
-//
-//
-//  private List<ICommand> initCommands2() {
-//    ICommand move = new Move("rr", 100, 100, 1);
-//    ICommand changeColor = new ChangeColor("rr", new Color(255, 255, 255), 1);
-//    ICommand changeSize = new ChangeSize("oo", 2, 3, 1);
-//    List<ICommand> result = new ArrayList<>();
-//    result.add(move);
-//    result.add(changeColor);
-//    result.add(changeSize);
-//    return result;
-//  }
-//
-//  private List<ICommand> initCommands3() {
-//    ICommand move = new Move("rr", 100, 100, 1);
-//    ICommand move2 = new Move("rr", 100, 100, 2);
-//    ICommand changeColor = new ChangeColor("rr", new Color(255, 255, 255), 1);
-//    ICommand changeSize = new ChangeSize("oo", 2, 3, 1);
-//    List<ICommand> result = new ArrayList<>();
-//    result.add(move);
-//    result.add(move2);
-//    result.add(changeColor);
-//    result.add(changeSize);
-//    return result;
-//  }
-//
-//  @Test
-//  public void isAnimationOver() {
-//    assertFalse(m.isAnimationOver());
-//  }
-//
-//  @Test
-//  public void emptyAnimation() {
-//
-//    assertEquals("", m.getModelState());
-//    assertEquals(0, m.getShapes().size());
-//    assertEquals(0, m.getCommands().size());
-//
-//  }
-//
-//  @Test
-//  public void addShape() {
-//    initData();
-//    assertEquals(2, m.getShapes().size());
-//
-//  }
-//
-//  @Test
-//  public void addCommand() {
-//    List<ICommand> c = initCommands();
-//    m.addCommand(c, 5, 20);
-//    assertEquals(4, m.getCommands().get(5).size());
-//  }
-//
-//
-//  @Test
-//  public void getShapes() {
-//    initData();
-//    assertEquals(2, m.getShapes().size());
-//  }
-//
-//  @Test
-//  public void testTickResult() {
-//    initData();
-//    List<ICommand> c = initCommands();
-//    ArrayList<IShape> s = new ArrayList<>();
-//    s.add(new SimpleShape("o", 1, 200, 200, 2, 3, new Color(255, 0, 0)));
-//    s.add(new SimpleShape("r", 4, 100, 100, 50, 100, new Color(255, 255, 255)));
-//
-//    m.addCommand(c, 1, 1);
-//    assertArrayEquals(s.toArray(), m.tickResult().toArray());
-//
-//  }
-//
-//  @Test
-//  public void testGetModelState() {
-//    initData();
-//    List<ICommand> c = initCommands2();
-//    m.addCommand(c, 1, 5);
-//    assertEquals("shape r rectangle\n"
-//        + "motion r 1 200 200 50 100 255 0 0 \n"
-//        + "motion r 1 100 100 50 100 255 255 255 \n"
-//        + "motion r 2 100 100 50 100 255 255 255 \n"
-//        + "motion r 2 100 100 50 100 255 255 255 \n"
-//        + "motion r 3 100 100 50 100 255 255 255 \n"
-//        + "motion r 3 100 100 50 100 255 255 255 \n"
-//        + "motion r 4 100 100 50 100 255 255 255 \n"
-//        + "motion r 4 100 100 50 100 255 255 255 \n"
-//        + "shape o oval\n"
-//        + "motion o 1 200 200 2 3 255 0 0 \n"
-//        + "motion o 2 200 200 2 3 255 0 0 \n"
-//        + "motion o 3 200 200 2 3 255 0 0 \n"
-//        + "motion o 4 200 200 2 3 255 0 0 \n", m.getModelState());
-//
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void testInvalidOverlap() {
-//    initData();
-//    List<ICommand> c = initCommands2();
-//    List<ICommand> c2 = initCommands3();
-//    m.addCommand(c, 1, 5);
-//    m.addCommand(c2, 3, 7);
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void testInvalidOverlapSameStartEnd() {
-//    initData();
-//    List<ICommand> c = initCommands2();
-//    List<ICommand> c2 = initCommands3();
-//    m.addCommand(c, 1, 5);
-//    m.addCommand(c2, 1, 5);
-//  }
-//
-//  @Test
-//  public void testOverlapSameStartEnd() {
-//    initData();
-//    List<ICommand> c = initCommands2();
-//    List<ICommand> c2 = initCommands3();
-//    m.addCommand(c, 1, 5);
-//    m.addCommand(c2, 5, 7);
-//    assertFalse(m.isAnimationOver());
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void testNoOverlap() {
-//    initData();
-//    List<ICommand> c = initCommands2();
-//    List<ICommand> c2 = initCommands3();
-//    m.addCommand(c, 1, 5);
-//    m.addCommand(c2, 8, 9);
-//  }
+
+  @Test
+  public void testGetLastTick() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle")
+        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+            10, 100, 100, 50, 50, 0, 0, 255).build();
+
+    assertEquals(10, m.getLastTick());
+  }
+
+  @Test
+  public void testProduceTextView() {
+    AnimatorModel m;
+    m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle")
+        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+            10, 100, 100, 50, 50, 0, 0, 255).build();
+    assertEquals("Shape r rectangle\n"
+        + "motion r 0 100 100 50 50 255 0 0 10 100 100 50 50 0 255 0 \n", m.produceTextView());
+  }
+
+  @Test
+  public void testUpdate() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle")
+        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+            10, 100, 100, 50, 50, 255, 0, 0).build();
+
+    ArrayList<IShape> ls = new ArrayList<>();
+    ls.add(new SimpleShape("r", "rectangle", 100.0, 100.0, 50.0, 50.0, new Color(255, 0, 0)));
+    assertEquals(ls.get(0).toSVG(), m.update(9).get(0).toSVG());
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testUpdateNoMotion() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle").build();
+
+    assertEquals(new ArrayList<IShape>(), m.update(10));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testAddMotionNoShape() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+            10, 100, 100, 50, 50, 0, 0, 255).build();
+  }
+
+
+  @Test
+  public void testAddMotion() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().declareShape("r", "rectangle")
+        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+            10, 100, 100, 50, 50, 0, 0, 255).build();
+    assertEquals(1, m.getMotions().size());
+  }
+
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidMotion() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle")
+        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+            10, 100, 100, 50, 50, 0, 0, 255)
+        .addMotion("r", 6, 100, 100, 50, 50, 255, 0, 0,
+            13, 100, 100, 50, 50, 0, 0, 255).build();
+
+    m.checkForValidMotions();
+  }
+
+  @Test
+  public void testValidMotions() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle")
+        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+            10, 100, 100, 50, 50, 0, 0, 255)
+        .addMotion("r", 10, 100, 100, 50, 50, 0, 0, 255,
+            14, 100, 100, 50, 50, 0, 0, 255).build();
+
+    m.checkForValidMotions();
+
+    assertEquals("Shape r rectangle\n"
+        + "motion r 0 100 100 50 50 255 0 0 10 100 100 50 50 0 255 0 \n"
+        + "motion r 10 100 100 50 50 0 255 0 14 100 100 50 50 0 255 0 \n", m.produceTextView());
+  }
+
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testTwoShapesSameName() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle").declareShape("r", "oval").build();
+  }
+
+  @Test
+  public void testManyShapesUniqueNames() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle").declareShape("o", "oval")
+        .declareShape("o2", "oval")
+        .build();
+  }
+
+  @Test
+  public void testCreateShape() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle")
+        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0, 10, 100, 100, 50, 50, 0, 0, 255).build();
+    m.checkForValidMotions();
+    assertEquals(1, m.getShapes().size());
+  }
+
+
 }

@@ -10,43 +10,71 @@ import java.awt.Shape;
 public interface IShape {
 
   /**
-   * Moves the shape to a given position.
+   * This method moves the shape and does the tweening aspect.
    *
-   * @param x the desired x coordinate of the shape
-   * @param y the desired y coordinate of the shape
+   * @param startX the starting x position of the shape
+   * @param startY the starting y position of the shape
+   * @param endX the ending x position of the shape
+   * @param endY the ending y position of the shape
+   * @param totalTicks the total duration of the motion
+   * @param tick the current tick of the motion
+   * @param startTime the start time of the motion
+   * @param endTime the end time of the motion
    */
-  void move(int startX, int startY, int endX, int endY, int totalTicks, int tick, int startTime, int endTime);
+  void move(int startX, int startY, int endX, int endY, int totalTicks, int tick, int startTime,
+      int endTime);
 
   /**
-   * Changes the color of this shape to a new one.
+   * This method changes the color of the shape and does the tweening aspect.
    *
-   * @param color the desired r,g,b color
-   * @param totalTicks the length of the animation for this shape
+   * @param startColor the starting color of the shape
+   * @param totalTicks the total duration of the motion
+   * @param tick the current tick of the motion
+   * @param startTime the start time of the motion
+   * @param endTime the end time of the motion
    */
-  void changeColor(Color startColor, Color endColor, int totalTicks, int tick, int startTime, int endTime);
+  void changeColor(Color startColor, Color endColor, int totalTicks, int tick, int startTime,
+      int endTime);
 
   /**
-   * Changes the size of this shape.
+   * This method changes the color of the shape and does the tweening aspect.
    *
-   * @param width the desired width of the final shape
-   * @param height the desired height of the final shape
+   * @param startWidth the starting width of the shape
+   * @param startHeight the starting height of the shape
+   * @param totalTicks the total duration of the motion
+   * @param tick the current tick of the motion
+   * @param startTime the start time of the motion
+   * @param endTime the end time of the motion
    */
-  void changeSize(int startWidth, int startHeight, int endWidth, int endheight, int totalTicks, int tick, int startTime, int endTime);
+  void changeSize(int startWidth, int startHeight, int endWidth, int endheight, int totalTicks,
+      int tick, int startTime, int endTime);
 
   /**
    * Gets the java Shape object stored inside of this shape that represents its visual aspects.
-   * @return  A Java Shape object that can be drawn.
+   *
+   * @return A Java Shape object that can be drawn.
    */
   Shape getShape();
 
   /**
    * Allows the caller to use the color of this IShape.
-   * @return  The Color of the this IShape.
+   *
+   * @return The Color of the this IShape.
    */
   Color getColor();
 
 
+  /**
+   * Converts the shapes properties into a string formatted in the svg style.
+   *
+   * @return string formatted to fit svg parameters.
+   */
   String toSVG();
 
+  /**
+   * Returns the type of shape (rectangle, ellipse).
+   *
+   * @return the type of the shape.
+   */
   String getType();
 }
