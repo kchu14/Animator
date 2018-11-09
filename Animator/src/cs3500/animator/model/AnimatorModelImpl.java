@@ -136,6 +136,16 @@ public final class AnimatorModelImpl implements AnimatorModel {
     return result.toString();
   }
 
+  @Override
+  public Map<String, List<Motion>> getMotions(){
+    return new HashMap<String, List<Motion>>(this.nameMotion);
+  }
+
+  @Override
+  public Map<String, IShape> getShapes(){
+    return new HashMap<String, IShape>(this.shapes);
+  }
+
 // todo
   // view
   // key frame

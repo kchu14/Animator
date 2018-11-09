@@ -79,4 +79,63 @@ public class Motion implements Comparable<Motion>{
 
   }
 
+  public String toSVG(double speed) {
+    String result = "";
+    String thisScaleType1 = "";
+    String thisScaleType2 = "";
+    String thisPosType1 = "";
+    String thisPosType2 = "";
+    if (type.equals("rectangle")) {
+      thisScaleType1 = "width";
+      thisScaleType2 = "height";
+      thisPosType1 = "x";
+      thisPosType2 = "y";
+    }
+    else {
+      thisScaleType1 = "rx";
+      thisScaleType2 = "ry";
+      thisPosType1 = "cx";
+      thisPosType2 = "cy";
+    }
+
+    result = "<animate attributeType=\"xml\" begin=\""
+        + Double.toString((startTime) * (1000 / speed)) + "ms\" dur=\""
+        + Double.valueOf((endTime - startTime) * (1000 / speed))
+        + "ms\" attributeName=\"" + thisPosType1 + "\"" + " from=\"" + Double.toString(this.startX)
+        + "\" to=\"" + Double.toString(this.endX) + "\" fill=\"freeze\"/>\n"
+        + "<animate attributeType=\"xml\" begin=\""
+        + Double.toString(startTime * (1000 / speed)) + "ms\" dur=\""
+        + Double.toString((endTime - startTime) * (1000 / speed))
+        + "ms\" attributeName=\"" + thisPosType2 + "\"" + " from=\""
+        + Double.toString(this.startY) + "\" to=\"" + Double.toString(this.endY)
+        + "\" fill=\"freeze\" />\n\n";
+
+    result += "<animate attributeType=\"xml\" begin=\""
+        + Double.toString(startTime * (1000 / speed)) + "ms\" dur=\""
+        + Double.toString((endTime - startTime) * (1000 / speed))
+        + "\" attributeName=\"" + thisScaleType1 + "\"" + " from=\"" + Double.toString(this.startWidth)
+        + "\" to=\"" + Float.toString(this.endWidth) + "\" fill=\"freeze\"/>\n"
+        + "<animate attributeType=\"xml\" begin=\""
+        + Double.toString(startTime * (1000 / speed)) + "ms\" dur=\""
+        + Double.toString((endTime - startTime)  * (1000 / speed))
+        + "ms\" attributeName=\"" + thisScaleType2 + "\"" + " from=\"" + Double.toString(this.startHeight)
+        + "\" to=\"" + Double.toString(this.endHeight) + "\" fill=\"freeze\"/>\n";
+
+
+    result += "<animate attributeType=\"xml\" begin=\""
+        + Double.toString(startTime  * (1000 / speed)) + "ms\" dur=\""
+        + Double.valueOf((endTime - startTime)  * (1000 / speed))
+        + "ms\" attributeName=\"fill\"" + " from=\"" + "rgb("
+        + Integer.toString(this.startColor.getRed()) + ", "
+        + Integer.toString(this.startColor.getGreen()) + ", "
+        + Integer.toString(this.startColor.getBlue()) + ")\""
+        + " to=\"" + "rgb(" + Integer.toString(this.endColor.getRed()) + ", "
+        + Integer.toString(this.endColor.getGreen()) + ", "
+        + Integer.toString(this.endColor.getBlue()) + ")\"/>\n\n";
+
+    return result;
+
+
+
+  }
 }

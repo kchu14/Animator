@@ -39,4 +39,6 @@ public interface AnimatorModel {
   int getWidth();
   int getWindowX();
   int getWindowY();
+  Map<String, List<Motion>> getMotions();
+  Map<String, IShape> getShapes();
 }

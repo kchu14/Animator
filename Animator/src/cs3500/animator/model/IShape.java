@@ -46,5 +46,7 @@ public interface IShape {
   Color getColor();
 
 
+  String toSVG();
 
+  String getType();
 }

@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 
 /**
  * This is an implementation of the IView interface that uses Java Swing to draw the results of the
@@ -25,13 +27,11 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
   private int width;
   private int height;
 
+
   public VisualGraphicsView() {
     super();
 
-    List<String> lines = Arrays.asList("The first line", "The second line");
-    Path file = Paths.get("the-file-name.txt");
-    Files.write(file, lines, Charset.forName("UTF-8"));
-  //Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
+
   }
 
   @Override
@@ -52,18 +52,33 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
   @Override
   public void playAnimation(AnimatorModel model) {
     makeVisible();
+    int i = 0;
+    Timer t = new Timer(2, null);
+    ActionListener listener = new MyTimerActionListener(i, model, t);
+    t.addActionListener(listener);
+    t.start();
+  }
 
-    for(int i = 0; i <= model.getLastTick(); i++) {
-      try {
-        Thread.sleep(69);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+  class MyTimerActionListener implements ActionListener {
 
-      refresh();
-      animatorPanel.setShapes(model.update(i));
+    private int tick;
+    private AnimatorModel model;
+    private Timer t;
+
+    private MyTimerActionListener(int tick, AnimatorModel model, Timer t) {
+      this.tick = tick;
+      this.model = model;
+      this.t = t;
     }
 
+    public void actionPerformed(ActionEvent e) {
+      refresh();
+      animatorPanel.setShapes(model.update(tick));
+      tick++;
+      if(tick > model.getLastTick()) {
+        t.stop();
+      }
+    }
   }
 
 
@@ -82,4 +97,5 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
     this.pack();
 
   }
+
 }

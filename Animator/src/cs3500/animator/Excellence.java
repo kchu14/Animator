@@ -42,6 +42,18 @@ public final class Excellence {
     }
 
     AnimatorModel model;
+    AnimatorView view = null;
+    if(viewType.equals("text")) {
+      view = new TextView(outType);
+    }
+
+    if(viewType.equals("svg")) {
+      view = new SvgView(outType);
+    }
+
+    if(viewType.equals("visual")) {
+      view = new VisualGraphicsView();
+    }
     try {
       FileReader fr =
           new FileReader(fileName);
@@ -49,24 +61,15 @@ public final class Excellence {
           .parseFile(fr, new AnimatorModelImpl.Builder());
       model.checkForValidMotions();
     } catch (Exception e) {
+      // add making error window
+      view.showErrorMessage(e.getMessage());
       throw new IllegalArgumentException(e.getMessage());
     }
 
-    AnimatorView view = null;
-    if(viewType.equals("text")) {
-      view = new TextView();
-    }
 
-    if(viewType.equals("svg")) {
-      view = new SvgView();
-    }
 
-    if(viewType.equals("visual")) {
-      view = new VisualGraphicsView();
-    }
 
     // make it a read only model
-
     view.setWindow(model.getWidth(), model.getHeight(), model.getWindowX(), model.getWindowY());
     view.playAnimation(model);
 //    IController controller = new MVCCommandController(model, view);

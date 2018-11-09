@@ -112,5 +112,35 @@ public class SimpleShape implements IShape {
     return this.color;
   }
 
+  @Override
+  public String toSVG() {
+    String thisType = "";
+    if (type.equals("rectangle")) {
+      thisType = "<rect id=\"" + name + "\" x=\""
+          + this.x + "\" y=\"" + this.y + "\" width=\"" + width
+          + "\" height=\"" + height + "\" fill="
+          + "\"rgb(" + Integer.toString((this.color.getRed()))
+          + ", " + Integer.toString((this.color.getGreen())) + ", "
+          + Integer.toString((this.color.getBlue()))
+          + ")\"" + " visibility=\"visible\">\n";;
+
+    }
+    else {
+      thisType = "<ellipse id=\"" + name + "\" cx=\""
+          + this.x + "\" cy=\"" + this.y + "\" rx=\"" + width
+          + "\" ry=\"" + height + "\" fill="
+          + "\"rgb(" + Integer.toString((this.color.getRed() ))
+          + ", " + Integer.toString((this.color.getGreen() )) + ", "
+          + Integer.toString((this.color.getBlue()))
+          + ")\"" + " visibility=\"visible\">\n";;
+    }
+    return thisType;
+  }
+
+  @Override
+  public String getType() {
+    return new String(this.type);
+  }
+
 
 }
