@@ -48,11 +48,11 @@ public final class Excellence {
     }
 
     if(viewType.equals("svg")) {
-      view = new SvgView(outType);
+      view = new SvgView(outType, speed);
     }
 
     if(viewType.equals("visual")) {
-      view = new VisualGraphicsView();
+      view = new VisualGraphicsView(speed);
     }
     try {
       FileReader fr =

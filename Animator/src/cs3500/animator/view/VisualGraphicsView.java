@@ -23,13 +23,12 @@ import javax.swing.Timer;
 public class VisualGraphicsView extends JFrame implements AnimatorView {
 
   private AnimatorPanel animatorPanel;
-  private JLabel display;
-  private int width;
-  private int height;
+  private int speed;
 
 
-  public VisualGraphicsView() {
+  public VisualGraphicsView(int speed) {
     super();
+    this.speed = speed;
 
 
   }
@@ -53,7 +52,7 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
   public void playAnimation(AnimatorModel model) {
     makeVisible();
     int i = 0;
-    Timer t = new Timer(2, null);
+    Timer t = new Timer(1000 / speed, null);
     ActionListener listener = new MyTimerActionListener(i, model, t);
     t.addActionListener(listener);
     t.start();
@@ -84,7 +83,6 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
 
   @Override
   public void setWindow(int width, int height, int x, int y) {
-    this.height = height;
     this.setTitle("Animator");
     this.setSize(width, height);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -18,9 +18,10 @@ import java.util.Map.Entry;
 public class SvgView implements AnimatorView {
 
   private String fileOut;
-
-  public SvgView(String fileOut) {
+  private int speed;
+  public SvgView(String fileOut, int speed) {
     this.fileOut = fileOut;
+    this.speed = speed;
   }
 
   @Override
@@ -41,7 +42,7 @@ public class SvgView implements AnimatorView {
   @Override
   public void playAnimation(AnimatorModel model) {
     StringBuilder inSvg = new StringBuilder();
-    inSvg.append("<svg width=\"" + 700 + "\" height=\"" + 700
+    inSvg.append("<svg width=\"" + model.getWidth() + "\" height=\"" + model.getHeight()
         +"\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n\n");
     for (Entry<String, IShape> set : model.getShapes().entrySet()) {
       String key = set.getKey();
@@ -52,7 +53,7 @@ public class SvgView implements AnimatorView {
         List<Motion> value2 = set2.getValue();
         if (key.equals(key2)) {
           for (Motion m : value2) {
-            inSvg.append(m.toSVG(100));
+            inSvg.append(m.toSVG(speed));
           }
         }
       }
