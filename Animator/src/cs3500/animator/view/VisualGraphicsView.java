@@ -28,10 +28,6 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
   public VisualGraphicsView() {
     super();
 
-    List<String> lines = Arrays.asList("The first line", "The second line");
-    Path file = Paths.get("the-file-name.txt");
-    Files.write(file, lines, Charset.forName("UTF-8"));
-  //Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
   }
 
   @Override
@@ -55,7 +51,7 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
 
     for(int i = 0; i <= model.getLastTick(); i++) {
       try {
-        Thread.sleep(69);
+        Thread.sleep(50);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
