@@ -27,7 +27,8 @@ public final class AnimatorModelImpl implements AnimatorModel {
   int topMostY;
   int animationWidth;
   int animationHeight;
-  ArrayList<Integer>  tickList;
+  List<Integer> tickList;
+  List<IShape> newShapes;
 
 
   private AnimatorModelImpl(Map<String, IShape> shapes,
@@ -44,6 +45,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
     this.animationHeight = animationHeight;
     this.tickShapesList = tickShapesList;
     this.tickList = tickList;
+    this.newShapes = new ArrayList<>();
   }
 
   public int getLastTick() {
@@ -81,7 +83,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
   }
 
   public List<IShape> update(int tick) {
-    List<IShape> newShapes = new ArrayList<>();
+    newShapes.clear();
     for (List<Motion> lom : nameMotion.values()) {
       for (Motion m : lom) {
         if (tick >= m.startTime && tick < m.endTime) {
@@ -89,7 +91,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
         }
       }
     }
-    return newShapes;
+    return new ArrayList<>(newShapes);
   }
 
   @Override
@@ -137,12 +139,12 @@ public final class AnimatorModelImpl implements AnimatorModel {
   }
 
   @Override
-  public Map<String, List<Motion>> getMotions(){
+  public Map<String, List<Motion>> getMotions() {
     return new HashMap<String, List<Motion>>(this.nameMotion);
   }
 
   @Override
-  public Map<String, IShape> getShapes(){
+  public Map<String, IShape> getShapes() {
     return new HashMap<String, IShape>(this.shapes);
   }
 
@@ -161,7 +163,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
     int topMostY;
     int animationWidth;
     int animationHeight;
-    ArrayList<Integer>  tickList;
+    ArrayList<Integer> tickList;
 
 
     @Override
