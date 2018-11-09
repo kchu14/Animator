@@ -1,28 +1,35 @@
 package cs3500.animator.view;
 
 import cs3500.animator.model.IShape;
-import cs3500.animator.model.Motion;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JPanel;
 
+/**
+ * This class represents the animator panel on which the animation is drawn. The overridden method
+ * paint component refreshes the panel with the new shapes.
+ */
 public class AnimatorPanel extends JPanel {
 
   private List<IShape> shapes;
 
+  /**
+   * Constructs the animation panel and sets the shapes list to an array list.
+   */
   public AnimatorPanel() {
     super();
     this.shapes = new ArrayList<>();
 
   }
 
+  /**
+   * Sets the shapes to be drawn.
+   *
+   * @param shapes the given shapes to be drawn.
+   */
   public void setShapes(List<IShape> shapes) {
     this.shapes = shapes;
   }
@@ -30,7 +37,6 @@ public class AnimatorPanel extends JPanel {
 
   @Override
   protected void paintComponent(Graphics g) {
-    //never forget to call super.paintComponent!
     super.paintComponent(g);
     Graphics2D g2d = (Graphics2D) g;
     AffineTransform originalTransform = g2d.getTransform();
@@ -40,7 +46,5 @@ public class AnimatorPanel extends JPanel {
     }
     g2d.setTransform(originalTransform);
   }
-
-
 }
 

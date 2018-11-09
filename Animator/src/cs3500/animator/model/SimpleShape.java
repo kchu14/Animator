@@ -1,14 +1,13 @@
 package cs3500.animator.model;
 
-import cs3500.animator.util.AnimationBuilder;
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * This class represents a generic shape and implements all of its associated operations.
+ * This class represents a generic shape and implements all of its associated operations. Operations
+ * include moving the shape, changing the color and changing the size.
  */
 public class SimpleShape implements IShape {
 
@@ -21,6 +20,17 @@ public class SimpleShape implements IShape {
   protected Color color;
   protected Shape shape;
 
+  /**
+   * Constructs a shape.
+   *
+   * @param name the given name
+   * @param type the given type (rectangle, ellipse)
+   * @param x the given x coord
+   * @param y the given y coord
+   * @param width the given width
+   * @param height the given height
+   * @param color the given color
+   */
   public SimpleShape(String name, String type, double x, double y, double width, double height,
       Color color) {
     this.name = name;
@@ -34,9 +44,12 @@ public class SimpleShape implements IShape {
 
   }
 
-  public void getCurShape() {
+  /**
+   * This method resets the shapes.
+   */
+  private void getCurShape() {
     if (type.equals("rectangle")) {
-      this.shape = new Rectangle2D.Double( x, y, width, height);
+      this.shape = new Rectangle2D.Double(x, y, width, height);
 
     }
     if (type.equals("ellipse")) {
@@ -64,7 +77,7 @@ public class SimpleShape implements IShape {
   }
 
   @Override
-  public void changeColor(Color startColor, Color endColor,int totalTicksi, int currentTicki,
+  public void changeColor(Color startColor, Color endColor, int totalTicksi, int currentTicki,
       int startTimei, int endTimei) {
 
     double totalTicks = (double) totalTicksi;
@@ -72,13 +85,13 @@ public class SimpleShape implements IShape {
     double startTime = (double) startTimei;
     double endTime = (double) endTimei;
 
-    int red  = (int) (startColor.getRed() * ((endTime - currentTick) / totalTicks)
+    int red = (int) (startColor.getRed() * ((endTime - currentTick) / totalTicks)
         + endColor.getRed() * ((currentTick - startTime) / totalTicks));
 
     int green = (int) (startColor.getGreen() * ((endTime - currentTick) / totalTicks)
         + endColor.getGreen() * ((currentTick - startTime) / totalTicks));
 
-    int blue= (int) (startColor.getBlue() * ((endTime - currentTick) / totalTicks)
+    int blue = (int) (startColor.getBlue() * ((endTime - currentTick) / totalTicks)
         + endColor.getBlue() * ((currentTick - startTime) / totalTicks));
 
     this.color = new Color(red, green, blue);
@@ -86,7 +99,8 @@ public class SimpleShape implements IShape {
   }
 
   @Override
-  public void changeSize(int startWidth, int startHeight, int endWidth, int endHeight, int totalTicksi, int currentTicki,
+  public void changeSize(int startWidth, int startHeight, int endWidth, int endHeight,
+      int totalTicksi, int currentTicki,
       int startTimei, int endTimei) {
 
     double totalTicks = (double) totalTicksi;
@@ -94,11 +108,11 @@ public class SimpleShape implements IShape {
     double startTime = (double) startTimei;
     double endTime = (double) endTimei;
 
-    width  = (startWidth * ((endTime - currentTick) / totalTicks)
+    width = (startWidth * ((endTime - currentTick) / totalTicks)
         + endWidth * ((currentTick - startTime) / totalTicks));
 
     height = (startHeight * ((endTime - currentTick) / totalTicks)
-        + endHeight* ((currentTick - startTime) / totalTicks));
+        + endHeight * ((currentTick - startTime) / totalTicks));
     getCurShape();
   }
 
@@ -110,6 +124,37 @@ public class SimpleShape implements IShape {
   @Override
   public Color getColor() {
     return this.color;
+  }
+
+  @Override
+  public String toSVG() {
+    String thisType = "";
+    if (type.equals("rectangle")) {
+      thisType = "<rect id=\"" + name + "\" x=\""
+          + this.x + "\" y=\"" + this.y + "\" width=\"" + width
+          + "\" height=\"" + height + "\" fill="
+          + "\"rgb(" + Integer.toString((this.color.getRed()))
+          + ", " + Integer.toString((this.color.getGreen())) + ", "
+          + Integer.toString((this.color.getBlue()))
+          + ")\"" + " visibility=\"visible\">\n";
+      ;
+
+    } else {
+      thisType = "<ellipse id=\"" + name + "\" cx=\""
+          + this.x + "\" cy=\"" + this.y + "\" rx=\"" + width
+          + "\" ry=\"" + height + "\" fill="
+          + "\"rgb(" + Integer.toString((this.color.getRed()))
+          + ", " + Integer.toString((this.color.getGreen())) + ", "
+          + Integer.toString((this.color.getBlue()))
+          + ")\"" + " visibility=\"visible\">\n";
+      ;
+    }
+    return thisType;
+  }
+
+  @Override
+  public String getType() {
+    return new String(this.type);
   }
 
 

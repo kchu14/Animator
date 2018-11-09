@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * This interface specifies the operations of a model. The model is what controls the functionality
- * of the animation.
+ * of the animation. Operations include producing the text view, and checking for valid motions.
  */
 public interface AnimatorModel {
 
@@ -34,9 +34,41 @@ public interface AnimatorModel {
    */
   List<IShape> update(int tick);
 
+  /**
+   * Allows the caller to see the height of this animation.
+   * @return  The height of this animation as an integer.
+   */
   int getHeight();
 
+  /**
+   * Allows the caller to see the width of this animation.
+   * @return  The width of this animation as an integer.
+   */
   int getWidth();
+
+  /**
+   * Allows the caller to see the x coordinate of the top left
+   * of the window that holds this animation.
+   * @return  The x coordinate of the top left of the window that holds this anmation.
+   */
   int getWindowX();
+
+  /**
+   * Allows the caller to see the y coordinate of the top left
+   * of the window that holds this animation.
+   * @return  The y coordinate of the top left of the window that holds this anmation.
+   */
   int getWindowY();
+
+  /**
+   * Allows the caller to see a copy of the map of motions of this animation.
+   * @return  A copy of the map of motions of this animation.
+   */
+  Map<String, List<Motion>> getMotions();
+
+  /**
+   * Allows the caller to see a copy of the map of shapes of this animation.
+   * @return  A copy of the map of shapes of this animation.
+   */
+  Map<String, IShape> getShapes();
 }
