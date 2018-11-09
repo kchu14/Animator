@@ -69,7 +69,7 @@ public class Motion implements Comparable<Motion> {
    *
    * @return A string representing the motion.
    */
-  String getTextResult() {
+  public String getTextResult() {
     return String.format(
         "motion %s %d %d %d %d %d %d %d %d "
             + "%d %d %d %d %d %d %d %d \n",

@@ -31,6 +31,8 @@ public final class Excellence {
     String fileName = "";
     String viewType = "";
     String outType = "System.out";
+    String errorMsg = "invalid arguments";
+    boolean error = false;
     int speed = 1;
     for (int i = 0; i < args.length; i++) {
       if (args[i].equals("-in")) {
@@ -47,25 +49,27 @@ public final class Excellence {
       }
     }
     if (fileName.equals("") || viewType.equals("")) {
-      throw new IllegalArgumentException("need to specify file name and view type");
+      error = true;
+      errorMsg = "need to specify file name and view type";
     }
 
     AnimatorModel model;
     AnimatorView view = constructView(viewType, outType, speed);
+    if (view == null || error) {
+      view = new VisualGraphicsView(speed);
+      view.showErrorMessage(errorMsg);
+      System.exit(0);
+    }
 
     try {
       FileReader fr =
           new FileReader(fileName);
       model = AnimationReader
           .parseFile(fr, new AnimatorModelImpl.Builder());
-      model.checkForValidMotions();
     } catch (Exception e) {
-      // add making error window
-      view.showErrorMessage(e.getMessage());
       throw new IllegalArgumentException(e.getMessage());
     }
 
-    // make it a read only model
     view.playAnimation(model);
 
   }

@@ -8,6 +8,7 @@ import java.awt.geom.Ellipse2D;
 import org.junit.Test;
 
 public class SimpleShapeTest {
+
   @Test
   public void testGetColor() {
     IShape simpleShape =
@@ -28,146 +29,78 @@ public class SimpleShapeTest {
     assertEquals(ovalShape.getShape(), new Ellipse2D.Double(200, 200, 50, 100));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void invalidMoveRectangleZeroTick() {
-    IShape simpleShape =
-        new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.move(100, 100, 0);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void invalidMoveRectangleNegativeTick() {
-    IShape simpleShape =
-        new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.move(100, 100, -10);
-  }
-
 
   @Test
   public void moveRectangleSamePosition() {
     IShape simpleShape =
-            new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.move(200, 200, 1);
-    assertEquals(200, simpleShape.getX());
-    assertEquals(200, simpleShape.getY());
+        new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
+    simpleShape.move(200, 200, 200, 200, 1, 2, 1, 2);
+    assertEquals(
+        "<rect id=\"r\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" fill=\"rgb(255, 0, 0)\" visibility=\"visible\">\n",
+        simpleShape.toSVG());
   }
 
   @Test
   public void moveRectangleOneTick() {
     IShape simpleShape =
-            new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.move(100, 100, 1);
-    assertEquals(100, simpleShape.getX());
-    assertEquals(100, simpleShape.getY());
+        new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
+    simpleShape.move(200, 200, 201, 201, 1, 2, 1, 2);
+    assertEquals(
+        "<rect id=\"r\" x=\"201.0\" y=\"201.0\" width=\"50.0\" height=\"100.0\" fill=\"rgb(255, 0, 0)\" visibility=\"visible\">\n",
+        simpleShape.toSVG());
   }
 
   @Test
   public void moveRectangleMoreThanOneTick() {
     IShape simpleShape =
-            new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.move(100, 100, 100);
-    assertEquals(199, simpleShape.getX());
-    assertEquals(199, simpleShape.getY());
+        new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
+    simpleShape.move(200, 200, 210, 210, 9, 10, 1, 10);
+    assertEquals(
+        "<rect id=\"r\" x=\"210.0\" y=\"210.0\" width=\"50.0\" height=\"100.0\" fill=\"rgb(255, 0, 0)\" visibility=\"visible\">\n",
+        simpleShape.toSVG());
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void invalidMoveOvalZeroTick() {
-    IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.move(100, 100, 0);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void invalidMoveOvalNegativeTick() {
-    IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.move(100, 100, -10);
-  }
-
-  @Test
-  public void moveOvalSamePosition() {
-    IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.move(200, 200, 1);
-    assertEquals(200, simpleShape.getX());
-    assertEquals(200, simpleShape.getY());
-  }
-
-  @Test
-  public void moveOvalOneTick() {
-    IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.move(100, 100, 1);
-    assertEquals(100, simpleShape.getX());
-    assertEquals(100, simpleShape.getY());
-    simpleShape.move(200, 200, 1);
-    assertEquals(200, simpleShape.getX());
-    assertEquals(200, simpleShape.getY());
-  }
-
-  @Test
-  public void moveOvalMoreThanOneTick() {
-    IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.move(100, 100, 100);
-    assertEquals(199, simpleShape.getX());
-    assertEquals(199, simpleShape.getY());
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void invalidColorChange() {
-    IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.changeColor(new Color(255, 255, 255), -10);
-  }
 
   @Test
   public void changeColor() {
     IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.changeColor(new Color(255, 255, 255), 1);
-    assertEquals(new Color(255, 255, 255), simpleShape.getColor());
+        new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
+    simpleShape.changeColor(new Color(255, 0, 0), new Color(0, 0, 0), 1, 2, 1, 2);
+    assertEquals(new Color(0, 0, 0), simpleShape.getColor());
   }
 
   @Test
   public void changeColorMoreThanOneTick() {
     IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.changeColor(new Color(255, 255, 255), 255);
-    assertEquals(new Color(255, 1, 1), simpleShape.getColor());
+        new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
+    simpleShape.changeColor(new Color(255, 0, 0), new Color(255, 255, 255), 9, 10, 1, 10);
+    assertEquals(new Color(255, 255, 255), simpleShape.getColor());
   }
 
   @Test
   public void changeColorDecreaseColors() {
     IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.changeColor(new Color(200, 200, 200), 55);
-    assertEquals(new Color(254, 254, 254), simpleShape.getColor());
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void invalidSizeChange() {
-    IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.changeSize(10, 10, -10);
+        new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
+    simpleShape.changeColor(new Color(255, 0, 0), new Color(0, 0, 0), 1, 2, 1, 2);
+    assertEquals(new Color(0, 0, 0), simpleShape.getColor());
   }
 
   @Test
   public void changeSize() {
     IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.changeSize(1, 50, 1);
-    assertEquals(1, simpleShape.getWidth());
-    assertEquals(50, simpleShape.getHeight());
+        new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
+    simpleShape.changeSize(200, 200, 300, 300, 1, 2, 1, 2);
+    assertEquals(300, ((SimpleShape) simpleShape).height, .01);
+    assertEquals(300, ((SimpleShape) simpleShape).width, .01);
   }
 
   @Test
   public void changeSizeMoreThanOneTick() {
     IShape simpleShape =
-            new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
-    simpleShape.changeSize(100, 150, 50);
-    assertEquals(51, simpleShape.getWidth());
-    assertEquals(101, simpleShape.getHeight());
+        new SimpleShape("o", "ellipse", 200, 200, 50, 100, new Color(255, 0, 0));
+    simpleShape.changeSize(200, 200, 300, 300, 9, 10, 1, 10);
+    assertEquals(300, ((SimpleShape) simpleShape).height, .01);
+    assertEquals(300, ((SimpleShape) simpleShape).width, .01);
   }
 
 }

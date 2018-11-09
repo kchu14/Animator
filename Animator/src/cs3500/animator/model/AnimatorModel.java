@@ -71,4 +71,10 @@ public interface AnimatorModel {
    * @return  A copy of the map of shapes of this animation.
    */
   Map<String, IShape> getShapes();
+
+  /**
+   * Allows the caller to see a copy of the map of shape names and types.
+   * @return  A copy of the map of shapes and types of this animation.
+   */
+  Map<String, String> getNameType();
 }

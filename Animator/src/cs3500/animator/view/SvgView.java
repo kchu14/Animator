@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Map.Entry;
 
 /**
- * TThis is an implementation of the Animator View interface that represents the svg view.
- * It outputs our animation to a svg file that can be played in browser.
+ * TThis is an implementation of the Animator View interface that represents the svg view. It
+ * outputs our animation to a svg file that can be played in browser.
  */
 public class SvgView implements AnimatorView {
 
@@ -41,25 +41,22 @@ public class SvgView implements AnimatorView {
     StringBuilder inSvg = new StringBuilder();
     inSvg.append("<svg width=\"" + model.getWidth() + "\" height=\"" + model.getHeight()
         + "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n\n");
-    for (Entry<String, IShape> set : model.getShapes().entrySet()) {
+
+    for (Entry<String, List<Motion>> set : model.getMotions().entrySet()) {
       String key = set.getKey();
-      IShape value = set.getValue();
-      inSvg.append(value.toSVG());
-      for (Entry<String, List<Motion>> set2 : model.getMotions().entrySet()) {
-        String key2 = set2.getKey();
-        List<Motion> value2 = set2.getValue();
-        if (key.equals(key2)) {
-          for (Motion m : value2) {
-            inSvg.append(m.toSVG(speed));
-          }
-        }
+      List<Motion> lom = set.getValue();
+      inSvg.append(model.getShapes().get(key).toSVG());
+      for (Motion m : lom) {
+        inSvg.append(m.toSVG(speed));
       }
-      if (value.getType().equals("rectangle")) {
+      if (model.getNameType().get(key).equals("rectangle")) {
         inSvg.append("</rect>\n\n");
       } else {
         inSvg.append("</ellipse>\n\n");
       }
     }
+
+
     inSvg.append("</svg>");
 
     byte[] data = inSvg.toString().getBytes();

@@ -46,7 +46,6 @@ public class AnimatorModelImplTest {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
         .declareShape("r", "rectangle").build();
 
-    assertEquals(new ArrayList<IShape>(), m.update(10));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -106,6 +105,9 @@ public class AnimatorModelImplTest {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
         .declareShape("r", "rectangle").declareShape("o", "oval")
         .declareShape("o2", "oval")
+        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0, 10, 100, 100, 50, 50, 0, 0, 255)
+        .addMotion("o", 0, 100, 100, 50, 50, 255, 0, 0, 10, 100, 100, 50, 50, 0, 0, 255)
+        .addMotion("o2", 0, 100, 100, 50, 50, 255, 0, 0, 10, 100, 100, 50, 50, 0, 0, 255)
         .build();
   }
 
@@ -116,6 +118,46 @@ public class AnimatorModelImplTest {
         .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0, 10, 100, 100, 50, 50, 0, 0, 255).build();
     m.checkForValidMotions();
     assertEquals(1, m.getShapes().size());
+  }
+
+
+
+  @Test
+  public void testOverlap() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+            10, 200, 200, 50, 100, 255, 0, 0)
+        .build();
+    m.checkForValidMotions();
+    assertEquals("Shape r rectangle\n"
+        + "motion r 1 200 200 50 100 255 0 0 10 200 200 50 100 255 0 0 \n"
+        + "motion r 10 200 200 50 100 255 0 0 50 300 300 50 100 255 0 0 \n", m.produceTextView());
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testOverlapFail() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+            9, 200, 200, 50, 100, 255, 0, 0)
+        .build();
+    m.checkForValidMotions();
+    assertEquals("", m.produceTextView());
+  }
+
+  @Test (expected =  IllegalArgumentException.class)
+  public void testTeleport() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 201, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+            10, 200, 200, 50, 100, 255, 0, 0)
+        .build();
+    m.checkForValidMotions();
+    assertEquals("", m.produceTextView());
   }
 
 

@@ -64,32 +64,52 @@ public final class AnimatorModelImpl implements AnimatorModel {
     return tickList.get(tickList.size() - 1);
   }
 
+  private void removeShape(String name) {
+    this.shapes.remove(name);
+    this.nameType.remove(name);
+  }
+
+  private void removeMotion(Motion motion, String name) {
+    if (this.nameMotion.containsKey(name)) {
+      List<Motion> lom = nameMotion.get(name);
+      for (Motion m : lom) {
+        if (m.compareTo(motion) == 0) {
+          nameMotion.get(name).remove(motion);
+        }
+      }
+    }
+  }
+
   @Override
   public void checkForValidMotions() {
-    for (List<Motion> listOfMotion : nameMotion.values()) {
-      Collections.sort(listOfMotion);
-      this.addShape(listOfMotion.get(0));
-      int prevEndTime = listOfMotion.get(0).startTime;
-      int prevX = listOfMotion.get(0).startX;
-      int prevY = listOfMotion.get(0).startY;
-      int prevWidth = listOfMotion.get(0).startWidth;
-      int prevHeight = listOfMotion.get(0).startHeight;
-      Color prevColor = listOfMotion.get(0).startColor;
-      for (Motion m : listOfMotion) {
-        if (m.startTime != prevEndTime) {
-          throw new IllegalArgumentException("added an overlapping or gaping motion");
+    try {
+      for (List<Motion> listOfMotion : nameMotion.values()) {
+        Collections.sort(listOfMotion);
+        this.addShape(listOfMotion.get(0));
+        int prevEndTime = listOfMotion.get(0).startTime;
+        int prevX = listOfMotion.get(0).startX;
+        int prevY = listOfMotion.get(0).startY;
+        int prevWidth = listOfMotion.get(0).startWidth;
+        int prevHeight = listOfMotion.get(0).startHeight;
+        Color prevColor = listOfMotion.get(0).startColor;
+        for (Motion m : listOfMotion) {
+          if (m.startTime != prevEndTime) {
+            throw new IllegalArgumentException("added an overlapping or gaping motion");
+          }
+          if (m.startX != prevX || m.startY != prevY || m.startWidth != prevWidth ||
+              m.startHeight != prevHeight || !m.startColor.equals(prevColor)) {
+            throw new IllegalArgumentException("shape motion must be continuous");
+          }
+          prevEndTime = m.endTime;
+          prevX = m.endX;
+          prevY = m.endY;
+          prevWidth = m.endWidth;
+          prevHeight = m.endHeight;
+          prevColor = m.endColor;
         }
-        if (m.startX != prevX || m.startY != prevY || m.startWidth != prevWidth ||
-            m.startHeight != prevHeight || !m.startColor.equals(prevColor)) {
-          throw new IllegalArgumentException("shape motion must be continuous");
-        }
-        prevEndTime = m.endTime;
-        prevX = m.endX;
-        prevY = m.endY;
-        prevWidth = m.endWidth;
-        prevHeight = m.endHeight;
-        prevColor = m.endColor;
       }
+    } catch (NullPointerException e) {
+      throw new IllegalArgumentException("did not add motion or shape correctly");
     }
   }
 
@@ -160,12 +180,17 @@ public final class AnimatorModelImpl implements AnimatorModel {
 
   @Override
   public Map<String, List<Motion>> getMotions() {
-    return new HashMap<>(this.nameMotion);
+    return new LinkedHashMap<>(this.nameMotion);
   }
 
   @Override
   public Map<String, IShape> getShapes() {
-    return new HashMap<>(this.shapes);
+    return new LinkedHashMap<>(this.shapes);
+  }
+
+  @Override
+  public Map<String, String> getNameType() {
+    return new LinkedHashMap<>(this.nameType);
   }
 
   /**
@@ -186,8 +211,10 @@ public final class AnimatorModelImpl implements AnimatorModel {
 
     @Override
     public AnimatorModel build() {
-      return new AnimatorModelImpl(shapes, nameMotion, nameType,
+      AnimatorModel m = new AnimatorModelImpl(shapes, nameMotion, nameType,
           leftMostX, topMostY, animationWidth, animationHeight, tickList);
+      m.checkForValidMotions();
+      return m;
     }
 
     @Override
@@ -205,7 +232,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
      */
     public AnimationBuilder<AnimatorModel> declareShape(String name, String type) {
       if (this.nameType == null) {
-        this.nameType = new HashMap<>();
+        this.nameType = new LinkedHashMap<>();
       }
 
       if (this.nameType.containsKey(name)) {
@@ -256,9 +283,9 @@ public final class AnimatorModelImpl implements AnimatorModel {
     @Override
     public AnimationBuilder<AnimatorModel> addKeyframe(String name, int t, int x, int y, int w,
         int h, int r, int g, int b) {
-      return null;
+      this.addMotion(name, t, x, y, w, h, r, g, b, t, x, y, w, h, r, g, b);
+      return this;
     }
-    // FILL IN HERE
   }
 }
 

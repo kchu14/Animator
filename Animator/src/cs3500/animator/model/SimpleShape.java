@@ -94,7 +94,8 @@ public class SimpleShape implements IShape {
     int blue = (int) (startColor.getBlue() * ((endTime - currentTick) / totalTicks)
         + endColor.getBlue() * ((currentTick - startTime) / totalTicks));
 
-    this.color = new Color(red, green, blue);
+    this.color = new Color(Math.max(0, Math.min(red, 255)), Math.max(0, Math.min(green, 255)),
+        Math.max(0, Math.min(blue, 255)));
     getCurShape();
   }
 
