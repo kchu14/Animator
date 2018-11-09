@@ -30,10 +30,6 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
     this.speed = speed;
 
 
-    List<String> lines = Arrays.asList("The first line", "The second line");
-    Path file = Paths.get("the-file-name.txt");
-    Files.write(file, lines, Charset.forName("UTF-8"));
-  //Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
   }
 
   /**
@@ -57,28 +53,6 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
 
   @Override
   public void playAnimation(AnimatorModel model) {
-<<<<<<< HEAD
-    makeVisible();
-
-    for(int i = 0; i <= model.getLastTick(); i++) {
-      try {
-        Thread.sleep(69);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-
-      refresh();
-      animatorPanel.setShapes(model.update(i));
-    }
-
-  }
-
-
-  @Override
-  public void setWindow(int width, int height, int x, int y) {
-    this.height = height;
-=======
->>>>>>> 93c9189c790647e0737526dc310c219ff00a35cd
     this.setTitle("Animator");
     this.setSize(model.getWidth(), model.getHeight());
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
