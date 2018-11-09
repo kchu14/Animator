@@ -14,11 +14,14 @@ import java.io.Writer;
 public class TextView implements AnimatorView {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   //
 //    List<String> lines = Arrays.asList("The first line", "The second line");
 //    Path file = Paths.get("the-file-name.txt");
 //    Files.write(file, lines, Charset.forName("UTF-8"));
   //Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
+=======
+>>>>>>> parent of 591ed9c... different version
   @Override
   public void makeVisible() {
 =======
