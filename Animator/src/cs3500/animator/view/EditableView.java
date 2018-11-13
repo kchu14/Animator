@@ -3,7 +3,11 @@ package cs3500.animator.view;
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.Motion;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,15 +34,22 @@ public class EditableView extends JFrame implements AnimatorView {
   public void playAnimation(AnimatorModel model) {
     this.setKeyFrames(model.getKeyFrames());
     this.setTitle("Editor");
-    this.setSize(700, 700);
+    this.setSize(1280, 700);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setLayout(new GridLayout(1,2,3,3)); //3,3 are gaps
     ePane = new EditorPanel(keyFrames);
     ePane.setPreferredSize(new Dimension(500, 500));
-    this.add(ePane, BorderLayout.WEST);
-    this.setVisible(true);
-    this.pack();
+    ePane.setBackground(Color.BLACK);
+    ePane.setLayout(new FlowLayout(FlowLayout.LEFT,3,3)); //Components aligned to left
+    this.add(ePane);
+
+    //this.pack();
 
     graphicsView.playAnimation(model);
+    this.add(graphicsView.getAnimation());
+
+
+    this.setVisible(true);
 
   }
 

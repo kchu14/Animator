@@ -3,6 +3,7 @@ package cs3500.animator.view;
 import cs3500.animator.model.Motion;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -30,6 +32,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 
   private JLabel colorChooserDisplay;
   private JPanel motionPanel;
+  private JPanel shapeNamesPanel;
   private Map<String, List<Motion>> keyFrames;
   private JList<String> listOfStrings;
   private JList<String> listOfMotions;
@@ -40,8 +43,9 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
   public EditorPanel(Map<String, List<Motion>> keyFrames) {
     super();
     this.keyFrames = keyFrames;
-    motionPanel = new JPanel();
-    this.add(new JScrollPane(motionPanel));
+    shapeNamesPanel = new JPanel();
+    shapeNamesPanel.setBackground(Color.red);
+    //motionPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
     for (Entry<String, List<Motion>> shape : keyFrames.entrySet()) {
       dataForListOfStrings.addElement(shape.getKey());
@@ -50,8 +54,15 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     listOfStrings = new JList<>(dataForListOfStrings);
     listOfStrings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     listOfStrings.addListSelectionListener(this);
-    this.add(listOfStrings);
+    //JScrollPane scrollShapeNames = new JScrollPane(listOfStrings);
+    //scrollShapeNames.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+    shapeNamesPanel.add(new JScrollPane(listOfStrings));
+    this.add(shapeNamesPanel);
+    motionPanel = new JPanel();
+    motionPanel.setBackground(Color.green);
+    //motionPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    this.add(motionPanel);
 
 
     /*JPanel colorChooserPanel = new JPanel();
@@ -110,7 +121,6 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 
   @Override
   public void valueChanged(ListSelectionEvent e) {
-    this.remove(motionPanel);
     displayMotions(listOfStrings.getSelectedValue());
 
   }
