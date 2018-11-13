@@ -2,18 +2,14 @@ package cs3500.animator;
 
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.AnimatorModelImpl;
-import cs3500.animator.util.AnimationBuilder;
 import cs3500.animator.util.AnimationReader;
 import cs3500.animator.view.AnimatorView;
+import cs3500.animator.view.EditableView;
 import cs3500.animator.view.SvgView;
 import cs3500.animator.view.TextView;
+import cs3500.animator.view.IVisualGraphicsView;
 import cs3500.animator.view.VisualGraphicsView;
-import java.io.File;
 import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.util.Scanner;
-import javafx.scene.shape.SVGPath;
 
 /**
  * This class contains the main method and runs the animation based off of the given command line
@@ -27,7 +23,6 @@ public final class Excellence {
    * @param args the command line arguments that specifies the type of animation.
    */
   public static void main(String[] args) {
-    //-in "name-of-animation-file" -view "type-of-view" -out "where-output-show-go" -speed "integer-ticks-per-second"
     String fileName = "";
     String viewType = "";
     String outType = "System.out";
@@ -55,9 +50,10 @@ public final class Excellence {
 
     AnimatorModel model;
     AnimatorView view = constructView(viewType, outType, speed);
+
     if (view == null || error) {
-      view = new VisualGraphicsView(speed);
-      view.showErrorMessage(errorMsg);
+      IVisualGraphicsView v = new VisualGraphicsView(speed);
+      v.showErrorMessage(errorMsg);
       System.exit(0);
     }
 
@@ -94,6 +90,10 @@ public final class Excellence {
 
     if (viewType.equals("visual")) {
       view = new VisualGraphicsView(speed);
+    }
+
+    if (viewType.equals("edit")) {
+      view = new EditableView(new VisualGraphicsView(speed));
     }
 
     return view;

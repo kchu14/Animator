@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
 
@@ -14,7 +15,7 @@ import javax.swing.Timer;
  * This is an implementation of the Animator View interface that uses Java Swing to draw the results
  * of the animation. It plays the animation using a timer to the users specified speed.
  */
-public class VisualGraphicsView extends JFrame implements AnimatorView {
+public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
 
   private AnimatorPanel animatorPanel;
   private int speed;
@@ -69,6 +70,22 @@ public class VisualGraphicsView extends JFrame implements AnimatorView {
     ActionListener listener = new MyTimerActionListener(i, model, t);
     t.addActionListener(listener);
     t.start();
+  }
+
+  @Override
+  public JPanel getAnimation() {
+//    animatorPanel = new AnimatorPanel();
+//    animatorPanel.setPreferredSize(new Dimension(model.getWidth(), model.getHeight()));
+//    JScrollPane pane = new JScrollPane(animatorPanel);
+//    this.add(pane, BorderLayout.CENTER);
+//    this.pack();
+//    makeVisible();
+//    int i = 0;
+//    Timer t = new Timer(1000 / speed, null);
+//    ActionListener listener = new MyTimerActionListener(i, model, t);
+//    t.addActionListener(listener);
+//    t.start();
+    return animatorPanel;
   }
 
   /**

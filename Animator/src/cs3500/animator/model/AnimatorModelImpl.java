@@ -4,7 +4,6 @@ import cs3500.animator.util.AnimationBuilder;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,7 @@ import java.util.Map.Entry;
  * Operations include, producing the text view ouput, building the model and checking for valid
  * inputs (motions are correct and not overlapping on the same shape).
  */
-public final class AnimatorModelImpl implements AnimatorModel {
+public class AnimatorModelImpl implements AnimatorModel, IReadOnlyModel {
 
   // shape name, shape object
   private Map<String, IShape> shapes;
@@ -78,6 +77,26 @@ public final class AnimatorModelImpl implements AnimatorModel {
         }
       }
     }
+  }
+
+  @Override
+  public Map<String, List<Motion>> getKeyFrames() {
+    Map<String, List<Motion>> result = new LinkedHashMap<>();
+    for (Entry<String, List<Motion>> set : nameMotion.entrySet()) {
+      List<Motion> result2 = new ArrayList<>();
+      for (Motion m : set.getValue()) {
+        result2.add(
+            new Motion(m.name, m.type, m.startTime, m.startX, m.startY, m.startWidth, m.startHeight,
+                m.startColor,
+                m.startTime, m.startX, m.startY, m.startWidth, m.startHeight, m.startColor));
+        result2.add(
+            new Motion(m.name, m.type, m.endTime, m.endX, m.endY, m.endWidth, m.endHeight,
+                m.endColor,
+                m.endTime, m.endX, m.endY, m.endWidth, m.endHeight, m.endColor));
+      }
+      result.put(set.getKey(), result2);
+    }
+    return result;
   }
 
   @Override
@@ -161,21 +180,6 @@ public final class AnimatorModelImpl implements AnimatorModel {
           new SimpleShape(key, nameType.get(m.name), m.startX, m.startY, m.startWidth,
               m.startHeight, m.startColor));
     }
-  }
-
-
-  @Override
-  public String produceTextView() {
-    StringBuilder result = new StringBuilder();
-    for (Entry<String, List<Motion>> set : nameMotion.entrySet()) {
-      String key = set.getKey();
-      List<Motion> value = set.getValue();
-      result.append("Shape " + key + " " + nameType.get(key) + "\n");
-      for (Motion m : value) {
-        result.append(m.getTextResult());
-      }
-    }
-    return result.toString();
   }
 
   @Override

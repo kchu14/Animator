@@ -71,10 +71,4 @@ public interface IShape {
    */
   String toSVG();
 
-  /**
-   * Returns the type of shape (rectangle, ellipse).
-   *
-   * @return the type of the shape.
-   */
-  String getType();
 }
