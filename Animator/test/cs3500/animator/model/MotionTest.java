@@ -44,4 +44,7 @@ public class MotionTest {
             + "<animate attributeType=\"xml\" begin=\"1000.0ms\" dur=\"10000.0ms\" attributeName=\"height\" from=\"100.0\" to=\"200.0\" fill=\"freeze\"/>\n",
         m.toSVG(1));
   }
+
+  @Test
+  public void
 }
