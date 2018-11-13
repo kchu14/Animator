@@ -61,7 +61,7 @@ public class TextView implements ITextView {
     if (this.fileOutput.equals("System.out")) {
       System.out.println(this.produceTextView(model.getMotions(), model.getNameType()));
     } else {
-      Writer writer = null;
+      BufferedWriter writer = null;
 
       String[] motions = this.produceTextView(model.getMotions(),
           model.getNameType()).split("\n");
@@ -71,7 +71,7 @@ public class TextView implements ITextView {
             new FileOutputStream(fileOutput)));
         for (String m : motions) {
           writer.write(m);
-          ((BufferedWriter) writer).newLine();
+           writer.newLine();
         }
 
       } catch (IOException ex) {
