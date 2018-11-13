@@ -4,6 +4,7 @@ import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.AnimatorModelImpl;
 import cs3500.animator.util.AnimationReader;
 import cs3500.animator.view.AnimatorView;
+import cs3500.animator.view.EditableView;
 import cs3500.animator.view.SvgView;
 import cs3500.animator.view.TextView;
 import cs3500.animator.view.IVisualGraphicsView;
@@ -89,6 +90,10 @@ public final class Excellence {
 
     if (viewType.equals("visual")) {
       view = new VisualGraphicsView(speed);
+    }
+
+    if (viewType.equals("edit")) {
+      view = new EditableView(new VisualGraphicsView(speed));
     }
 
     return view;
