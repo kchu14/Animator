@@ -32,7 +32,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 
   private JLabel colorChooserDisplay;
   private JPanel motionPanel;
-  private JPanel shapeNamesPanel;
+  private JPanel shapesAndMotions;
   private Map<String, List<Motion>> keyFrames;
   private JList<String> listOfStrings;
   private JList<String> listOfMotions;
@@ -42,8 +42,11 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
    */
   public EditorPanel(Map<String, List<Motion>> keyFrames) {
     super();
+    shapesAndMotions = new JPanel();
+    shapesAndMotions.setBackground(Color.BLUE);
+    shapesAndMotions.setSize(640, 350);
     this.keyFrames = keyFrames;
-    shapeNamesPanel = new JPanel();
+    JPanel shapeNamesPanel = new JPanel();
     shapeNamesPanel.setBackground(Color.red);
     //motionPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
@@ -58,12 +61,12 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     //scrollShapeNames.setAlignmentX(Component.LEFT_ALIGNMENT);
 
     shapeNamesPanel.add(new JScrollPane(listOfStrings));
-    this.add(shapeNamesPanel);
+    shapesAndMotions.add(shapeNamesPanel);
     motionPanel = new JPanel();
     motionPanel.setBackground(Color.green);
     //motionPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    this.add(motionPanel);
-
+    shapesAndMotions.add(motionPanel);
+    this.add(shapesAndMotions);
 
     /*JPanel colorChooserPanel = new JPanel();
     colorChooserPanel.setLayout(new FlowLayout());
@@ -92,7 +95,8 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     listOfMotions.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     listOfMotions.addListSelectionListener(this);
     motionPanel.add(new JScrollPane(listOfMotions));
-    this.add(motionPanel);
+    shapesAndMotions.add(motionPanel);
+    this.add(shapesAndMotions);
     this.updateUI();
     System.out.println("displaying");
 

@@ -132,6 +132,14 @@ public class AnimatorModelImpl implements AnimatorModel, IReadOnlyModel {
     }
   }
 
+  //other option: run through the program first
+  //store each list of newshapes (frame)
+  //just use a getter and loop through ticks
+  //downsides - takes up a ton of memory
+
+  //make a field newShapes in our model
+  //mutate the field using this method
+  //use a getter to get the shapes
   @Override
   public List<IShape> update(int tick) {
     newShapes.clear();
