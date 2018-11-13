@@ -14,7 +14,7 @@ import javax.swing.Timer;
  * This is an implementation of the Animator View interface that uses Java Swing to draw the results
  * of the animation. It plays the animation using a timer to the users specified speed.
  */
-public class VisualGraphicsView extends JFrame implements AnimatorView {
+public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
 
   private AnimatorPanel animatorPanel;
   private int speed;

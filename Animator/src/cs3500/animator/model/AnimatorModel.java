@@ -10,12 +10,6 @@ import java.util.Map;
 public interface AnimatorModel {
 
   /**
-   * Produces a text output representation of the set of motions input into this animation.
-   * @return  A String representing the animation through a list of motions.
-   */
-  String produceTextView();
-
-  /**
    * Checks if any of the motions input into this animation are invalid. This means if they overlap
    * or have gaps in between motions.
    */
@@ -77,4 +71,7 @@ public interface AnimatorModel {
    * @return  A copy of the map of shapes and types of this animation.
    */
   Map<String, String> getNameType();
+
+
+  Map<String, List<Motion>> getKeyFrames();
 }

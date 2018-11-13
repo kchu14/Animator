@@ -12,29 +12,36 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * This is an implementation of the Animator View interface that represents the text view. It outputs our animation to a
- * text file or to system.out by default.
+ * This is an implementation of the Animator View interface that represents the text view. It
+ * outputs our animation to a text file or to system.out by default.
  */
-public class TextView implements AnimatorView {
+public class TextView implements ITextView {
 
   private String fileOutput;
+  protected String fileOutputString;
 
 
   /**
    * Constructs a text view.
-    * @param fileOutput the output file name.
+   *
+   * @param fileOutput the output file name.
    */
   public TextView(String fileOutput) {
     this.fileOutput = fileOutput;
   }
 
-
   @Override
-  public void showErrorMessage(String error) {
-
+  public String getFileOutput() {
+    return new String(fileOutputString);
   }
 
-  private String produceTextView(Map<String, List<Motion>> nameMotion, Map<String, String> nameType) {
+  /**
+   * Produces a text output representation of the set of motions input into this animation.
+   *
+   * @return A String representing the animation through a list of motions.
+   */
+  private String produceTextView(Map<String, List<Motion>> nameMotion,
+      Map<String, String> nameType) {
     StringBuilder result = new StringBuilder();
     for (Entry<String, List<Motion>> set : nameMotion.entrySet()) {
       String key = set.getKey();
@@ -44,6 +51,7 @@ public class TextView implements AnimatorView {
         result.append(m.getTextResult());
       }
     }
+    this.fileOutputString = result.toString();
     return result.toString();
   }
 
@@ -55,7 +63,8 @@ public class TextView implements AnimatorView {
     } else {
       Writer writer = null;
 
-      String[] motions = this.produceTextView(model.getMotions(), model.getNameType()).split("\n");
+      String[] motions = this.produceTextView(model.getMotions(),
+          model.getNameType()).split("\n");
 
       try {
         writer = new BufferedWriter(new OutputStreamWriter(
@@ -66,12 +75,12 @@ public class TextView implements AnimatorView {
         }
 
       } catch (IOException ex) {
-        this.showErrorMessage(ex.getMessage());
+        throw new IllegalArgumentException(ex.getMessage());
       } finally {
         try {
           writer.close();
         } catch (Exception ex) {
-          this.showErrorMessage(ex.getMessage());
+          throw new IllegalArgumentException(ex.getMessage());
         }
       }
     }

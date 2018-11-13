@@ -138,7 +138,7 @@ public class SimpleShape implements IShape {
           + ", " + Integer.toString((this.color.getGreen())) + ", "
           + Integer.toString((this.color.getBlue()))
           + ")\"" + " visibility=\"visible\">\n";
-      ;
+
 
     } else {
       thisType = "<ellipse id=\"" + name + "\" cx=\""
@@ -148,15 +148,8 @@ public class SimpleShape implements IShape {
           + ", " + Integer.toString((this.color.getGreen())) + ", "
           + Integer.toString((this.color.getBlue()))
           + ")\"" + " visibility=\"visible\">\n";
-      ;
+
     }
     return thisType;
   }
-
-  @Override
-  public String getType() {
-    return new String(this.type);
-  }
-
-
 }

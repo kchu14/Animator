@@ -4,7 +4,6 @@ import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
 
 import cs3500.animator.model.AnimatorModel;
-import cs3500.animator.model.IShape;
 import cs3500.animator.model.Motion;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -16,13 +15,14 @@ import java.util.List;
 import java.util.Map.Entry;
 
 /**
- * TThis is an implementation of the Animator View interface that represents the svg view. It
+ * This is an implementation of the Animator View interface that represents the svg view. It
  * outputs our animation to a svg file that can be played in browser.
  */
-public class SvgView implements AnimatorView {
+public class SvgView implements ISvgView {
 
   private String fileOut;
   private int speed;
+  protected String outPutText;
 
   /**
    * Constructs a svg view.
@@ -55,10 +55,8 @@ public class SvgView implements AnimatorView {
         inSvg.append("</ellipse>\n\n");
       }
     }
-
-
     inSvg.append("</svg>");
-
+    outPutText = inSvg.toString();
     byte[] data = inSvg.toString().getBytes();
     Path p = Paths.get("./", this.fileOut);//String.valueOf(outFile));
     try (OutputStream out = new BufferedOutputStream(
@@ -71,8 +69,8 @@ public class SvgView implements AnimatorView {
 
 
   @Override
-  public void showErrorMessage(String error) {
-
+  public String getOutPutText() {
+    return new String(outPutText);
   }
 
 

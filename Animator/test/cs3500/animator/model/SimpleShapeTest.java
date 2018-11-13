@@ -2,7 +2,8 @@ package cs3500.animator.model;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 
 import org.junit.Test;
@@ -36,7 +37,8 @@ public class SimpleShapeTest {
         new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
     simpleShape.move(200, 200, 200, 200, 1, 2, 1, 2);
     assertEquals(
-        "<rect id=\"r\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" fill=\"rgb(255, 0, 0)\" visibility=\"visible\">\n",
+        "<rect id=\"r\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" fill=\""
+            + "rgb(255, 0, 0)\" visibility=\"visible\">\n",
         simpleShape.toSVG());
   }
 
@@ -46,7 +48,8 @@ public class SimpleShapeTest {
         new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
     simpleShape.move(200, 200, 201, 201, 1, 2, 1, 2);
     assertEquals(
-        "<rect id=\"r\" x=\"201.0\" y=\"201.0\" width=\"50.0\" height=\"100.0\" fill=\"rgb(255, 0, 0)\" visibility=\"visible\">\n",
+        "<rect id=\"r\" x=\"201.0\" y=\"201.0\" width=\"50.0\" height=\"100.0\" "
+            + "fill=\"rgb(255, 0, 0)\" visibility=\"visible\">\n",
         simpleShape.toSVG());
   }
 
@@ -56,7 +59,8 @@ public class SimpleShapeTest {
         new SimpleShape("r", "rectangle", 200, 200, 50, 100, new Color(255, 0, 0));
     simpleShape.move(200, 200, 210, 210, 9, 10, 1, 10);
     assertEquals(
-        "<rect id=\"r\" x=\"210.0\" y=\"210.0\" width=\"50.0\" height=\"100.0\" fill=\"rgb(255, 0, 0)\" visibility=\"visible\">\n",
+        "<rect id=\"r\" x=\"210.0\" y=\"210.0\" width=\"50.0\" height=\"100.0\" "
+            + "fill=\"rgb(255, 0, 0)\" visibility=\"visible\">\n",
         simpleShape.toSVG());
   }
 
