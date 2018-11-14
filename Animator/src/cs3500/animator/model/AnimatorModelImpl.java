@@ -152,7 +152,6 @@ public class AnimatorModelImpl implements AnimatorModel {
 
   private void update(int tick) {
     List<IShape> newShapes = new ArrayList<>();
-    System.out.println(tick);
     if (nameMotion == null) {
       throw new IllegalArgumentException("no motions created");
     }

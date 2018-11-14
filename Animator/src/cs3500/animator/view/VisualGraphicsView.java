@@ -65,9 +65,16 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
     this.add(pane, BorderLayout.CENTER);
     this.pack();
     makeVisible();
+    initiateTimer(model, animatorPanel);
+
+
+  }
+
+  @Override
+  public void initiateTimer(AnimatorModel model, AnimatorPanel animatorPanel) {
     int i = 0;
     Timer t = new Timer(1000 / speed, null);
-    ActionListener listener = new MyTimerActionListener(i, model, t);
+    ActionListener listener = new MyTimerActionListener(i, model, t, animatorPanel);
     t.addActionListener(listener);
     t.start();
   }
@@ -88,39 +95,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
     return animatorPanel;
   }
 
-  /**
-   * This is an implementation of the action listener interface. It represents our action listener
-   * that is used to control the speed of the animation.
-   */
-  class MyTimerActionListener implements ActionListener {
 
-    private int tick;
-    private AnimatorModel model;
-    private Timer t;
-
-    /**
-     * Constructs a action listener to be used in the display of the animation.
-     *
-     * @param tick the current tick
-     * @param model the model to be displayed
-     * @param t the timer
-     */
-    private MyTimerActionListener(int tick, AnimatorModel model, Timer t) {
-      this.tick = tick;
-      this.model = model;
-      this.t = t;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-      refresh();
-      animatorPanel.setShapes(model.getTickListShapes().get(tick));
-      tick++;
-      if (tick > model.getLastTick()) {
-        t.stop();
-      }
-    }
-  }
 
 
 }

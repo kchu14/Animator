@@ -45,8 +45,9 @@ public class EditableView extends JFrame implements AnimatorView {
 
     //this.pack();
 
-    graphicsView.playAnimation(model);
-    this.add(graphicsView.getAnimation());
+    AnimatorPanel animatorPanel = new AnimatorPanel();
+    graphicsView.initiateTimer(model, animatorPanel);
+    this.add(animatorPanel);
 
 
     this.setVisible(true);

@@ -1,6 +1,7 @@
 package cs3500.animator.view;
 
 
+import cs3500.animator.model.AnimatorModel;
 import javax.swing.JPanel;
 
 /**
@@ -18,4 +19,5 @@ public interface IVisualGraphicsView extends AnimatorView{
 
   JPanel getAnimation();
 
+  void initiateTimer(AnimatorModel model, AnimatorPanel animatorPanel);
 }
