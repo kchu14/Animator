@@ -18,6 +18,7 @@ import java.util.Map.Entry;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -81,54 +82,62 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     //input textfield
     JTextField redText = new JTextField(2);
     shapeAttributes.add(redText);
-
-    //buttons
     JButton redButton = new JButton("Red");
     shapeAttributes.add(redButton);
 
     //input textfield
     JTextField greenText = new JTextField(2);
     shapeAttributes.add(greenText);
-
-    //buttons
     JButton greenButton = new JButton("Green");
     shapeAttributes.add(greenButton);
 
     //input textfield
     JTextField blueText = new JTextField(2);
     shapeAttributes.add(blueText);
-
-    //buttons
     JButton blueButton = new JButton("Blue");
     shapeAttributes.add(blueButton);
 
     //input textfield
     JTextField widthText = new JTextField(2);
     shapeAttributes.add(widthText);
-
-    //buttons
     JButton widthButton = new JButton("Width");
     shapeAttributes.add(widthButton);
 
-//input textfield
+    //input textfield
     JTextField heightText = new JTextField(2);
     shapeAttributes.add(heightText);
-
-    //buttons
     JButton heightButton = new JButton("Height");
     shapeAttributes.add(heightButton);
 
-    this.add(shapeAttributes, BorderLayout.CENTER);
+    //input textfield
+    JTextField xText = new JTextField(2);
+    shapeAttributes.add(xText);
+    JButton xButton = new JButton("X");
+    shapeAttributes.add(xButton);
 
+    //input textfield
+    JTextField yText = new JTextField(2);
+    shapeAttributes.add(yText);
+    JButton yButton = new JButton("Y");
+    shapeAttributes.add(yButton);
+    this.add(shapeAttributes, BorderLayout.CENTER);
 
     JPanel playBackCommands = new JPanel();
     playBackCommands.setLayout(new FlowLayout());
+    JButton restart = new JButton("restart");
     JButton rewind = new JButton("<");
-    JButton pause = new JButton("||");
+    JButton pause = new JButton("pause");
     JButton forwards = new JButton(">");
+    JButton start = new JButton("start");
+    JCheckBox loop = new JCheckBox("loop");
+
     playBackCommands.add(rewind);
     playBackCommands.add(pause);
+    playBackCommands.add(start);
     playBackCommands.add(forwards);
+    playBackCommands.add(restart);
+    playBackCommands.add(loop);
+
     this.add(playBackCommands, BorderLayout.SOUTH);
 
     /*JPanel colorChooserPanel = new JPanel();
