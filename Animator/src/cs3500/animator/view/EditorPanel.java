@@ -4,6 +4,7 @@ import cs3500.animator.model.Motion;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -45,6 +47,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     shapesAndMotions = new JPanel();
     shapesAndMotions.setBackground(Color.BLUE);
     shapesAndMotions.setSize(640, 350);
+    shapesAndMotions.setLayout(new FlowLayout());
     this.keyFrames = keyFrames;
     JPanel shapeNamesPanel = new JPanel();
     shapeNamesPanel.setBackground(Color.red);
@@ -61,12 +64,31 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     //scrollShapeNames.setAlignmentX(Component.LEFT_ALIGNMENT);
 
     shapeNamesPanel.add(new JScrollPane(listOfStrings));
-    shapesAndMotions.add(shapeNamesPanel);
+    shapesAndMotions.add(shapeNamesPanel, BorderLayout.WEST);
     motionPanel = new JPanel();
     motionPanel.setBackground(Color.green);
+    motionPanel.setLayout(new FlowLayout());
+    motionPanel.setPreferredSize(new Dimension(300,200));
     //motionPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    shapesAndMotions.add(motionPanel);
-    this.add(shapesAndMotions);
+    shapesAndMotions.add(motionPanel, BorderLayout.EAST);
+    this.add(shapesAndMotions, BorderLayout.NORTH);
+
+    JPanel shapeAttributes = new JPanel();
+    shapeAttributes.setBackground(Color.gray);
+    shapeAttributes.setLayout(new FlowLayout());
+
+    //input textfield
+    JTextField input = new JTextField(15);
+    shapeAttributes.add(input);
+
+    //buttons
+    JButton commandButton = new JButton("Execute");
+    shapeAttributes.add(commandButton);
+
+    this.add(shapeAttributes, BorderLayout.SOUTH);
+
+
+
 
     /*JPanel colorChooserPanel = new JPanel();
     colorChooserPanel.setLayout(new FlowLayout());
