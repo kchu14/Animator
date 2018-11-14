@@ -58,9 +58,12 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     shapesAndMotions.setBackground(Color.BLUE);
     shapesAndMotions.setPreferredSize(new Dimension(640, 350));
     shapesAndMotions.setLayout(new BorderLayout());
+
     this.keyFrames = keyFrames;
     JPanel shapeNamesPanel = new JPanel();
     shapeNamesPanel.setBackground(Color.red);
+    shapeNamesPanel.setBorder(BorderFactory.createTitledBorder("Shape Name"));
+
     DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
     for (Entry<String, List<Motion>> shape : keyFrames.entrySet()) {
       dataForListOfStrings.addElement(shape.getKey());
@@ -74,55 +77,103 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     shapesAndMotions.add(shapeNamesPanel, BorderLayout.WEST);
     motionPanel = new JPanel();
     motionPanel.setBackground(Color.green);
-    motionPanel.setLayout(new FlowLayout());
+    motionPanel.setLayout(new BorderLayout());
+    motionPanel.setBorder(BorderFactory.createTitledBorder("Keyframes"));
+
+
+
     shapesAndMotions.add(motionPanel, BorderLayout.CENTER);
+    JPanel keyFrameButtons = new JPanel(new FlowLayout());
+    JButton addMotionButton = new JButton("add keyframe");
+    JButton removeMotionButton = new JButton("remove keyframe");
+    JButton addShapeButton = new JButton("add shape");
+    JButton removeShapeButton = new JButton("remove shape");
+    keyFrameButtons.add(addShapeButton);
+    keyFrameButtons.add(removeShapeButton);
+    keyFrameButtons.add(addMotionButton);
+    keyFrameButtons.add(removeMotionButton);
+
+    shapesAndMotions.add(keyFrameButtons, BorderLayout.SOUTH);
     this.add(shapesAndMotions, BorderLayout.NORTH);
+
+
 
     JPanel shapeAttributes = new JPanel();
     shapeAttributes.setBackground(Color.gray);
     shapeAttributes.setLayout(new FlowLayout());
+    shapeAttributes.setBorder(BorderFactory.createTitledBorder("Shape Attributes"));
+
+
+
+    JPanel colors = new JPanel();
+    colors.setLayout(new BoxLayout(colors, BoxLayout.Y_AXIS));
 
     //input textfield
+    JPanel redTextButton =  new JPanel(new FlowLayout());
     JTextField redText = new JTextField(2);
-    shapeAttributes.add(redText);
+    redTextButton.add(redText);
     JButton redButton = new JButton("Red");
-    shapeAttributes.add(redButton);
+    redTextButton.add(redButton);
+    colors.add(redTextButton);
 
     //input textfield
+    JPanel greenTextButton =  new JPanel(new FlowLayout());
     JTextField greenText = new JTextField(2);
-    shapeAttributes.add(greenText);
+    greenTextButton.add(greenText);
     JButton greenButton = new JButton("Green");
-    shapeAttributes.add(greenButton);
+    greenTextButton.add(greenButton);
+    colors.add(greenTextButton);
 
     //input textfield
+    JPanel blueTextButton =  new JPanel(new FlowLayout());
     JTextField blueText = new JTextField(2);
-    shapeAttributes.add(blueText);
+    blueTextButton.add(blueText);
     JButton blueButton = new JButton("Blue");
-    shapeAttributes.add(blueButton);
+    blueTextButton.add(blueButton);
+    colors.add(blueTextButton);
 
+
+    shapeAttributes.add(colors);
+
+    JPanel sizePanel = new JPanel();
+    sizePanel.setLayout(new BoxLayout(sizePanel, BoxLayout.Y_AXIS));
     //input textfield
+    JPanel widthTextButton =  new JPanel(new FlowLayout());
     JTextField widthText = new JTextField(2);
-    shapeAttributes.add(widthText);
+    widthTextButton.add(widthText);
     JButton widthButton = new JButton("Width");
-    shapeAttributes.add(widthButton);
+    widthTextButton.add(widthButton);
+    sizePanel.add(widthTextButton);
 
     //input textfield
+    JPanel heightTextButton =  new JPanel(new FlowLayout());
     JTextField heightText = new JTextField(2);
-    shapeAttributes.add(heightText);
+    heightTextButton.add(heightText);
     JButton heightButton = new JButton("Height");
-    shapeAttributes.add(heightButton);
+    heightTextButton.add(heightButton);
+    sizePanel.add(heightTextButton);
 
+    shapeAttributes.add(sizePanel);
+
+
+    JPanel positionPanel = new JPanel();
+    positionPanel.setLayout(new BoxLayout(positionPanel, BoxLayout.Y_AXIS));
     //input textfield
+    JPanel xTextButton =  new JPanel(new FlowLayout());
     JTextField xText = new JTextField(2);
-    shapeAttributes.add(xText);
+    xTextButton.add(xText);
     JButton xButton = new JButton("X");
-    shapeAttributes.add(xButton);
+    xTextButton.add(xButton);
+    positionPanel.add(xTextButton);
 
     //input textfield
+    JPanel yTextButton =  new JPanel(new FlowLayout());
     JTextField yText = new JTextField(2);
-    shapeAttributes.add(yText);
+    yTextButton.add(yText);
     JButton yButton = new JButton("Y");
-    shapeAttributes.add(yButton);
+    yTextButton.add(yButton);
+    positionPanel.add(yTextButton);
+    shapeAttributes.add(positionPanel);
 
     //radio buttons
     JPanel radioPanel = new JPanel();
@@ -136,6 +187,8 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     radioPanel.add(rectangleButton);
     radioPanel.add(ellipseButton);
     shapeAttributes.add(radioPanel);
+
+
 
     this.add(shapeAttributes, BorderLayout.CENTER);
 
