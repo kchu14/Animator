@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -117,10 +118,18 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     JButton heightButton = new JButton("Height");
     shapeAttributes.add(heightButton);
 
-    this.add(shapeAttributes, BorderLayout.SOUTH);
+    this.add(shapeAttributes, BorderLayout.CENTER);
 
 
-
+    JPanel playBackCommands = new JPanel();
+    playBackCommands.setLayout(new FlowLayout());
+    JButton rewind = new JButton("<");
+    JButton pause = new JButton("||");
+    JButton forwards = new JButton(">");
+    playBackCommands.add(rewind);
+    playBackCommands.add(pause);
+    playBackCommands.add(forwards);
+    this.add(playBackCommands, BorderLayout.SOUTH);
 
     /*JPanel colorChooserPanel = new JPanel();
     colorChooserPanel.setLayout(new FlowLayout());
