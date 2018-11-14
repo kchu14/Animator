@@ -42,16 +42,20 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
   /**
    * Constructs the animation panel and sets the shapes list to an array list.
    */
+
   public EditorPanel(Map<String, List<Motion>> keyFrames) {
     super();
+    this.setLayout(new BorderLayout());
+    this.setPreferredSize(new Dimension(500, 500));
+    this.setBackground(Color.BLACK);
+
     shapesAndMotions = new JPanel();
     shapesAndMotions.setBackground(Color.BLUE);
-    shapesAndMotions.setSize(640, 350);
-    shapesAndMotions.setLayout(new FlowLayout());
+    shapesAndMotions.setPreferredSize(new Dimension(640, 350));
+    shapesAndMotions.setLayout(new BorderLayout());
     this.keyFrames = keyFrames;
     JPanel shapeNamesPanel = new JPanel();
     shapeNamesPanel.setBackground(Color.red);
-    //motionPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
     for (Entry<String, List<Motion>> shape : keyFrames.entrySet()) {
       dataForListOfStrings.addElement(shape.getKey());
@@ -60,17 +64,13 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     listOfStrings = new JList<>(dataForListOfStrings);
     listOfStrings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     listOfStrings.addListSelectionListener(this);
-    //JScrollPane scrollShapeNames = new JScrollPane(listOfStrings);
-    //scrollShapeNames.setAlignmentX(Component.LEFT_ALIGNMENT);
-
+    listOfStrings.setPreferredSize(new Dimension(100, 350));
     shapeNamesPanel.add(new JScrollPane(listOfStrings));
     shapesAndMotions.add(shapeNamesPanel, BorderLayout.WEST);
     motionPanel = new JPanel();
     motionPanel.setBackground(Color.green);
     motionPanel.setLayout(new FlowLayout());
-    motionPanel.setPreferredSize(new Dimension(300,200));
-    //motionPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    shapesAndMotions.add(motionPanel, BorderLayout.EAST);
+    shapesAndMotions.add(motionPanel, BorderLayout.CENTER);
     this.add(shapesAndMotions, BorderLayout.NORTH);
 
     JPanel shapeAttributes = new JPanel();
@@ -78,12 +78,44 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     shapeAttributes.setLayout(new FlowLayout());
 
     //input textfield
-    JTextField input = new JTextField(15);
-    shapeAttributes.add(input);
+    JTextField redText = new JTextField(2);
+    shapeAttributes.add(redText);
 
     //buttons
-    JButton commandButton = new JButton("Execute");
-    shapeAttributes.add(commandButton);
+    JButton redButton = new JButton("Red");
+    shapeAttributes.add(redButton);
+
+    //input textfield
+    JTextField greenText = new JTextField(2);
+    shapeAttributes.add(greenText);
+
+    //buttons
+    JButton greenButton = new JButton("Green");
+    shapeAttributes.add(greenButton);
+
+    //input textfield
+    JTextField blueText = new JTextField(2);
+    shapeAttributes.add(blueText);
+
+    //buttons
+    JButton blueButton = new JButton("Blue");
+    shapeAttributes.add(blueButton);
+
+    //input textfield
+    JTextField widthText = new JTextField(2);
+    shapeAttributes.add(widthText);
+
+    //buttons
+    JButton widthButton = new JButton("Width");
+    shapeAttributes.add(widthButton);
+
+//input textfield
+    JTextField heightText = new JTextField(2);
+    shapeAttributes.add(heightText);
+
+    //buttons
+    JButton heightButton = new JButton("Height");
+    shapeAttributes.add(heightButton);
 
     this.add(shapeAttributes, BorderLayout.SOUTH);
 
@@ -109,16 +141,17 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     motionPanel.removeAll();
     DefaultListModel<String> dataForListOfMotions = new DefaultListModel<>();
     List<Motion> lom = keyFrames.get(shapeName);
-      for (Motion m : lom) {
-        dataForListOfMotions.addElement(m.getTextResult());
-      }
+    for (Motion m : lom) {
+      dataForListOfMotions.addElement(m.getTextResult());
+    }
 
     listOfMotions = new JList<>(dataForListOfMotions);
     listOfMotions.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     listOfMotions.addListSelectionListener(this);
+    listOfMotions.setPreferredSize(new Dimension(300, 350));
     motionPanel.add(new JScrollPane(listOfMotions));
-    shapesAndMotions.add(motionPanel);
-    this.add(shapesAndMotions);
+    shapesAndMotions.add(motionPanel, BorderLayout.CENTER);
+    //this.add(shapesAndMotions, "North");
     this.updateUI();
     System.out.println("displaying");
 

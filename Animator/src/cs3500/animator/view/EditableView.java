@@ -38,9 +38,6 @@ public class EditableView extends JFrame implements AnimatorView {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new GridLayout(1,2,3,3)); //3,3 are gaps
     ePane = new EditorPanel(keyFrames);
-    ePane.setPreferredSize(new Dimension(500, 500));
-    ePane.setBackground(Color.BLACK);
-    ePane.setLayout(new FlowLayout(FlowLayout.LEFT,3,3)); //Components aligned to left
     this.add(ePane);
 
     //this.pack();
