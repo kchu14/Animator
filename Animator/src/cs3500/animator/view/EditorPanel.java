@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -120,6 +123,20 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     shapeAttributes.add(yText);
     JButton yButton = new JButton("Y");
     shapeAttributes.add(yButton);
+
+    //radio buttons
+    JPanel radioPanel = new JPanel();
+    radioPanel.setBorder(BorderFactory.createTitledBorder("Shape Type"));
+    radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.PAGE_AXIS));
+    ButtonGroup rGroup1 = new ButtonGroup();
+    JRadioButton rectangleButton = new JRadioButton("rectangle");
+    JRadioButton ellipseButton = new JRadioButton("ellipse");
+    rGroup1.add(rectangleButton);
+    rGroup1.add(ellipseButton);
+    radioPanel.add(rectangleButton);
+    radioPanel.add(ellipseButton);
+    shapeAttributes.add(radioPanel);
+
     this.add(shapeAttributes, BorderLayout.CENTER);
 
     JPanel playBackCommands = new JPanel();
