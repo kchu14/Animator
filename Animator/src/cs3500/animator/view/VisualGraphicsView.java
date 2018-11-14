@@ -114,7 +114,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
     @Override
     public void actionPerformed(ActionEvent e) {
       refresh();
-      animatorPanel.setShapes(model.update(tick));
+      animatorPanel.setShapes(model.getTickListShapes().get(tick));
       tick++;
       if (tick > model.getLastTick()) {
         t.stop();

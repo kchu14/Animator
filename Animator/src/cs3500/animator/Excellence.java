@@ -2,6 +2,7 @@ package cs3500.animator;
 
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.AnimatorModelImpl;
+import cs3500.animator.model.ReadOnlyModel;
 import cs3500.animator.util.AnimationReader;
 import cs3500.animator.view.AnimatorView;
 import cs3500.animator.view.EditableView;
@@ -65,8 +66,8 @@ public final class Excellence {
     } catch (Exception e) {
       throw new IllegalArgumentException(e.getMessage());
     }
-
-    view.playAnimation(model);
+    AnimatorModel readOnlyModel = new ReadOnlyModel(model);
+    view.playAnimation(readOnlyModel);
 
   }
 

@@ -4,6 +4,7 @@ import cs3500.animator.util.AnimationBuilder;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Map.Entry;
  * Operations include, producing the text view ouput, building the model and checking for valid
  * inputs (motions are correct and not overlapping on the same shape).
  */
-public class AnimatorModelImpl implements AnimatorModel, IReadOnlyModel {
+public class AnimatorModelImpl implements AnimatorModel {
 
   // shape name, shape object
   private Map<String, IShape> shapes;
@@ -27,7 +28,7 @@ public class AnimatorModelImpl implements AnimatorModel, IReadOnlyModel {
   private int animationWidth;
   private int animationHeight;
   private List<Integer> tickList;
-  private List<IShape> newShapes;
+  private Map<Integer, List<IShape>> tickListShapes;
 
 
   /**
@@ -45,7 +46,8 @@ public class AnimatorModelImpl implements AnimatorModel, IReadOnlyModel {
   private AnimatorModelImpl(Map<String, IShape> shapes,
       Map<String, List<Motion>> nameMotion,
       Map<String, String> nameType, int leftMostX,
-      int topMostY, int animationWidth, int animationHeight, ArrayList<Integer> tickList) {
+      int topMostY, int animationWidth, int animationHeight, ArrayList<Integer> tickList,
+      Map<Integer, List<IShape>> tickListShapes) {
     this.shapes = shapes;
     this.nameMotion = nameMotion;
     this.nameType = nameType;
@@ -54,7 +56,9 @@ public class AnimatorModelImpl implements AnimatorModel, IReadOnlyModel {
     this.animationWidth = animationWidth;
     this.animationHeight = animationHeight;
     this.tickList = tickList;
-    this.newShapes = new ArrayList<>();
+    this.tickListShapes = tickListShapes;
+    this.checkForValidMotions();
+    this.setTicks();
   }
 
   @Override
@@ -80,27 +84,40 @@ public class AnimatorModelImpl implements AnimatorModel, IReadOnlyModel {
   }
 
   @Override
+  public Map<Integer, List<IShape>> getTickListShapes() {
+    return new LinkedHashMap<>(this.tickListShapes);
+  }
+
+  @Override
   public Map<String, List<Motion>> getKeyFrames() {
     Map<String, List<Motion>> result = new LinkedHashMap<>();
     for (Entry<String, List<Motion>> set : nameMotion.entrySet()) {
       List<Motion> result2 = new ArrayList<>();
+      int n = set.getValue().size() - 1;
+      int i = 0;
       for (Motion m : set.getValue()) {
         result2.add(
             new Motion(m.name, m.type, m.startTime, m.startX, m.startY, m.startWidth, m.startHeight,
                 m.startColor,
                 m.startTime, m.startX, m.startY, m.startWidth, m.startHeight, m.startColor));
-        result2.add(
-            new Motion(m.name, m.type, m.endTime, m.endX, m.endY, m.endWidth, m.endHeight,
-                m.endColor,
-                m.endTime, m.endX, m.endY, m.endWidth, m.endHeight, m.endColor));
+        if (i == n) {
+          result2.add(
+              new Motion(m.name, m.type, m.endTime, m.endX, m.endY, m.endWidth, m.endHeight,
+                  m.endColor,
+                  m.endTime, m.endX, m.endY, m.endWidth, m.endHeight, m.endColor));
+        }
+        i++;
       }
       result.put(set.getKey(), result2);
     }
     return result;
   }
 
-  @Override
-  public void checkForValidMotions() {
+  /**
+   * Checks if any of the motions input into this animation are invalid. This means if they overlap
+   * or have gaps in between motions.
+   */
+  private void checkForValidMotions() {
     try {
       for (List<Motion> listOfMotion : nameMotion.values()) {
         Collections.sort(listOfMotion);
@@ -132,17 +149,10 @@ public class AnimatorModelImpl implements AnimatorModel, IReadOnlyModel {
     }
   }
 
-  //other option: run through the program first
-  //store each list of newshapes (frame)
-  //just use a getter and loop through ticks
-  //downsides - takes up a ton of memory
 
-  //make a field newShapes in our model
-  //mutate the field using this method
-  //use a getter to get the shapes
-  @Override
-  public List<IShape> update(int tick) {
-    newShapes.clear();
+  private void update(int tick) {
+    List<IShape> newShapes = new ArrayList<>();
+    System.out.println(tick);
     if (nameMotion == null) {
       throw new IllegalArgumentException("no motions created");
     }
@@ -153,7 +163,17 @@ public class AnimatorModelImpl implements AnimatorModel, IReadOnlyModel {
         }
       }
     }
-    return new ArrayList<>(newShapes);
+    tickListShapes.put(tick, newShapes);
+  }
+
+  private void setTicks() {
+    Collections.sort(tickList);
+//    int firstTick = tickList.get(0);
+    int lastTick = tickList.get(tickList.size() - 1);
+
+    for (int i = 0; i <= lastTick; i++) {
+      this.update(i);
+    }
   }
 
   @Override
@@ -219,13 +239,13 @@ public class AnimatorModelImpl implements AnimatorModel, IReadOnlyModel {
     private int animationWidth;
     private int animationHeight;
     private ArrayList<Integer> tickList;
+    private Map<Integer, List<IShape>> tickListShapes;
 
 
     @Override
     public AnimatorModel build() {
       AnimatorModel m = new AnimatorModelImpl(shapes, nameMotion, nameType,
-          leftMostX, topMostY, animationWidth, animationHeight, tickList);
-      m.checkForValidMotions();
+          leftMostX, topMostY, animationWidth, animationHeight, tickList, tickListShapes);
       return m;
     }
 
@@ -268,9 +288,10 @@ public class AnimatorModelImpl implements AnimatorModel, IReadOnlyModel {
       tickList.add(t1);
       tickList.add(t2);
 
-      if (this.nameMotion == null || this.shapes == null) {
+      if (this.nameMotion == null || this.shapes == null || this.tickListShapes == null) {
         this.nameMotion = new LinkedHashMap<>();
         this.shapes = new LinkedHashMap<>();
+        this.tickListShapes = new LinkedHashMap<>();
       }
 
       try {

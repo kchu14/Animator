@@ -10,23 +10,22 @@ import java.util.Map;
 public interface AnimatorModel {
 
   /**
-   * Checks if any of the motions input into this animation are invalid. This means if they overlap
-   * or have gaps in between motions.
-   */
-  void checkForValidMotions();
-
-  /**
    * Allows the caller to see the final tick of this animation.
    * @return  The final tick of this animation.
    */
   int getLastTick();
 
-  /**
-   * Updates the IShapes in the animation based on the tick that the animation is currently at.
-   * @param tick  The current tick of the animation.
-   * @return  A list of updated IShapes with proper fields that correspond to the current tick.
+//  /**
+//   * Updates the IShapes in the animation based on the tick that the animation is currently at.
+//   * @param tick  The current tick of the animation.
+//   */
+//  void update(int tick);
+
+    /**
+   * Allows the caller to see the shapes to be animated on every tick.
+   * @return  The map of ticks and shapes to be animated.
    */
-  List<IShape> update(int tick);
+    Map<Integer, List<IShape>> getTickListShapes();
 
   /**
    * Allows the caller to see the height of this animation.
@@ -74,4 +73,5 @@ public interface AnimatorModel {
 
 
   Map<String, List<Motion>> getKeyFrames();
+
 }

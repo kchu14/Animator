@@ -43,6 +43,16 @@ public class SimpleShape implements IShape {
     getCurShape();
 
   }
+  public SimpleShape(SimpleShape shape) {
+    this.name = shape.name;
+    this.type = shape.type;
+    this.x = shape.x;
+    this.y = shape.y;
+    this.width = shape.width;
+    this.height = shape.height;
+    this.color = shape.color;
+    getCurShape();
+  }
 
   /**
    * This method resets the shapes.

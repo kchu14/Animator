@@ -96,7 +96,7 @@ public class Motion implements Comparable<Motion> {
     shape.changeSize(startWidth, startHeight, endWidth, endHeight, totalTicks, tick, startTime,
         endTime);
     shape.move(startX, startY, endX, endY, totalTicks, tick, startTime, endTime);
-    return shape;
+    return new SimpleShape((SimpleShape)shape);
 
   }
 
