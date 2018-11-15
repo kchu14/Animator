@@ -22,4 +22,5 @@ public interface IVisualGraphicsView extends AnimatorView{
   void initiateTimer(AnimatorModel model, AnimatorPanel animatorPanel);
   void setIsAnimationOver(Boolean b);
 
+  void restart();
 }

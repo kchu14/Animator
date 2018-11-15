@@ -85,6 +85,11 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
   }
 
   @Override
+  public void restart() {
+    listener.restart();
+  }
+
+  @Override
   public JPanel getAnimation() {
 //    animatorPanel = new AnimatorPanel();
 //    animatorPanel.setPreferredSize(new Dimension(model.getWidth(), model.getHeight()));

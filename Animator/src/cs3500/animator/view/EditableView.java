@@ -64,4 +64,9 @@ public class EditableView extends JFrame implements IEditView {
   public void setIsAnimationOver(Boolean b) {
     graphicsView.setIsAnimationOver(b);
   }
+
+  @Override
+  public void restart() {
+    graphicsView.restart();
+  }
 }

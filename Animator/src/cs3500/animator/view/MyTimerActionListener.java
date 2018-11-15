@@ -18,6 +18,7 @@ class MyTimerActionListener implements ActionListener {
   private AnimatorPanel animatorPanel;
   private boolean isAnimationOver;
   private boolean endOnNextLoop;
+  private boolean restart;
 
 
   /**
@@ -49,8 +50,14 @@ class MyTimerActionListener implements ActionListener {
       this.endOnNextLoop = true;
 
     }
+    if(this.restart) {
+      t.restart();
+      tick = originalTick;
+      restart = false;
+    }
     if (endOnNextLoop && tick > model.getLastTick()) {
       t.stop();
+
       System.out.println("animation ended");
     }
     if (tick > model.getLastTick()) {
@@ -60,5 +67,9 @@ class MyTimerActionListener implements ActionListener {
 
   public void setIsAnimationOver(Boolean b) {
     this.isAnimationOver = b;
+  }
+
+  public void restart() {
+    this.restart = true;
   }
 }

@@ -50,7 +50,8 @@ public class EditController implements IController, ActionListener {
       case "remove shape":
         break;
 
-      case "restart":
+      case "Restart":
+        view.restart();
 
         break;
       case "rewind":
