@@ -8,6 +8,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-public class EditableView extends JFrame implements AnimatorView {
+public class EditableView extends JFrame implements IEditView {
 
   IVisualGraphicsView graphicsView;
   private Map<String, List<Motion>> keyFrames;
@@ -53,5 +54,9 @@ public class EditableView extends JFrame implements AnimatorView {
 
   public void setKeyFrames(Map<String, List<Motion>> keyFrames) {
     this.keyFrames = keyFrames;
+  }
+
+  public void setButtonListeners(ActionListener e) {
+    ePane.setButtonListeners(e);
   }
 }

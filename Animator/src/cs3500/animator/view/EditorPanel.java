@@ -1,5 +1,7 @@
 package cs3500.animator.view;
 
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.error;
+
 import cs3500.animator.model.Motion;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -27,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.AncestorListener;
@@ -53,6 +57,8 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
   private JRadioButton rectangleButton;
   private JRadioButton ellipseButton;
   private JTextField time;
+  private JTextField shapeName;
+  private List<JButton> listOfButtons;
 
   /**
    * Constructs the animation panel and sets the shapes list to an array list.
@@ -63,7 +69,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     this.setLayout(new BorderLayout());
     this.setPreferredSize(new Dimension(500, 500));
     this.setBackground(Color.BLACK);
-
+    this.listOfButtons = new ArrayList<>();
     shapesAndMotions = new JPanel();
     shapesAndMotions.setBackground(Color.BLUE);
     shapesAndMotions.setPreferredSize(new Dimension(640, 350));
@@ -92,29 +98,44 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 
     shapesAndMotions.add(motionPanel, BorderLayout.CENTER);
     JPanel keyFrameButtons = new JPanel(new FlowLayout());
-    JButton addMotionButton = new JButton("add keyframe");
-    JButton removeMotionButton = new JButton("remove keyframe");
-    JButton addShapeButton = new JButton("add shape");
-    JButton removeShapeButton = new JButton("remove shape");
-    JButton modifyMotionButton = new JButton("modify keyframe");
+    JButton addMotionButton = new JButton("Add keyframe");
+    listOfButtons.add(addMotionButton);
+    JButton removeMotionButton = new JButton("Remove keyframe");
+    listOfButtons.add(removeMotionButton);
+    JButton addShapeButton = new JButton("Add shape");
+    listOfButtons.add(addShapeButton);
+    JButton removeShapeButton = new JButton("Remove shape");
+    listOfButtons.add(removeShapeButton);
+    JButton modifyMotionButton = new JButton("Modify keyframe");
+    listOfButtons.add(modifyMotionButton);
+//    addMotionButton.addActionListener(this);
+//    addMotionButton.setActionCommand("add keyframe");
+//    removeMotionButton.addActionListener(this);
+//    removeMotionButton.setActionCommand("remove keyframe");
+//    addShapeButton.addActionListener(this);
+//    addShapeButton.setActionCommand("add shape");
+//    removeShapeButton.addActionListener(this);
+//    removeShapeButton.setActionCommand("remove shape");
+//    modifyMotionButton.addActionListener(this);
+//    modifyMotionButton.setActionCommand("modify keyframe");
 
     keyFrameButtons.add(addShapeButton);
-    keyFrameButtons.add(removeShapeButton);
     keyFrameButtons.add(addMotionButton);
-    keyFrameButtons.add(removeMotionButton);
     keyFrameButtons.add(modifyMotionButton);
+    keyFrameButtons.add(removeShapeButton);
+    keyFrameButtons.add(removeMotionButton);
 
     shapesAndMotions.add(keyFrameButtons, BorderLayout.SOUTH);
     this.add(shapesAndMotions, BorderLayout.NORTH);
 
     JPanel shapeAttributes = new JPanel();
-    shapeAttributes.setBackground(Color.gray);
+    //shapeAttributes.setBackground(Color.gray);
     shapeAttributes.setLayout(new FlowLayout());
     shapeAttributes.setBorder(BorderFactory.createTitledBorder("Shape Attributes"));
 
     time = new JTextField(2);
     shapeAttributes.add(time);
-    JButton timeButton = new JButton("time");
+    JTextArea timeButton = new JTextArea("Time");
     shapeAttributes.add(timeButton);
 
     JPanel colors = new JPanel();
@@ -124,7 +145,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     JPanel redTextButton = new JPanel(new FlowLayout());
     redText = new JTextField(2);
     redTextButton.add(redText);
-    JButton redButton = new JButton("Red");
+    JTextArea redButton = new JTextArea("Red");
     redTextButton.add(redButton);
     colors.add(redTextButton);
 
@@ -132,7 +153,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     JPanel greenTextButton = new JPanel(new FlowLayout());
     greenText = new JTextField(2);
     greenTextButton.add(greenText);
-    JButton greenButton = new JButton("Green");
+    JTextArea greenButton = new JTextArea("Green");
     greenTextButton.add(greenButton);
     colors.add(greenTextButton);
 
@@ -140,7 +161,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     JPanel blueTextButton = new JPanel(new FlowLayout());
     blueText = new JTextField(2);
     blueTextButton.add(blueText);
-    JButton blueButton = new JButton("Blue");
+    JTextArea blueButton = new JTextArea("Blue");
     blueTextButton.add(blueButton);
     colors.add(blueTextButton);
 
@@ -152,7 +173,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     JPanel widthTextButton = new JPanel(new FlowLayout());
     widthText = new JTextField(2);
     widthTextButton.add(widthText);
-    JButton widthButton = new JButton("Width");
+    JTextArea widthButton = new JTextArea("Width");
     widthTextButton.add(widthButton);
     sizePanel.add(widthTextButton);
 
@@ -160,7 +181,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     JPanel heightTextButton = new JPanel(new FlowLayout());
     heightText = new JTextField(2);
     heightTextButton.add(heightText);
-    JButton heightButton = new JButton("Height");
+    JTextArea heightButton = new JTextArea("Height");
     heightTextButton.add(heightButton);
     sizePanel.add(heightTextButton);
 
@@ -172,7 +193,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     JPanel xTextButton = new JPanel(new FlowLayout());
     xText = new JTextField(2);
     xTextButton.add(xText);
-    JButton xButton = new JButton("X");
+    JTextArea xButton = new JTextArea("X");
     xTextButton.add(xButton);
     positionPanel.add(xTextButton);
 
@@ -180,7 +201,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     JPanel yTextButton = new JPanel(new FlowLayout());
     yText = new JTextField(2);
     yTextButton.add(yText);
-    JButton yButton = new JButton("Y");
+    JTextArea yButton = new JTextArea("Y");
     yTextButton.add(yButton);
     positionPanel.add(yTextButton);
     shapeAttributes.add(positionPanel);
@@ -190,28 +211,46 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     radioPanel.setBorder(BorderFactory.createTitledBorder("Shape Type"));
     radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.PAGE_AXIS));
     ButtonGroup rGroup1 = new ButtonGroup();
-    rectangleButton = new JRadioButton("rectangle");
-    ellipseButton = new JRadioButton("ellipse");
+    rectangleButton = new JRadioButton("Rectangle");
+    ellipseButton = new JRadioButton("Ellipse");
+
     rGroup1.add(rectangleButton);
     rGroup1.add(ellipseButton);
     radioPanel.add(rectangleButton);
     radioPanel.add(ellipseButton);
     shapeAttributes.add(radioPanel);
 
+    shapeName = new JTextField(2);
+    shapeAttributes.add(shapeName);
+    JTextArea shapeNameButton = new JTextArea("Shape Name");
+    shapeAttributes.add(shapeNameButton);
+
     this.add(shapeAttributes, BorderLayout.CENTER);
 
     JPanel playBackCommands = new JPanel();
     playBackCommands.setLayout(new FlowLayout());
-    JButton restart = new JButton("restart");
+    JButton restart = new JButton("Restart");
+    listOfButtons.add(restart);
+//    restart.addActionListener(this);
+//    restart.setActionCommand("restart");
     JButton rewind = new JButton("<");
-    JButton pause = new JButton("pause");
+    listOfButtons.add(rewind);
+//    rewind.addActionListener(this);
+//    rewind.setActionCommand("rewind");
+    JButton pause = new JButton("||");
+    listOfButtons.add(pause);
+//    pause.addActionListener(this);
+//    pause.setActionCommand("pause");
     JButton forwards = new JButton(">");
-    JButton start = new JButton("start");
-    JCheckBox loop = new JCheckBox("loop");
+    listOfButtons.add(forwards);
+//    forwards.addActionListener(this);
+//    forwards.setActionCommand("forwards");
+    JButton loop = new JButton("Loop");
+//    loop.addActionListener(this);
+//    loop.setActionCommand("loop");
 
     playBackCommands.add(rewind);
     playBackCommands.add(pause);
-    playBackCommands.add(start);
     playBackCommands.add(forwards);
     playBackCommands.add(restart);
     playBackCommands.add(loop);
@@ -253,6 +292,13 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 
   }
 
+  public void setButtonListeners(ActionListener e) {
+    for (JButton b : listOfButtons) {
+      b.addActionListener(e);
+      b.setActionCommand(b.getName());
+    }
+  }
+
   private class MotionListener implements ListSelectionListener {
 
     @Override
@@ -270,6 +316,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
           xText.setText(strArr[3]);
           yText.setText(strArr[4]);
           time.setText(strArr[2]);
+          shapeName.setText(strArr[1]);
 
           if (m.getType().equals("rectangle")) {
             rectangleButton.setSelected(true);
@@ -283,18 +330,47 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    /*switch (e.getActionCommand()) {
-      case "R":
-        listOfStrings.setText(new String(pfield.getPassword()));
-        pfield.setText("");
+    switch (e.getActionCommand()) {
+      case "add keyframe":
         break;
-      case "RB1":
-        radioDisplay.setText("Radio button 1 was selected");
+      case "remove keyframe":
         break;
 
-      case "RB2":
-        radioDisplay.setText("Radio button 2 was selected");
-        break;*/
+      case "modify keyframe":
+        break;
+
+      case "add shape":
+        String shapeName = this.shapeName.getText();
+        boolean isRect = false;
+        if (rectangleButton.isSelected()) {
+          isRect = true;
+        }
+        for (String names : keyFrames.keySet()) {
+          if (shapeName.equals(names)) {
+            JOptionPane.showMessageDialog(this, "Cannot add a duplicate name",
+                "Error!", JOptionPane.ERROR_MESSAGE);
+          }
+        }
+        break;
+
+      case "remove shape":
+        break;
+
+      case "restart":
+
+        break;
+      case "rewind":
+        break;
+
+      case "pause":
+        break;
+
+      case "forwards":
+        break;
+
+      case "loop":
+        break;
+    }
   }
 
   @Override

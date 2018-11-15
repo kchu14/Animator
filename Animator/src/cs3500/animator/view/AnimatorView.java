@@ -9,4 +9,5 @@ public interface AnimatorView {
    * @param model the given model to be animated.
    */
   void playAnimation(AnimatorModel model);
+
 }
