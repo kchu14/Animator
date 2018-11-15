@@ -71,13 +71,11 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     this.setBackground(Color.BLACK);
     this.listOfButtons = new ArrayList<>();
     shapesAndMotions = new JPanel();
-    shapesAndMotions.setBackground(Color.BLUE);
     shapesAndMotions.setPreferredSize(new Dimension(640, 350));
     shapesAndMotions.setLayout(new BorderLayout());
 
     this.keyFrames = keyFrames;
     JPanel shapeNamesPanel = new JPanel();
-    shapeNamesPanel.setBackground(Color.red);
     shapeNamesPanel.setBorder(BorderFactory.createTitledBorder("Shape Name"));
 
     DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
@@ -92,7 +90,6 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     shapeNamesPanel.add(new JScrollPane(listOfStrings));
     shapesAndMotions.add(shapeNamesPanel, BorderLayout.WEST);
     motionPanel = new JPanel();
-    motionPanel.setBackground(Color.green);
     motionPanel.setLayout(new BorderLayout());
     motionPanel.setBorder(BorderFactory.createTitledBorder("Keyframes"));
 
@@ -129,7 +126,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     JPanel shapeAttributes = new JPanel();
     //shapeAttributes.setBackground(Color.gray);
     shapeAttributes.setLayout(new FlowLayout());
-    shapeAttributes.setBorder(BorderFactory.createTitledBorder("Shape Attributes"));
+    shapeAttributes.setBorder(BorderFactory.createTitledBorder("Shape/Keyframe Attributes"));
 
     time = new JTextField(4);
     shapeAttributes.add(time);
@@ -189,7 +186,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     positionPanel.setLayout(new BoxLayout(positionPanel, BoxLayout.Y_AXIS));
     //input textfield
     JPanel xTextButton = new JPanel(new FlowLayout());
-    xText = new JTextField(2);
+    xText = new JTextField(3);
     xTextButton.add(xText);
     JTextArea xButton = new JTextArea("X");
     xTextButton.add(xButton);
@@ -197,7 +194,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 
     //input textfield
     JPanel yTextButton = new JPanel(new FlowLayout());
-    yText = new JTextField(2);
+    yText = new JTextField(3);
     yTextButton.add(yText);
     JTextArea yButton = new JTextArea("Y");
     yTextButton.add(yButton);
@@ -296,7 +293,6 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     shapesAndMotions.add(motionPanel, BorderLayout.CENTER);
     //this.add(shapesAndMotions, "North");
     this.updateUI();
-    System.out.println("displaying");
 
   }
 
