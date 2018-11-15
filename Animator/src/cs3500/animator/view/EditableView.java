@@ -69,4 +69,14 @@ public class EditableView extends JFrame implements IEditView {
   public void restart() {
     graphicsView.restart();
   }
+
+  @Override
+  public void rewind() {
+    graphicsView.rewind();
+  }
+
+  @Override
+  public void fastforward() {
+    graphicsView.fastforward();
+  }
 }

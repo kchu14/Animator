@@ -90,6 +90,16 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
   }
 
   @Override
+  public void rewind() {
+    listener.rewind();
+  }
+
+  @Override
+  public void fastforward() {
+      listener.fastforward();
+  }
+
+  @Override
   public JPanel getAnimation() {
 //    animatorPanel = new AnimatorPanel();
 //    animatorPanel.setPreferredSize(new Dimension(model.getWidth(), model.getHeight()));

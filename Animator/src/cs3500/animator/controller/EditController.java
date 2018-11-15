@@ -54,13 +54,15 @@ public class EditController implements IController, ActionListener {
         view.restart();
 
         break;
-      case "rewind":
+      case "<":
+        view.rewind();
         break;
 
-      case "pause":
+      case "||":
         break;
 
-      case "forwards":
+      case ">":
+        view.fastforward();
         break;
 
       case "Toggle Loop":

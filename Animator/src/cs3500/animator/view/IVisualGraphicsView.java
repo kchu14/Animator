@@ -23,4 +23,8 @@ public interface IVisualGraphicsView extends AnimatorView{
   void setIsAnimationOver(Boolean b);
 
   void restart();
+
+  void rewind();
+
+  void fastforward();
 }

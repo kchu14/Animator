@@ -72,4 +72,12 @@ class MyTimerActionListener implements ActionListener {
   public void restart() {
     this.restart = true;
   }
+
+  public void rewind() {
+  }
+
+  public void fastforward() {
+    t.setDelay(t.getDelay() / 10);
+    System.out.println(t.getDelay());
+  }
 }

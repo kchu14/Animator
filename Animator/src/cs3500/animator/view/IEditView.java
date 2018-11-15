@@ -7,4 +7,8 @@ public interface IEditView extends AnimatorView {
   void setIsAnimationOver(Boolean b);
 
   void restart();
+
+  void rewind();
+
+  void fastforward();
 }
