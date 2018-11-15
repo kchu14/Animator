@@ -67,7 +67,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
   public EditorPanel(Map<String, List<Motion>> keyFrames) {
     super();
     this.setLayout(new BorderLayout());
-    this.setPreferredSize(new Dimension(500, 500));
+    //this.setPreferredSize(new Dimension(500, 500));
     this.setBackground(Color.BLACK);
     this.listOfButtons = new ArrayList<>();
     shapesAndMotions = new JPanel();
@@ -119,9 +119,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 //    modifyMotionButton.addActionListener(this);
 //    modifyMotionButton.setActionCommand("modify keyframe");
 
-    keyFrameButtons.add(addShapeButton);
-    keyFrameButtons.add(addMotionButton);
-    keyFrameButtons.add(modifyMotionButton);
+
     keyFrameButtons.add(removeShapeButton);
     keyFrameButtons.add(removeMotionButton);
 
@@ -133,7 +131,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     shapeAttributes.setLayout(new FlowLayout());
     shapeAttributes.setBorder(BorderFactory.createTitledBorder("Shape Attributes"));
 
-    time = new JTextField(2);
+    time = new JTextField(4);
     shapeAttributes.add(time);
     JTextArea timeButton = new JTextArea("Time");
     shapeAttributes.add(timeButton);
@@ -220,12 +218,22 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     radioPanel.add(ellipseButton);
     shapeAttributes.add(radioPanel);
 
-    shapeName = new JTextField(2);
+    shapeName = new JTextField(4);
     shapeAttributes.add(shapeName);
     JTextArea shapeNameButton = new JTextArea("Shape Name");
     shapeAttributes.add(shapeNameButton);
 
-    this.add(shapeAttributes, BorderLayout.CENTER);
+    JPanel middleButtonsPanel = new JPanel(new BorderLayout());
+    middleButtonsPanel.add(shapeAttributes, BorderLayout.NORTH);
+
+    JPanel newMotionShapeButtonsPanel = new JPanel(new FlowLayout());
+
+    newMotionShapeButtonsPanel.add(addShapeButton);
+    newMotionShapeButtonsPanel.add(addMotionButton);
+    newMotionShapeButtonsPanel.add(modifyMotionButton);
+    middleButtonsPanel.add(newMotionShapeButtonsPanel, BorderLayout.SOUTH);
+
+    this.add(middleButtonsPanel, BorderLayout.CENTER);
 
     JPanel playBackCommands = new JPanel();
     playBackCommands.setLayout(new FlowLayout());
