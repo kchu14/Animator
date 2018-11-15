@@ -76,7 +76,25 @@ public class Motion implements Comparable<Motion> {
         name, startTime, startX, startY, startWidth, startHeight, startColor.getRed(),
         startColor.getBlue(), startColor.getGreen(),
         endTime, endX, endY, endWidth, endHeight, endColor.getRed(),
-        endColor.getBlue(), endColor.getGreen());
+        endColor.getGreen(), endColor.getBlue());
+  }
+
+  /**
+   * Outputs the start time of this tick for use of other classes.
+   *
+   * @return An integer representing the starting tick for this motion
+   */
+  public int getStartTime() {
+    return this.startTime;
+  }
+
+  /**
+   * Outputs the type of the shape the motion is acting upon.
+   *
+   * @return An string denoting the type.
+   */
+  public String getType() {
+    return this.type;
   }
 
   @Override
