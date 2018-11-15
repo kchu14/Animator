@@ -13,25 +13,27 @@ public class EditController implements IController, ActionListener {
 
   private AnimatorModel model;
   private IEditView view;
+  private boolean isAnimationOver;
 
   public EditController(AnimatorModel model, IEditView view) {
     this.model = model;
     this.view = view;
+    this.isAnimationOver = false;
     view.setButtonListeners(this);
   }
 
   @Override
   public void actionPerformed(ActionEvent e) {
-//    switch (e.getActionCommand()) {
-//      case "add keyframe":
-//        break;
-//      case "remove keyframe":
-//        break;
-//
-//      case "modify keyframe":
-//        break;
-//
-//      case "add shape":
+    switch (e.getActionCommand()) {
+      case "add keyframe":
+        break;
+      case "remove keyframe":
+        break;
+
+      case "modify keyframe":
+        break;
+
+      case "add shape":
 //        String shapeName = this.shapeName.getText();
 //        boolean isRect = false;
 //        if (rectangleButton.isSelected()) {
@@ -43,25 +45,28 @@ public class EditController implements IController, ActionListener {
 //                "Error!", JOptionPane.ERROR_MESSAGE);
 //          }
 //        }
-//        break;
-//
-//      case "remove shape":
-//        break;
-//
-//      case "restart":
-//
-//        break;
-//      case "rewind":
-//        break;
-//
-//      case "pause":
-//        break;
-//
-//      case "forwards":
-//        break;
-//
-//      case "loop":
-//        break;
-//    }
+        break;
+
+      case "remove shape":
+        break;
+
+      case "restart":
+
+        break;
+      case "rewind":
+        break;
+
+      case "pause":
+        break;
+
+      case "forwards":
+        break;
+
+      case "Toggle Loop":
+        view.setIsAnimationOver(isAnimationOver);
+        System.out.println(isAnimationOver);
+        this.isAnimationOver = !isAnimationOver;
+        break;
+    }
   }
 }

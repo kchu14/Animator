@@ -12,9 +12,13 @@ import javax.swing.Timer;
 class MyTimerActionListener implements ActionListener {
 
   private int tick;
+  private int originalTick;
   private AnimatorModel model;
   private Timer t;
   private AnimatorPanel animatorPanel;
+  private boolean isAnimationOver;
+  private boolean endOnNextLoop;
+
 
   /**
    * Constructs a action listener to be used in the display of the animation.
@@ -23,11 +27,16 @@ class MyTimerActionListener implements ActionListener {
    * @param model the model to be displayed
    * @param t the timer
    */
-  public MyTimerActionListener(int tick, AnimatorModel model, Timer t, AnimatorPanel animatorPanel) {
+  public MyTimerActionListener(int tick, AnimatorModel model, Timer t,
+      AnimatorPanel animatorPanel) {
     this.tick = tick;
+    this.originalTick = tick;
     this.model = model;
     this.t = t;
     this.animatorPanel = animatorPanel;
+    this.isAnimationOver = false;
+    this.endOnNextLoop = false;
+
   }
 
   @Override
@@ -36,7 +45,19 @@ class MyTimerActionListener implements ActionListener {
     animatorPanel.setShapes(model.getTickListShapes().get(tick));
     tick++;
     if (tick > model.getLastTick()) {
+      tick = originalTick;
+    }
+    if (isAnimationOver) {
+      endOnNextLoop = true;
+      System.out.println("animation ended");
+
+    }
+    if (endOnNextLoop && tick > model.getLastTick()) {
       t.stop();
     }
+  }
+
+  public void setIsAnimationOver(Boolean b) {
+    this.isAnimationOver = b;
   }
 }

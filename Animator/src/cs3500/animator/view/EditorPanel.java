@@ -116,7 +116,6 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 //    modifyMotionButton.addActionListener(this);
 //    modifyMotionButton.setActionCommand("modify keyframe");
 
-
     keyFrameButtons.add(removeShapeButton);
     keyFrameButtons.add(removeMotionButton);
 
@@ -250,7 +249,8 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     listOfButtons.add(forwards);
 //    forwards.addActionListener(this);
 //    forwards.setActionCommand("forwards");
-    JButton loop = new JButton("Loop");
+    JButton loop = new JButton("Toggle Loop");
+    listOfButtons.add(loop);
 //    loop.addActionListener(this);
 //    loop.setActionCommand("loop");
 
@@ -300,6 +300,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     for (JButton b : listOfButtons) {
       b.addActionListener(e);
       b.setActionCommand(b.getName());
+      System.out.println("added listener " + b.getText());
     }
   }
 

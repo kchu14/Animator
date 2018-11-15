@@ -58,5 +58,10 @@ public class EditableView extends JFrame implements IEditView {
 
   public void setButtonListeners(ActionListener e) {
     ePane.setButtonListeners(e);
+    System.out.println("added button listeners in edit view");
+  }
+
+  public void setIsAnimationOver(Boolean b) {
+    graphicsView.setIsAnimationOver(b);
   }
 }

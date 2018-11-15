@@ -20,5 +20,6 @@ public interface IVisualGraphicsView extends AnimatorView{
   JPanel getAnimation();
 
   void initiateTimer(AnimatorModel model, AnimatorPanel animatorPanel);
+  void setIsAnimationOver(Boolean b);
 
 }

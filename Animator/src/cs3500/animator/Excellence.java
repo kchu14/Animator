@@ -1,5 +1,7 @@
 package cs3500.animator;
 
+import cs3500.animator.controller.EditController;
+import cs3500.animator.controller.IController;
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.AnimatorModelImpl;
 import cs3500.animator.model.ReadOnlyModel;
@@ -68,6 +70,9 @@ public final class Excellence {
     }
     AnimatorModel readOnlyModel = new ReadOnlyModel(model);
     view.playAnimation(readOnlyModel);
+    if(view instanceof EditableView) {
+      IController controller = new EditController(model, (EditableView) view);
+    }
 
   }
 
