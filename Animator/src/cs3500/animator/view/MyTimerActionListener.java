@@ -44,16 +44,17 @@ class MyTimerActionListener implements ActionListener {
     animatorPanel.updateUI();
     animatorPanel.setShapes(model.getTickListShapes().get(tick));
     tick++;
-    if (tick > model.getLastTick()) {
-      tick = originalTick;
-    }
+
     if (isAnimationOver) {
-      endOnNextLoop = true;
-      System.out.println("animation ended");
+      this.endOnNextLoop = true;
 
     }
     if (endOnNextLoop && tick > model.getLastTick()) {
       t.stop();
+      System.out.println("animation ended");
+    }
+    if (tick > model.getLastTick()) {
+      tick = originalTick;
     }
   }
 
