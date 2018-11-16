@@ -2,6 +2,7 @@ package cs3500.animator.view;
 
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.Motion;
+import cs3500.animator.model.ReadOnlyModel;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class TextView implements ITextView {
 
 
   @Override
-  public void playAnimation(AnimatorModel model) {
+  public void playAnimation(ReadOnlyModel model) {
     if (this.fileOutput.equals("System.out")) {
       System.out.println(this.produceTextView(model.getMotions(), model.getNameType()));
     } else {

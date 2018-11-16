@@ -68,7 +68,7 @@ public final class Excellence {
     } catch (Exception e) {
       throw new IllegalArgumentException(e.getMessage());
     }
-    AnimatorModel readOnlyModel = new ReadOnlyModel(model);
+    ReadOnlyModel readOnlyModel = new ReadOnlyModel(model);
     view.playAnimation(readOnlyModel);
     if(view instanceof EditableView) {
       IController controller = new EditController(model, (EditableView) view);

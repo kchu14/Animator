@@ -54,21 +54,26 @@ public class EditController implements IController, ActionListener {
         view.restart();
 
         break;
-      case "<":
+      case "Reverse":
         view.rewind();
         break;
 
       case "||":
+        view.pause();
         break;
 
-      case ">":
+      case "Fastforward":
         view.fastforward();
         break;
 
+      case "Slow down":
+        view.slowDown();
+        break;
+
       case "Toggle Loop":
+        this.isAnimationOver = !isAnimationOver;
         view.setIsAnimationOver(isAnimationOver);
         System.out.println(isAnimationOver);
-        this.isAnimationOver = !isAnimationOver;
         break;
     }
   }

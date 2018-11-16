@@ -1,7 +1,9 @@
 package cs3500.animator.view;
 
 import cs3500.animator.model.AnimatorModel;
+import cs3500.animator.model.ReadOnlyModel;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +22,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
   private AnimatorPanel animatorPanel;
   private int speed;
   private MyTimerActionListener listener;
+  private ReadOnlyModel model;
 
 
   /**
@@ -54,7 +57,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
   }
 
   @Override
-  public void playAnimation(AnimatorModel model) {
+  public void playAnimation(ReadOnlyModel model) {
     this.setTitle("Animator");
     this.setSize(model.getWidth(), model.getHeight());
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,7 +75,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
   }
 
   @Override
-  public void initiateTimer(AnimatorModel model, AnimatorPanel animatorPanel) {
+  public void initiateTimer(ReadOnlyModel model, AnimatorPanel animatorPanel) {
     int i = 0;
     Timer t = new Timer(1000 / speed, null);
     listener = new MyTimerActionListener(i, model, t, animatorPanel);
@@ -84,19 +87,25 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
     listener.setIsAnimationOver(b);
   }
 
-  @Override
-  public void restart() {
-    listener.restart();
-  }
 
   @Override
-  public void rewind() {
+  public void rewind(ReadOnlyModel model) {
     listener.rewind();
   }
 
   @Override
   public void fastforward() {
       listener.fastforward();
+  }
+
+  @Override
+  public void slowDown() {
+    listener.slowDown();
+  }
+
+  @Override
+  public void pause() {
+    listener.pause();
   }
 
   @Override

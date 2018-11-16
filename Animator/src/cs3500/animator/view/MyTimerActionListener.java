@@ -18,7 +18,8 @@ class MyTimerActionListener implements ActionListener {
   private AnimatorPanel animatorPanel;
   private boolean isAnimationOver;
   private boolean endOnNextLoop;
-  private boolean restart;
+  private boolean isForward;
+  private boolean isPaused;
 
 
   /**
@@ -37,6 +38,7 @@ class MyTimerActionListener implements ActionListener {
     this.animatorPanel = animatorPanel;
     this.isAnimationOver = false;
     this.endOnNextLoop = false;
+    this.isForward = true;
 
   }
 
@@ -44,24 +46,26 @@ class MyTimerActionListener implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     animatorPanel.updateUI();
     animatorPanel.setShapes(model.getTickListShapes().get(tick));
-    tick++;
-
+    if (!isPaused) {
+      if (this.isForward) {
+        tick++;
+      } else {
+        tick--;
+      }
+    }
     if (isAnimationOver) {
       this.endOnNextLoop = true;
 
     }
-    if(this.restart) {
-      t.restart();
-      tick = originalTick;
-      restart = false;
-    }
-    if (endOnNextLoop && tick > model.getLastTick()) {
+    if (endOnNextLoop && (tick > model.getLastTick() || tick <= 0)) {
       t.stop();
-
       System.out.println("animation ended");
     }
     if (tick > model.getLastTick()) {
       tick = originalTick;
+    }
+    else if (tick < 1) {
+      tick = model.getLastTick();
     }
   }
 
@@ -69,15 +73,35 @@ class MyTimerActionListener implements ActionListener {
     this.isAnimationOver = b;
   }
 
-  public void restart() {
-    this.restart = true;
-  }
-
   public void rewind() {
+    isForward = !isForward;
   }
 
   public void fastforward() {
-    t.setDelay(t.getDelay() / 10);
+    if (t.getDelay() == 1 ) {
+      t.setDelay(t.getInitialDelay());
+    }
+    else {
+      t.setDelay(t.getDelay() / 5);
+    }
     System.out.println(t.getDelay());
+  }
+
+  public void stop() {
+    t.stop();
+  }
+
+  public void slowDown() {
+    if (t.getDelay() >= 1000) {
+      t.setDelay(t.getInitialDelay());
+    }
+    else {
+      t.setDelay(t.getDelay() * 5);
+    }
+    System.out.println(t.getDelay());
+  }
+
+  public void pause() {
+    isPaused = !isPaused;
   }
 }

@@ -1,6 +1,7 @@
 package cs3500.animator.view;
 
 import cs3500.animator.model.AnimatorModel;
+import cs3500.animator.model.ReadOnlyModel;
 
 public interface AnimatorView {
   /**
@@ -8,6 +9,6 @@ public interface AnimatorView {
    *
    * @param model the given model to be animated.
    */
-  void playAnimation(AnimatorModel model);
+  void playAnimation(ReadOnlyModel model);
 
 }

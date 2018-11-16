@@ -11,4 +11,8 @@ public interface IEditView extends AnimatorView {
   void rewind();
 
   void fastforward();
+
+  void slowDown();
+
+  void pause();
 }

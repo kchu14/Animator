@@ -5,6 +5,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.Motion;
+import cs3500.animator.model.ReadOnlyModel;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -37,7 +38,7 @@ public class SvgView implements ISvgView {
 
 
   @Override
-  public void playAnimation(AnimatorModel model) {
+  public void playAnimation(ReadOnlyModel model) {
     StringBuilder inSvg = new StringBuilder();
     inSvg.append("<svg width=\"" + model.getWidth() + "\" height=\"" + model.getHeight()
         + "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n\n");

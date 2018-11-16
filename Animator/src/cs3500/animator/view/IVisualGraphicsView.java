@@ -2,6 +2,7 @@ package cs3500.animator.view;
 
 
 import cs3500.animator.model.AnimatorModel;
+import cs3500.animator.model.ReadOnlyModel;
 import javax.swing.JPanel;
 
 /**
@@ -19,12 +20,13 @@ public interface IVisualGraphicsView extends AnimatorView{
 
   JPanel getAnimation();
 
-  void initiateTimer(AnimatorModel model, AnimatorPanel animatorPanel);
+  void initiateTimer(ReadOnlyModel model, AnimatorPanel animatorPanel);
   void setIsAnimationOver(Boolean b);
-
-  void restart();
-
-  void rewind();
+  void rewind(ReadOnlyModel model);
 
   void fastforward();
+
+  void slowDown();
+
+  void pause();
 }

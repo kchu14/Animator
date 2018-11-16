@@ -2,6 +2,7 @@ package cs3500.animator.view;
 
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.Motion;
+import cs3500.animator.model.ReadOnlyModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -26,16 +27,19 @@ public class EditableView extends JFrame implements IEditView {
   private JList<String> listOfStrings;
   private JList<String> listOfMotions;
   private EditorPanel ePane;
+  private ReadOnlyModel model;
+  private AnimatorPanel animatorPanel;
 
   public EditableView(IVisualGraphicsView graphicsView) {
     this.graphicsView = graphicsView;
   }
 
   @Override
-  public void playAnimation(AnimatorModel model) {
+  public void playAnimation(ReadOnlyModel model) {
+    this.model = model;
     this.setKeyFrames(model.getKeyFrames());
     this.setTitle("Editor");
-    this.setSize(1280, 700);
+    this.setSize(1600, 900);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new GridLayout(1,2,3,3)); //3,3 are gaps
     ePane = new EditorPanel(keyFrames);
@@ -43,7 +47,7 @@ public class EditableView extends JFrame implements IEditView {
 
     //this.pack();
 
-    AnimatorPanel animatorPanel = new AnimatorPanel();
+    this.animatorPanel = new AnimatorPanel();
     graphicsView.initiateTimer(model, animatorPanel);
     this.add(animatorPanel);
 
@@ -67,16 +71,29 @@ public class EditableView extends JFrame implements IEditView {
 
   @Override
   public void restart() {
-    graphicsView.restart();
+    this.remove(animatorPanel);
+    this.animatorPanel = new AnimatorPanel();
+    graphicsView.initiateTimer(model, animatorPanel);
+    this.add(animatorPanel);
   }
 
   @Override
   public void rewind() {
-    graphicsView.rewind();
+    graphicsView.rewind(model);
   }
 
   @Override
   public void fastforward() {
     graphicsView.fastforward();
+  }
+
+  @Override
+  public void slowDown() {
+    graphicsView.slowDown();
+  }
+
+  @Override
+  public void pause() {
+    graphicsView.pause();
   }
 }

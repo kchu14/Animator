@@ -237,7 +237,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     listOfButtons.add(restart);
 //    restart.addActionListener(this);
 //    restart.setActionCommand("restart");
-    JButton rewind = new JButton("<");
+    JButton rewind = new JButton("Reverse");
     listOfButtons.add(rewind);
 //    rewind.addActionListener(this);
 //    rewind.setActionCommand("rewind");
@@ -245,8 +245,11 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     listOfButtons.add(pause);
 //    pause.addActionListener(this);
 //    pause.setActionCommand("pause");
-    JButton forwards = new JButton(">");
+    JButton forwards = new JButton("Fastforward");
     listOfButtons.add(forwards);
+
+    JButton slowDown = new JButton("Slow down");
+    listOfButtons.add(slowDown);
 //    forwards.addActionListener(this);
 //    forwards.setActionCommand("forwards");
     JButton loop = new JButton("Toggle Loop");
@@ -257,6 +260,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     playBackCommands.add(rewind);
     playBackCommands.add(pause);
     playBackCommands.add(forwards);
+    playBackCommands.add(slowDown);
     playBackCommands.add(restart);
     playBackCommands.add(loop);
 
@@ -299,10 +303,12 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
   public void setButtonListeners(ActionListener e) {
     for (JButton b : listOfButtons) {
       b.addActionListener(e);
-      b.setActionCommand(b.getName());
+      b.setActionCommand(b.getText());
       System.out.println("added listener " + b.getText());
     }
   }
+
+
 
   private class MotionListener implements ListSelectionListener {
 

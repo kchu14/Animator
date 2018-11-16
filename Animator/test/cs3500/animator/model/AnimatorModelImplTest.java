@@ -19,7 +19,7 @@ public class AnimatorModelImplTest {
 
     assertEquals(10, m.getLastTick());
   }
-
+/*
   @Test
   public void testProduceTextView() {
     AnimatorModel m;
@@ -31,7 +31,7 @@ public class AnimatorModelImplTest {
     view.playAnimation(m);
     assertEquals("Shape r rectangle\n"
         + "motion r 0 100 100 50 50 255 0 0 10 100 100 50 50 0 255 0 \n", view.getFileOutput());
-  }
+  }*/
 
 //  @Test
 //  public void testUpdate() {
