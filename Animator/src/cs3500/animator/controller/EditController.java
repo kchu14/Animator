@@ -25,29 +25,20 @@ public class EditController implements IController, ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
-      case "add keyframe":
+      case "Add keyframe":
+        model.addNewMotion(view.newMotion());
         break;
-      case "remove keyframe":
-        break;
-
-      case "modify keyframe":
+      case "Remove keyframe":
         break;
 
-      case "add shape":
-//        String shapeName = this.shapeName.getText();
-//        boolean isRect = false;
-//        if (rectangleButton.isSelected()) {
-//          isRect = true;
-//        }
-//        for (String names : keyFrames.keySet()) {
-//          if (shapeName.equals(names)) {
-//            JOptionPane.showMessageDialog(this, "Cannot add a duplicate name",
-//                "Error!", JOptionPane.ERROR_MESSAGE);
-//          }
-//        }
+      case "Modify keyframe":
         break;
 
-      case "remove shape":
+      case "Add shape":
+
+        break;
+
+      case "Remove shape":
         break;
 
       case "Restart":

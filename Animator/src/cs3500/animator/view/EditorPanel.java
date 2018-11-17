@@ -59,6 +59,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
   private JTextField time;
   private JTextField shapeName;
   private List<JButton> listOfButtons;
+  private String selectedShape;
 
   /**
    * Constructs the animation panel and sets the shapes list to an array list.
@@ -308,6 +309,9 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     }
   }
 
+  public Motion newMotion() {
+    return new Motion(selectedShape, this.
+  }
 
 
   private class MotionListener implements ListSelectionListener {
@@ -391,7 +395,8 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 
   @Override
   public void valueChanged(ListSelectionEvent e) {
-    displayMotions(listOfStrings.getSelectedValue());
+    selectedShape = listOfStrings.getSelectedValue();
+    displayMotions(selectedShape);
 
   }
 

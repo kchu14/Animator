@@ -115,7 +115,6 @@ public class Motion implements Comparable<Motion> {
         endTime);
     shape.move(startX, startY, endX, endY, totalTicks, tick, startTime, endTime);
     return new SimpleShape((SimpleShape)shape);
-
   }
 
   /**
@@ -188,7 +187,27 @@ public class Motion implements Comparable<Motion> {
           + Integer.toString(this.endColor.getBlue()) + ")\"/>\n\n";
     }
     return result;
+  }
 
+  public void changeTo(Motion newMotion) {
+    this.startX = newMotion.startX;
+    this.startY = newMotion.startY;
+    this.startWidth = newMotion.startWidth;
+    this.startHeight = newMotion.startHeight;
+    this.startColor = newMotion.startColor;
+    this.endX = newMotion.endX;
+    this.endY = newMotion.endY;
+    this.endWidth = newMotion.endWidth;
+    this.endHeight = newMotion.endHeight;
+    this.endColor = newMotion.endColor;
+    this.shape = new SimpleShape(name, type, startX, startY, startWidth, startHeight, startColor);
+  }
 
+  public void fixEndings(Motion m) {
+    this.endX = m.endX;
+    this.endY = m.endY;
+    this.endWidth = m.endWidth;
+    this.endHeight = m.endHeight;
+    this.endColor = m.endColor;
   }
 }

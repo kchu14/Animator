@@ -67,22 +67,6 @@ public class AnimatorModelImpl implements AnimatorModel {
     return tickList.get(tickList.size() - 1);
   }
 
-  private void removeShape(String name) {
-    this.shapes.remove(name);
-    this.nameType.remove(name);
-  }
-
-  private void removeMotion(Motion motion, String name) {
-    if (this.nameMotion.containsKey(name)) {
-      List<Motion> lom = nameMotion.get(name);
-      for (Motion m : lom) {
-        if (m.compareTo(motion) == 0) {
-          nameMotion.get(name).remove(motion);
-        }
-      }
-    }
-  }
-
   @Override
   public Map<Integer, List<IShape>> getTickListShapes() {
     return new LinkedHashMap<>(this.tickListShapes);
@@ -209,6 +193,53 @@ public class AnimatorModelImpl implements AnimatorModel {
     }
   }
 
+  public void declareNewShape(String name, String type) {
+    if (this.nameType == null) {
+      this.nameType = new LinkedHashMap<>();
+    }
+    if (this.nameType.containsKey(name)) {
+      throw new IllegalArgumentException("Shape names have to be unique");
+    } else {
+      this.nameType.put(name, type);
+    }
+  }
+
+  public void removeShape(String name) {
+    this.shapes.remove(name);
+    this.nameType.remove(name);
+  }
+
+  public void addNewMotion(Motion m) {
+    List<Motion> lom = nameMotion.get(m.name);
+    lom.add(m);
+    nameMotion.put(m.name, lom);
+    checkForValidMotions();
+  }
+
+  public void editMotion(int startTick, String shapeName, Motion newMotion) {
+    for(Motion m : nameMotion.get(shapeName)) {
+      if(m.getStartTime() == startTick) {
+        m.changeTo(newMotion);
+      }
+    }
+  }
+
+  public void removeMotion(Motion motion, String name) {
+    if (this.nameMotion.containsKey(name)) {
+      List<Motion> lom = nameMotion.get(name);
+      for (int i = 0; i < lom.size(); i++) {
+        Motion m = lom.get(i);
+        if(i == 0 && m.compareTo(motion) == 0) {
+          nameMotion.get(name).remove(motion);
+        }
+        else if (m.compareTo(motion) == 0) {
+          nameMotion.get(name).remove(motion);
+          lom.get(i - 1).fixEndings(m);
+        }
+      }
+    }
+  }
+
   @Override
   public Map<String, List<Motion>> getMotions() {
     return new LinkedHashMap<>(this.nameMotion);
@@ -265,7 +296,6 @@ public class AnimatorModelImpl implements AnimatorModel {
       if (this.nameType == null) {
         this.nameType = new LinkedHashMap<>();
       }
-
       if (this.nameType.containsKey(name)) {
         throw new IllegalArgumentException("Shape names have to be unique");
       } else {

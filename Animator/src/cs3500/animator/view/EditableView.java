@@ -96,4 +96,9 @@ public class EditableView extends JFrame implements IEditView {
   public void pause() {
     graphicsView.pause();
   }
+
+  @Override
+  public Motion newMotion() {
+    return ePane.newMotion();
+  }
 }
