@@ -27,6 +27,8 @@ public class EditController implements IController, ActionListener {
     switch (e.getActionCommand()) {
       case "Add keyframe":
         model.addNewMotion(view.newMotion());
+        view.setKeyFrames(model.getKeyFrames());
+
         break;
       case "Remove keyframe":
         break;

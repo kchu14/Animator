@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -286,6 +287,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     motionPanel.removeAll();
     DefaultListModel<String> dataForListOfMotions = new DefaultListModel<>();
     List<Motion> lom = keyFrames.get(shapeName);
+    Collections.sort(lom);
     for (Motion m : lom) {
       dataForListOfMotions.addElement("" + m.getStartTime());
     }
@@ -305,12 +307,20 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     for (JButton b : listOfButtons) {
       b.addActionListener(e);
       b.setActionCommand(b.getText());
-      System.out.println("added listener " + b.getText());
     }
   }
 
   public Motion newMotion() {
-    return new Motion(selectedShape, this.
+    Color c = new Color(Integer.parseInt(redText.getText()), Integer.parseInt(greenText.getText()),
+        Integer.parseInt(blueText.getText()));
+    return new Motion(selectedShape, keyFrames.get(selectedShape).get(0).getType(),
+        Integer.parseInt(this.time.getText()),
+        Integer.parseInt(this.xText.getText()), Integer.parseInt(this.yText.getText()),
+        Integer.parseInt(this.widthText.getText()),
+        Integer.parseInt(this.heightText.getText()), c, Integer.parseInt(this.time.getText()),
+        Integer.parseInt(this.xText.getText()), Integer.parseInt(this.yText.getText()),
+        Integer.parseInt(this.widthText.getText()),
+        Integer.parseInt(this.heightText.getText()), c);
   }
 
 
@@ -402,6 +412,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 
   public void setKeyFrames(Map<String, List<Motion>> keyFrames) {
     this.keyFrames = keyFrames;
+    this.displayMotions(selectedShape);
   }
 }
 

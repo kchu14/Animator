@@ -37,7 +37,7 @@ public class EditableView extends JFrame implements IEditView {
   @Override
   public void playAnimation(ReadOnlyModel model) {
     this.model = model;
-    this.setKeyFrames(model.getKeyFrames());
+    this.keyFrames = model.getKeyFrames();
     this.setTitle("Editor");
     this.setSize(1600, 900);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,11 +58,11 @@ public class EditableView extends JFrame implements IEditView {
 
   public void setKeyFrames(Map<String, List<Motion>> keyFrames) {
     this.keyFrames = keyFrames;
+    ePane.setKeyFrames(keyFrames);
   }
 
   public void setButtonListeners(ActionListener e) {
     ePane.setButtonListeners(e);
-    System.out.println("added button listeners in edit view");
   }
 
   public void setIsAnimationOver(Boolean b) {

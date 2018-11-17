@@ -43,7 +43,7 @@ public class Motion implements Comparable<Motion> {
    * @param endHeight the ending height of the shape
    * @param endColor the ending color of the shape
    */
-  Motion(String name, String type, int startTime, int startX, int startY,
+  public Motion(String name, String type, int startTime, int startX, int startY,
       int startWidth,
       int startHeight, Color startColor, int endTime, int endX, int endY, int endWidth,
       int endHeight, Color endColor) {
@@ -204,10 +204,24 @@ public class Motion implements Comparable<Motion> {
   }
 
   public void fixEndings(Motion m) {
-    this.endX = m.endX;
-    this.endY = m.endY;
-    this.endWidth = m.endWidth;
-    this.endHeight = m.endHeight;
-    this.endColor = m.endColor;
+    this.endX = m.startX;
+    this.endY = m.startY;
+    this.endWidth = m.startWidth;
+    this.endHeight = m.startHeight;
+    this.endColor = m.startColor;
+    this.endTime = m.startTime;
+  }
+
+  public void fixBeginning(Motion m) {
+    this.startX = m.endX;
+    this.startY = m.endY;
+    this.startWidth = m.endWidth;
+    this.startHeight = m.endHeight;
+    this.startColor = m.endColor;
+    this.startTime = m.endTime;
+  }
+
+  public int getEndTime() {
+    return this.endTime;
   }
 }

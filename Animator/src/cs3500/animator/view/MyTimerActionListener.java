@@ -1,6 +1,7 @@
 package cs3500.animator.view;
 
 import cs3500.animator.model.AnimatorModel;
+import cs3500.animator.model.ReadOnlyModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -13,7 +14,7 @@ class MyTimerActionListener implements ActionListener {
 
   private int tick;
   private int originalTick;
-  private AnimatorModel model;
+  private ReadOnlyModel model;
   private Timer t;
   private AnimatorPanel animatorPanel;
   private boolean isAnimationOver;
@@ -29,7 +30,7 @@ class MyTimerActionListener implements ActionListener {
    * @param model the model to be displayed
    * @param t the timer
    */
-  public MyTimerActionListener(int tick, AnimatorModel model, Timer t,
+  public MyTimerActionListener(int tick, ReadOnlyModel model, Timer t,
       AnimatorPanel animatorPanel) {
     this.tick = tick;
     this.originalTick = tick;
