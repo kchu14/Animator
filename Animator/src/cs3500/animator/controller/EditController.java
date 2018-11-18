@@ -26,18 +26,23 @@ public class EditController implements IController, ActionListener {
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
       case "Add keyframe":
+        model.addShape(view.newMotion());
         model.addNewMotion(view.newMotion());
         view.setKeyFrames(model.getKeyFrames());
-
         break;
       case "Remove keyframe":
+        model.removeMotion(view.getSelectedMotion());
+        view.setKeyFrames(model.getKeyFrames());
         break;
 
       case "Modify keyframe":
+        model.editMotion(view.modifiedMotion());
+        view.setKeyFrames(model.getKeyFrames());
         break;
 
       case "Add shape":
-
+        model.declareNewShape(view.getSelectedShape());
+        view.setNameType(model.getNameType());
         break;
 
       case "Remove shape":

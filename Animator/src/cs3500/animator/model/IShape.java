@@ -70,5 +70,7 @@ public interface IShape {
    * @return string formatted to fit svg parameters.
    */
   String toSVG();
+  String getName();
+  String getType();
 
 }

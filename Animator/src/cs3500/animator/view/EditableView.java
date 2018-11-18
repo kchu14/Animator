@@ -3,6 +3,7 @@ package cs3500.animator.view;
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.ReadOnlyModel;
+import cs3500.animator.model.SimpleShape;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -42,7 +43,7 @@ public class EditableView extends JFrame implements IEditView {
     this.setSize(1600, 900);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new GridLayout(1,2,3,3)); //3,3 are gaps
-    ePane = new EditorPanel(keyFrames);
+    ePane = new EditorPanel(keyFrames, model.getNameType());
     this.add(ePane);
 
     //this.pack();
@@ -60,6 +61,27 @@ public class EditableView extends JFrame implements IEditView {
     this.keyFrames = keyFrames;
     ePane.setKeyFrames(keyFrames);
   }
+
+  @Override
+  public Motion getSelectedMotion() {
+    return ePane.getSelectedMotion();
+  }
+
+  @Override
+  public Motion modifiedMotion() {
+    return  ePane.modifiedMotion();
+  }
+
+  @Override
+  public SimpleShape getSelectedShape() {
+    return ePane.getSelectedShape();
+  }
+
+  @Override
+  public void setNameType(Map<String, String> nameType) {
+    ePane.setNameType(nameType);
+  }
+
 
   public void setButtonListeners(ActionListener e) {
     ePane.setButtonListeners(e);

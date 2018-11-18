@@ -5,10 +5,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * This class represents an animator model and implements all of its associated operations.
@@ -61,6 +63,11 @@ public class AnimatorModelImpl implements AnimatorModel {
     this.setTicks();
   }
 
+  // todo remove shape, redesign gui, error message, visitor for buttons, testing (fix old tests),
+  // todo documentation of changes, readme, extra credit, jar file, java docs,
+  // todo check each public method belongs to interface, make fields private add getters
+
+
   @Override
   public int getLastTick() {
     Collections.sort(tickList);
@@ -82,17 +89,25 @@ public class AnimatorModelImpl implements AnimatorModel {
       int i = 0;
       for (Motion m : set.getValue()) {
         result2.add(
-            new Motion(m.name, m.type, m.startTime, m.startX, m.startY, m.startWidth, m.startHeight,
+            new Motion(m.name, m.type, m.startTime, m.startX, m.startY, m.startWidth,
+                m.startHeight,
                 m.startColor,
                 m.startTime, m.startX, m.startY, m.startWidth, m.startHeight, m.startColor));
-        if (i == n) {
+        if (i == n && (i != 0 || m.getStartTime() != m.getEndTime())) {
           result2.add(
               new Motion(m.name, m.type, m.endTime, m.endX, m.endY, m.endWidth, m.endHeight,
                   m.endColor,
                   m.endTime, m.endX, m.endY, m.endWidth, m.endHeight, m.endColor));
         }
+
         i++;
       }
+      for (int j = 1; j < result2.size(); j++) {
+        if (result2.get(j).compareTo(result2.get(j - 1)) == 0) {
+          result2.remove(j);
+        }
+      }
+
       result.put(set.getKey(), result2);
     }
     return result;
@@ -180,12 +195,8 @@ public class AnimatorModelImpl implements AnimatorModel {
     return topMostY;
   }
 
-  /**
-   * Adds a shape to our shapes map given a motion (the initial shape of this motion).
-   *
-   * @param m the given motion that is acted on a shape.
-   */
-  private void addShape(Motion m) {
+
+  public void addShape(Motion m) {
     String key = m.name;
     if (!shapes.containsKey(key)) {
       shapes.put(key,
@@ -194,14 +205,14 @@ public class AnimatorModelImpl implements AnimatorModel {
     }
   }
 
-  public void declareNewShape(String name, String type) {
+  public void declareNewShape(SimpleShape shape) {
     if (this.nameType == null) {
       this.nameType = new LinkedHashMap<>();
     }
-    if (this.nameType.containsKey(name)) {
+    if (this.nameType.containsKey(shape.name)) {
       throw new IllegalArgumentException("Shape names have to be unique");
     } else {
-      this.nameType.put(name, type);
+      this.nameType.put(shape.name, shape.type);
     }
   }
 
@@ -212,7 +223,14 @@ public class AnimatorModelImpl implements AnimatorModel {
 
   public void addNewMotion(Motion newMotion) {
     List<Motion> lom = nameMotion.get(newMotion.name);
+    if (lom == null) {
+      lom = new ArrayList<>();
+      lom.add(newMotion);
+      nameMotion.put(newMotion.name, lom);
+      return;
+    }
     Collections.sort(lom);
+
     for (int i = 0; i < lom.size(); i++) {
       System.out.println(lom.get(i).getStartTime());
       Motion curMotion = lom.get(i);
@@ -253,32 +271,56 @@ public class AnimatorModelImpl implements AnimatorModel {
     lom.add(newMotion);
     nameMotion.put(newMotion.name, lom);
     checkForValidMotions();
+    tickList.add(newMotion.endTime);
     setTicks();
   }
 
-  public void editMotion(int startTick, String shapeName, Motion newMotion) {
-    for (Motion m : nameMotion.get(shapeName)) {
-      if (m.getStartTime() == startTick) {
+  public void editMotion(Motion newMotion) {
+    System.out.println("modified");
+    for (int i = 0; i < nameMotion.get(newMotion.name).size(); i++) {
+      Motion m = nameMotion.get(newMotion.name).get(i);
+      if (m.getStartTime() == newMotion.getStartTime()) {
         m.changeTo(newMotion);
+        if (i != 0) {
+          nameMotion.get(newMotion.name).get(i - 1).fixEndings(m);
+        }
+        System.out.println("changed to new motion case 1");
+
+      } else if (m.getEndTime() == newMotion.getStartTime()
+          && i == nameMotion.get(newMotion.name).size() - 1) {
+        m.fixEndings(newMotion);
+        System.out.println("changed to new motion case 2");
       }
     }
+    checkForValidMotions();
+    tickList.add(newMotion.endTime);
+    setTicks();
   }
 
-  public void removeMotion(Motion motion, String name) {
+  public void removeMotion(Motion motion) {
+
+    String name = motion.name;
+    System.out.println(nameMotion.get(name).size());
     if (this.nameMotion.containsKey(name)) {
       List<Motion> lom = nameMotion.get(name);
       for (int i = 0; i < lom.size(); i++) {
         Motion m = lom.get(i);
         if (i == 0 && m.compareTo(motion) == 0) {
-          nameMotion.get(name).remove(motion);
-        } else if (m.compareTo(motion) == 0) {
-          nameMotion.get(name).remove(motion);
-          if (i != lom.size() - 1) {
+          nameMotion.get(name).remove(m);
+        } else if (m.startTime == motion.startTime) {
+          if (i < lom.size() - 1) {
             lom.get(i - 1).fixEndings(lom.get(i + 1));
           }
+          nameMotion.get(name).remove(m);
+        } else if (m.endTime == motion.startTime && i == lom.size() - 1) {
+          nameMotion.get(name).remove(m);
         }
       }
+
+      checkForValidMotions();
+      setTicks();
     }
+
   }
 
   @Override

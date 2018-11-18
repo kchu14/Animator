@@ -3,13 +3,12 @@ package cs3500.animator.view;
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.error;
 
 import cs3500.animator.model.Motion;
+import cs3500.animator.model.SimpleShape;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.ScrollPane;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -24,21 +23,18 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.AncestorListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class EditorPanel extends JPanel implements ActionListener, ItemListener,
+public class EditorPanel extends JPanel implements ItemListener,
     ListSelectionListener {
 
 
@@ -61,13 +57,18 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
   private JTextField shapeName;
   private List<JButton> listOfButtons;
   private String selectedShape;
+  private String selectedType;
+  private Motion selectedMotion;
+  private JPanel shapeNamesPanel;
+  private Map<String, String> nameType;
 
   /**
    * Constructs the animation panel and sets the shapes list to an array list.
    */
 
-  public EditorPanel(Map<String, List<Motion>> keyFrames) {
+  public EditorPanel(Map<String, List<Motion>> keyFrames, Map<String, String> nameType) {
     super();
+    this.nameType = nameType;
     this.setLayout(new BorderLayout());
     //this.setPreferredSize(new Dimension(500, 500));
     this.setBackground(Color.BLACK);
@@ -77,20 +78,10 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
     shapesAndMotions.setLayout(new BorderLayout());
 
     this.keyFrames = keyFrames;
-    JPanel shapeNamesPanel = new JPanel();
+    shapeNamesPanel = new JPanel();
     shapeNamesPanel.setBorder(BorderFactory.createTitledBorder("Shape Name"));
+    this.displayShapes();
 
-    DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
-    for (Entry<String, List<Motion>> shape : keyFrames.entrySet()) {
-      dataForListOfStrings.addElement(shape.getKey());
-    }
-
-    listOfStrings = new JList<>(dataForListOfStrings);
-    listOfStrings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    listOfStrings.addListSelectionListener(this);
-    listOfStrings.setPreferredSize(new Dimension(100, 350));
-    shapeNamesPanel.add(new JScrollPane(listOfStrings));
-    shapesAndMotions.add(shapeNamesPanel, BorderLayout.WEST);
     motionPanel = new JPanel();
     motionPanel.setLayout(new BorderLayout());
     motionPanel.setBorder(BorderFactory.createTitledBorder("Keyframes"));
@@ -283,9 +274,32 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 
   }
 
+  private void displayShapes() {
+    shapeNamesPanel.removeAll();
+    DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
+    for (Entry<String, List<Motion>> shape : keyFrames.entrySet()) {
+      dataForListOfStrings.addElement(shape.getKey());
+    }
+    if (selectedShape != null) {
+      dataForListOfStrings.addElement(selectedShape);
+
+    }
+    listOfStrings = new JList<>(dataForListOfStrings);
+    listOfStrings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    listOfStrings.addListSelectionListener(this);
+    listOfStrings.setPreferredSize(new Dimension(100, 350));
+    shapeNamesPanel.add(new JScrollPane(listOfStrings));
+    shapesAndMotions.add(shapeNamesPanel, BorderLayout.WEST);
+
+    this.updateUI();
+  }
+
   private void displayMotions(String shapeName) {
     motionPanel.removeAll();
     DefaultListModel<String> dataForListOfMotions = new DefaultListModel<>();
+    if (keyFrames.get(shapeName) == null) {
+      return;
+    }
     List<Motion> lom = keyFrames.get(shapeName);
     Collections.sort(lom);
     for (Motion m : lom) {
@@ -303,6 +317,11 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
 
   }
 
+  public void setNameType(Map<String, String> nameType) {
+    this.nameType = nameType;
+  }
+
+
   public void setButtonListeners(ActionListener e) {
     for (JButton b : listOfButtons) {
       b.addActionListener(e);
@@ -311,9 +330,11 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
   }
 
   public Motion newMotion() {
-    Color c = new Color(Integer.parseInt(redText.getText()), Integer.parseInt(greenText.getText()),
-        Integer.parseInt(blueText.getText()));
-    return new Motion(selectedShape, keyFrames.get(selectedShape).get(0).getType(),
+
+    Color c = new Color(Math.min(0, Math.max(Integer.parseInt(redText.getText()), 255)),
+        Math.min(0, Math.max(Integer.parseInt(greenText.getText()), 255)),
+        Math.min(0, Math.max(Integer.parseInt(blueText.getText()), 255)));
+    return new Motion(selectedShape, nameType.get(selectedShape),
         Integer.parseInt(this.time.getText()),
         Integer.parseInt(this.xText.getText()), Integer.parseInt(this.yText.getText()),
         Integer.parseInt(this.widthText.getText()),
@@ -321,6 +342,34 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
         Integer.parseInt(this.xText.getText()), Integer.parseInt(this.yText.getText()),
         Integer.parseInt(this.widthText.getText()),
         Integer.parseInt(this.heightText.getText()), c);
+  }
+
+  public Motion modifiedMotion() {
+    Color c = new Color(Math.min(0, Math.max(Integer.parseInt(redText.getText()), 255)),
+        Math.min(0, Math.max(Integer.parseInt(greenText.getText()), 255)),
+        Math.min(0, Math.max(Integer.parseInt(blueText.getText()), 255)));
+    return new Motion(selectedShape, keyFrames.get(selectedShape).get(0).getType(),
+        selectedMotion.getStartTime(),
+        Integer.parseInt(this.xText.getText()), Integer.parseInt(this.yText.getText()),
+        Integer.parseInt(this.widthText.getText()),
+        Integer.parseInt(this.heightText.getText()), c, selectedMotion.getEndTime(),
+        Integer.parseInt(this.xText.getText()), Integer.parseInt(this.yText.getText()),
+        Integer.parseInt(this.widthText.getText()),
+        Integer.parseInt(this.heightText.getText()), c);
+  }
+
+  public Motion getSelectedMotion() {
+    return selectedMotion;
+  }
+
+  public SimpleShape getSelectedShape() {
+    selectedShape = shapeName.getText();
+    selectedType = "ellipse";
+    if (rectangleButton.isSelected()) {
+      selectedType = "rectangle";
+    }
+    displayShapes();
+    return new SimpleShape(selectedShape, selectedType);
   }
 
 
@@ -333,6 +382,7 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
       for (Motion m : lom) {
         if (m.getStartTime() == Integer.parseInt(listOfMotions.getSelectedValue())) {
           String[] strArr = m.getTextResult().split(" ");
+          selectedMotion = m;
           redText.setText(strArr[7]);
           greenText.setText(strArr[8]);
           blueText.setText(strArr[9]);
@@ -348,55 +398,12 @@ public class EditorPanel extends JPanel implements ActionListener, ItemListener,
           } else {
             ellipseButton.setSelected(true);
           }
+
         }
       }
     }
   }
 
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    switch (e.getActionCommand()) {
-      case "add keyframe":
-        break;
-      case "remove keyframe":
-        break;
-
-      case "modify keyframe":
-        break;
-
-      case "add shape":
-        String shapeName = this.shapeName.getText();
-        boolean isRect = false;
-        if (rectangleButton.isSelected()) {
-          isRect = true;
-        }
-        for (String names : keyFrames.keySet()) {
-          if (shapeName.equals(names)) {
-            JOptionPane.showMessageDialog(this, "Cannot add a duplicate name",
-                "Error!", JOptionPane.ERROR_MESSAGE);
-          }
-        }
-        break;
-
-      case "remove shape":
-        break;
-
-      case "restart":
-
-        break;
-      case "rewind":
-        break;
-
-      case "pause":
-        break;
-
-      case "forwards":
-        break;
-
-      case "loop":
-        break;
-    }
-  }
 
   @Override
   public void itemStateChanged(ItemEvent e) {

@@ -84,14 +84,21 @@ public interface AnimatorModel {
 
   Map<String, List<Motion>> getKeyFrames();
 
-  void declareNewShape(String name, String type);
+  void declareNewShape(SimpleShape shape);
 
   void removeShape(String name);
 
   void addNewMotion(Motion m);
 
-  void editMotion(int startTick, String shapeName, Motion newMotion);
+  void editMotion(Motion newMotion);
 
-  void removeMotion(Motion motion, String name);
+  void removeMotion(Motion motion);
+
+  /**
+   * Adds a shape to our shapes map given a motion (the initial shape of this motion).
+   *
+   * @param m the given motion that is acted on a shape.
+   */
+  void addShape(Motion m);
 
 }

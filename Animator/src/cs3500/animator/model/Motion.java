@@ -74,7 +74,7 @@ public class Motion implements Comparable<Motion> {
         "motion %s %d %d %d %d %d %d %d %d "
             + "%d %d %d %d %d %d %d %d \n",
         name, startTime, startX, startY, startWidth, startHeight, startColor.getRed(),
-        startColor.getBlue(), startColor.getGreen(),
+        startColor.getGreen(), startColor.getBlue(),
         endTime, endX, endY, endWidth, endHeight, endColor.getRed(),
         endColor.getGreen(), endColor.getBlue());
   }
@@ -195,11 +195,6 @@ public class Motion implements Comparable<Motion> {
     this.startWidth = newMotion.startWidth;
     this.startHeight = newMotion.startHeight;
     this.startColor = newMotion.startColor;
-    this.endX = newMotion.endX;
-    this.endY = newMotion.endY;
-    this.endWidth = newMotion.endWidth;
-    this.endHeight = newMotion.endHeight;
-    this.endColor = newMotion.endColor;
     this.shape = new SimpleShape(name, type, startX, startY, startWidth, startHeight, startColor);
   }
 

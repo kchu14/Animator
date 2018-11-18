@@ -53,6 +53,10 @@ public class SimpleShape implements IShape {
     this.color = shape.color;
     getCurShape();
   }
+  public SimpleShape(String name, String type) {
+    this.name = name;
+    this.type = type;
+  }
 
   /**
    * This method resets the shapes.
@@ -161,5 +165,13 @@ public class SimpleShape implements IShape {
 
     }
     return thisType;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public String getType() {
+    return this.type;
   }
 }
