@@ -1,12 +1,10 @@
 package cs3500.animator.view;
 
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.error;
 
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.SimpleShape;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -17,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -28,6 +25,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -38,7 +36,6 @@ public class EditorPanel extends JPanel implements ItemListener,
     ListSelectionListener {
 
 
-  private JLabel colorChooserDisplay;
   private JPanel motionPanel;
   private JPanel shapesAndMotions;
   private Map<String, List<Motion>> keyFrames;
@@ -61,6 +58,7 @@ public class EditorPanel extends JPanel implements ItemListener,
   private Motion selectedMotion;
   private JPanel shapeNamesPanel;
   private Map<String, String> nameType;
+  private JScrollPane losScroll;
 
   /**
    * Constructs the animation panel and sets the shapes list to an array list.
@@ -68,26 +66,26 @@ public class EditorPanel extends JPanel implements ItemListener,
 
   public EditorPanel(Map<String, List<Motion>> keyFrames, Map<String, String> nameType) {
     super();
+    // Sets layout
     this.nameType = nameType;
     this.setLayout(new BorderLayout());
-    //this.setPreferredSize(new Dimension(500, 500));
-    this.setBackground(Color.BLACK);
+    this.keyFrames = keyFrames;
+
+    // Sets up shapes and motions JLists
     this.listOfButtons = new ArrayList<>();
     shapesAndMotions = new JPanel();
     shapesAndMotions.setPreferredSize(new Dimension(640, 350));
     shapesAndMotions.setLayout(new BorderLayout());
-
-    this.keyFrames = keyFrames;
     shapeNamesPanel = new JPanel();
     shapeNamesPanel.setBorder(BorderFactory.createTitledBorder("Shape Name"));
+    shapeNamesPanel.setLayout(new BorderLayout());
     this.displayShapes();
-
     motionPanel = new JPanel();
     motionPanel.setLayout(new BorderLayout());
     motionPanel.setBorder(BorderFactory.createTitledBorder("Keyframes"));
-
     shapesAndMotions.add(motionPanel, BorderLayout.CENTER);
-    JPanel keyFrameButtons = new JPanel(new FlowLayout());
+
+    // Buttons for changing the animation
     JButton addMotionButton = new JButton("Add keyframe");
     listOfButtons.add(addMotionButton);
     JButton removeMotionButton = new JButton("Remove keyframe");
@@ -98,93 +96,74 @@ public class EditorPanel extends JPanel implements ItemListener,
     listOfButtons.add(removeShapeButton);
     JButton modifyMotionButton = new JButton("Modify keyframe");
     listOfButtons.add(modifyMotionButton);
-//    addMotionButton.addActionListener(this);
-//    addMotionButton.setActionCommand("add keyframe");
-//    removeMotionButton.addActionListener(this);
-//    removeMotionButton.setActionCommand("remove keyframe");
-//    addShapeButton.addActionListener(this);
-//    addShapeButton.setActionCommand("add shape");
-//    removeShapeButton.addActionListener(this);
-//    removeShapeButton.setActionCommand("remove shape");
-//    modifyMotionButton.addActionListener(this);
-//    modifyMotionButton.setActionCommand("modify keyframe");
+    JPanel removeButtons = new JPanel();
+    removeButtons.setLayout(new BoxLayout(removeButtons, BoxLayout.Y_AXIS));
 
-    keyFrameButtons.add(removeShapeButton);
-    keyFrameButtons.add(removeMotionButton);
 
-    shapesAndMotions.add(keyFrameButtons, BorderLayout.SOUTH);
+    removeButtons.add(removeShapeButton);
+    removeButtons.add(removeMotionButton);
+    shapeNamesPanel.add(removeButtons, BorderLayout.SOUTH);
     this.add(shapesAndMotions, BorderLayout.NORTH);
 
+    // Sets up shape attributes fields
+    JTabbedPane tabbedPane = new JTabbedPane();
     JPanel shapeAttributes = new JPanel();
-    //shapeAttributes.setBackground(Color.gray);
     shapeAttributes.setLayout(new FlowLayout());
     shapeAttributes.setBorder(BorderFactory.createTitledBorder("Shape/Keyframe Attributes"));
-
     time = new JTextField(4);
     shapeAttributes.add(time);
     JTextArea timeButton = new JTextArea("Time");
     shapeAttributes.add(timeButton);
 
+    // Colors of the shape
     JPanel colors = new JPanel();
     colors.setLayout(new BoxLayout(colors, BoxLayout.Y_AXIS));
-
-    //input textfield
     JPanel redTextButton = new JPanel(new FlowLayout());
     redText = new JTextField(2);
     redTextButton.add(redText);
     JTextArea redButton = new JTextArea("Red");
     redTextButton.add(redButton);
     colors.add(redTextButton);
-
-    //input textfield
     JPanel greenTextButton = new JPanel(new FlowLayout());
     greenText = new JTextField(2);
     greenTextButton.add(greenText);
     JTextArea greenButton = new JTextArea("Green");
     greenTextButton.add(greenButton);
     colors.add(greenTextButton);
-
-    //input textfield
     JPanel blueTextButton = new JPanel(new FlowLayout());
     blueText = new JTextField(2);
     blueTextButton.add(blueText);
     JTextArea blueButton = new JTextArea("Blue");
     blueTextButton.add(blueButton);
     colors.add(blueTextButton);
-
     shapeAttributes.add(colors);
 
+    // Size of the shape
     JPanel sizePanel = new JPanel();
     sizePanel.setLayout(new BoxLayout(sizePanel, BoxLayout.Y_AXIS));
-    //input textfield
     JPanel widthTextButton = new JPanel(new FlowLayout());
     widthText = new JTextField(2);
     widthTextButton.add(widthText);
     JTextArea widthButton = new JTextArea("Width");
     widthTextButton.add(widthButton);
     sizePanel.add(widthTextButton);
-
-    //input textfield
     JPanel heightTextButton = new JPanel(new FlowLayout());
     heightText = new JTextField(2);
     heightTextButton.add(heightText);
     JTextArea heightButton = new JTextArea("Height");
     heightTextButton.add(heightButton);
     sizePanel.add(heightTextButton);
-
     shapeAttributes.add(sizePanel);
 
+    // Position of the shape
     JPanel positionPanel = new JPanel();
     positionPanel.setLayout(new BoxLayout(positionPanel, BoxLayout.Y_AXIS));
-    //input textfield
     JPanel xTextButton = new JPanel(new FlowLayout());
     xText = new JTextField(3);
     xTextButton.add(xText);
     JTextArea xButton = new JTextArea("X");
     xTextButton.add(xButton);
     positionPanel.add(xTextButton);
-
-    //input textfield
     JPanel yTextButton = new JPanel(new FlowLayout());
     yText = new JTextField(3);
     yTextButton.add(yText);
@@ -193,89 +172,78 @@ public class EditorPanel extends JPanel implements ItemListener,
     positionPanel.add(yTextButton);
     shapeAttributes.add(positionPanel);
 
-    //radio buttons
+    shapeAttributes.add(modifyMotionButton);
+    shapeAttributes.add(addMotionButton);
+
+    tabbedPane.addTab("Modify / Add Keyframe", shapeAttributes);
+
+    // The shape type buttons
+    JPanel declareShapePanel = new JPanel();
     JPanel radioPanel = new JPanel();
     radioPanel.setBorder(BorderFactory.createTitledBorder("Shape Type"));
     radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.PAGE_AXIS));
     ButtonGroup rGroup1 = new ButtonGroup();
     rectangleButton = new JRadioButton("Rectangle");
     ellipseButton = new JRadioButton("Ellipse");
-
     rGroup1.add(rectangleButton);
     rGroup1.add(ellipseButton);
     radioPanel.add(rectangleButton);
     radioPanel.add(ellipseButton);
-    shapeAttributes.add(radioPanel);
+    declareShapePanel.add(radioPanel);
 
+    // Shape name text field
     shapeName = new JTextField(4);
-    shapeAttributes.add(shapeName);
+    declareShapePanel.add(shapeName);
     JTextArea shapeNameButton = new JTextArea("Shape Name");
-    shapeAttributes.add(shapeNameButton);
+    declareShapePanel.add(shapeNameButton);
+    declareShapePanel.add(addShapeButton);
+    tabbedPane.addTab("Add Shape", declareShapePanel);
+
 
     JPanel middleButtonsPanel = new JPanel(new BorderLayout());
-    middleButtonsPanel.add(shapeAttributes, BorderLayout.NORTH);
+    middleButtonsPanel.add(tabbedPane, BorderLayout.NORTH);
 
+    // Animation modifying buttons
     JPanel newMotionShapeButtonsPanel = new JPanel(new FlowLayout());
-
-    newMotionShapeButtonsPanel.add(addShapeButton);
-    newMotionShapeButtonsPanel.add(addMotionButton);
-    newMotionShapeButtonsPanel.add(modifyMotionButton);
+    //newMotionShapeButtonsPanel.add(addShapeButton);
+  //  newMotionShapeButtonsPanel.add(addMotionButton);
+    //newMotionShapeButtonsPanel.add(modifyMotionButton);
     middleButtonsPanel.add(newMotionShapeButtonsPanel, BorderLayout.SOUTH);
-
     this.add(middleButtonsPanel, BorderLayout.CENTER);
 
+    // Video control buttons
     JPanel playBackCommands = new JPanel();
     playBackCommands.setLayout(new FlowLayout());
     JButton restart = new JButton("Restart");
     listOfButtons.add(restart);
-//    restart.addActionListener(this);
-//    restart.setActionCommand("restart");
     JButton rewind = new JButton("Reverse");
     listOfButtons.add(rewind);
-//    rewind.addActionListener(this);
-//    rewind.setActionCommand("rewind");
     JButton pause = new JButton("||");
     listOfButtons.add(pause);
-//    pause.addActionListener(this);
-//    pause.setActionCommand("pause");
     JButton forwards = new JButton("Fastforward");
     listOfButtons.add(forwards);
-
     JButton slowDown = new JButton("Slow down");
     listOfButtons.add(slowDown);
-//    forwards.addActionListener(this);
-//    forwards.setActionCommand("forwards");
     JButton loop = new JButton("Toggle Loop");
     listOfButtons.add(loop);
-//    loop.addActionListener(this);
-//    loop.setActionCommand("loop");
-
     playBackCommands.add(rewind);
     playBackCommands.add(pause);
     playBackCommands.add(forwards);
     playBackCommands.add(slowDown);
     playBackCommands.add(restart);
     playBackCommands.add(loop);
-
     this.add(playBackCommands, BorderLayout.SOUTH);
 
-    /*JPanel colorChooserPanel = new JPanel();
-    colorChooserPanel.setLayout(new FlowLayout());
-    this.add(colorChooserPanel);
-    JButton colorChooserButton = new JButton("Choose a color");
-    colorChooserButton.setActionCommand("Color chooser");
-    colorChooserButton.addActionListener(this);
-    colorChooserPanel.add(colorChooserButton);
-    colorChooserDisplay = new JLabel("      ");
-    colorChooserDisplay.setOpaque(true); //so that background color shows up
-    colorChooserDisplay.setBackground(Color.WHITE);
-    colorChooserPanel.add(colorChooserDisplay);
-    this.add(colorChooserPanel);*/
 
   }
 
   private void displayShapes() {
-    shapeNamesPanel.removeAll();
+    if(shapeNamesPanel.getComponents().length >= 2) {
+      shapeNamesPanel.remove(losScroll);
+    }
+    else {
+      shapeNamesPanel.removeAll();
+    }
     DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
     for (Entry<String, List<Motion>> shape : keyFrames.entrySet()) {
       dataForListOfStrings.addElement(shape.getKey());
@@ -287,8 +255,10 @@ public class EditorPanel extends JPanel implements ItemListener,
     listOfStrings = new JList<>(dataForListOfStrings);
     listOfStrings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     listOfStrings.addListSelectionListener(this);
-    listOfStrings.setPreferredSize(new Dimension(100, 350));
-    shapeNamesPanel.add(new JScrollPane(listOfStrings));
+   // listOfStrings.setPreferredSize(new Dimension(100, 200));
+    losScroll = new JScrollPane(listOfStrings);
+    losScroll.setPreferredSize(new Dimension(100, 200));
+    shapeNamesPanel.add(losScroll, BorderLayout.NORTH);
     shapesAndMotions.add(shapeNamesPanel, BorderLayout.WEST);
 
     this.updateUI();
@@ -298,6 +268,10 @@ public class EditorPanel extends JPanel implements ItemListener,
     motionPanel.removeAll();
     DefaultListModel<String> dataForListOfMotions = new DefaultListModel<>();
     if (keyFrames.get(shapeName) == null) {
+      JPanel empty = new JPanel();
+      empty.setPreferredSize(new Dimension(300, 350));
+      motionPanel.add(new JScrollPane(empty));
+      shapesAndMotions.add(motionPanel, BorderLayout.CENTER);
       return;
     }
     List<Motion> lom = keyFrames.get(shapeName);
