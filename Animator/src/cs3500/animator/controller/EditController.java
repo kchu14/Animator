@@ -1,13 +1,9 @@
 package cs3500.animator.controller;
 
 import cs3500.animator.model.AnimatorModel;
-import cs3500.animator.view.AnimatorView;
-import cs3500.animator.view.EditableView;
-import cs3500.animator.view.EditorPanel;
 import cs3500.animator.view.IEditView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
 
 public class EditController implements IController, ActionListener {
 
@@ -26,26 +22,57 @@ public class EditController implements IController, ActionListener {
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
       case "Add keyframe":
-        model.addShape(view.newMotion());
-        model.addNewMotion(view.newMotion());
-        view.setKeyFrames(model.getKeyFrames());
+        try {
+          model.addShape(view.newMotion());
+          model.addNewMotion(view.newMotion());
+          view.setKeyFrames(model.getKeyFrames());
+        }
+        catch (Exception err) {
+          view.showError("Be sure that you have all of the fields"
+              + " filled out and a shape selected in the top left corner");
+        }
         break;
       case "Remove keyframe":
-        model.removeMotion(view.getSelectedMotion());
-        view.setKeyFrames(model.getKeyFrames());
+        try {
+          model.removeMotion(view.getSelectedMotion());
+          view.setKeyFrames(model.getKeyFrames());
+        }
+        catch (Exception err) {
+          view.showError("Be sure have selected a keyframe.");
+        }
         break;
 
       case "Modify keyframe":
-        model.editMotion(view.modifiedMotion());
-        view.setKeyFrames(model.getKeyFrames());
+        try {
+          model.editMotion(view.modifiedMotion());
+          view.setKeyFrames(model.getKeyFrames());
+        }
+        catch (Exception err) {
+            view.showError("Be sure you have a keyframe selected and all of the fields are filled "
+                + "out.");
+          }
         break;
 
       case "Add shape":
-        model.declareNewShape(view.getSelectedShape());
-        view.setNameType(model.getNameType());
+        try {
+          model.declareNewShape(view.getCreatedShape());
+          view.setNameType(model.getNameType());
+        }
+        catch (Exception err){
+          view.showError("Be sure that all of the shape fields are filled out and shape "
+              + "names are unique.");
+      }
         break;
 
       case "Remove shape":
+        try {
+          model.removeShape(view.getSelectedShape());
+          view.setNameType(model.getNameType());
+          view.setKeyFrames(model.getKeyFrames());
+        }
+        catch (Exception err) {
+          view.showError("Be sure you have a shape selected in the top left box.");
+        }
         break;
 
       case "Restart":

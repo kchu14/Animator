@@ -1,5 +1,6 @@
 package cs3500.animator.view;
 
+import cs3500.animator.model.IShape;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.SimpleShape;
 import java.awt.event.ActionListener;
@@ -29,7 +30,11 @@ public interface IEditView extends AnimatorView {
 
   Motion modifiedMotion();
 
-  SimpleShape getSelectedShape();
+  SimpleShape getCreatedShape();
 
   void setNameType(Map<String, String> nameType);
+
+  String getSelectedShape();
+
+  void showError(String message);
 }

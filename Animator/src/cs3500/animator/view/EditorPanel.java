@@ -39,7 +39,7 @@ public class EditorPanel extends JPanel implements ItemListener,
   private JPanel motionPanel;
   private JPanel shapesAndMotions;
   private Map<String, List<Motion>> keyFrames;
-  private JList<String> listOfStrings;
+  private JList<String> listOfShapes;
   private JList<String> listOfMotions;
   private JTextField redText;
   private JTextField greenText;
@@ -53,8 +53,6 @@ public class EditorPanel extends JPanel implements ItemListener,
   private JTextField time;
   private JTextField shapeName;
   private List<JButton> listOfButtons;
-  private String selectedShape;
-  private String selectedType;
   private Motion selectedMotion;
   private JPanel shapeNamesPanel;
   private Map<String, String> nameType;
@@ -98,7 +96,6 @@ public class EditorPanel extends JPanel implements ItemListener,
     listOfButtons.add(modifyMotionButton);
     JPanel removeButtons = new JPanel();
     removeButtons.setLayout(new BoxLayout(removeButtons, BoxLayout.Y_AXIS));
-
 
     removeButtons.add(removeShapeButton);
     removeButtons.add(removeMotionButton);
@@ -199,14 +196,13 @@ public class EditorPanel extends JPanel implements ItemListener,
     declareShapePanel.add(addShapeButton);
     tabbedPane.addTab("Add Shape", declareShapePanel);
 
-
     JPanel middleButtonsPanel = new JPanel(new BorderLayout());
     middleButtonsPanel.add(tabbedPane, BorderLayout.NORTH);
 
     // Animation modifying buttons
     JPanel newMotionShapeButtonsPanel = new JPanel(new FlowLayout());
     //newMotionShapeButtonsPanel.add(addShapeButton);
-  //  newMotionShapeButtonsPanel.add(addMotionButton);
+    //  newMotionShapeButtonsPanel.add(addMotionButton);
     //newMotionShapeButtonsPanel.add(modifyMotionButton);
     middleButtonsPanel.add(newMotionShapeButtonsPanel, BorderLayout.SOUTH);
     this.add(middleButtonsPanel, BorderLayout.CENTER);
@@ -238,25 +234,21 @@ public class EditorPanel extends JPanel implements ItemListener,
   }
 
   private void displayShapes() {
-    if(shapeNamesPanel.getComponents().length >= 2) {
+    if (shapeNamesPanel.getComponents().length >= 2) {
       shapeNamesPanel.remove(losScroll);
-    }
-    else {
+    } else {
       shapeNamesPanel.removeAll();
     }
     DefaultListModel<String> dataForListOfStrings = new DefaultListModel<>();
-    for (Entry<String, List<Motion>> shape : keyFrames.entrySet()) {
+    for (Entry<String, String> shape : nameType.entrySet()) {
       dataForListOfStrings.addElement(shape.getKey());
     }
-    if (selectedShape != null) {
-      dataForListOfStrings.addElement(selectedShape);
 
-    }
-    listOfStrings = new JList<>(dataForListOfStrings);
-    listOfStrings.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    listOfStrings.addListSelectionListener(this);
-   // listOfStrings.setPreferredSize(new Dimension(100, 200));
-    losScroll = new JScrollPane(listOfStrings);
+    listOfShapes = new JList<>(dataForListOfStrings);
+    listOfShapes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    listOfShapes.addListSelectionListener(this);
+    // listOfStrings.setPreferredSize(new Dimension(100, 200));
+    losScroll = new JScrollPane(listOfShapes);
     losScroll.setPreferredSize(new Dimension(100, 200));
     shapeNamesPanel.add(losScroll, BorderLayout.NORTH);
     shapesAndMotions.add(shapeNamesPanel, BorderLayout.WEST);
@@ -266,10 +258,10 @@ public class EditorPanel extends JPanel implements ItemListener,
 
   private void displayMotions(String shapeName) {
     motionPanel.removeAll();
+    JPanel empty = new JPanel();
+    empty.setPreferredSize(new Dimension(300, 350));
     DefaultListModel<String> dataForListOfMotions = new DefaultListModel<>();
     if (keyFrames.get(shapeName) == null) {
-      JPanel empty = new JPanel();
-      empty.setPreferredSize(new Dimension(300, 350));
       motionPanel.add(new JScrollPane(empty));
       shapesAndMotions.add(motionPanel, BorderLayout.CENTER);
       return;
@@ -287,12 +279,14 @@ public class EditorPanel extends JPanel implements ItemListener,
     motionPanel.add(new JScrollPane(listOfMotions));
     shapesAndMotions.add(motionPanel, BorderLayout.CENTER);
     //this.add(shapesAndMotions, "North");
+    selectedMotion = null;
     this.updateUI();
 
   }
 
   public void setNameType(Map<String, String> nameType) {
     this.nameType = nameType;
+    displayShapes();
   }
 
 
@@ -305,10 +299,11 @@ public class EditorPanel extends JPanel implements ItemListener,
 
   public Motion newMotion() {
 
-    Color c = new Color(Math.min(0, Math.max(Integer.parseInt(redText.getText()), 255)),
-        Math.min(0, Math.max(Integer.parseInt(greenText.getText()), 255)),
-        Math.min(0, Math.max(Integer.parseInt(blueText.getText()), 255)));
-    return new Motion(selectedShape, nameType.get(selectedShape),
+    Color c = new Color(Math.max(0, Math.min(Integer.parseInt(redText.getText()), 255)),
+        Math.max(0, Math.min(Integer.parseInt(greenText.getText()), 255)),
+        Math.max(0, Math.min(Integer.parseInt(blueText.getText()), 255)));
+    return new Motion(listOfShapes.getSelectedValue(),
+        nameType.get(listOfShapes.getSelectedValue()),
         Integer.parseInt(this.time.getText()),
         Integer.parseInt(this.xText.getText()), Integer.parseInt(this.yText.getText()),
         Integer.parseInt(this.widthText.getText()),
@@ -319,10 +314,11 @@ public class EditorPanel extends JPanel implements ItemListener,
   }
 
   public Motion modifiedMotion() {
-    Color c = new Color(Math.min(0, Math.max(Integer.parseInt(redText.getText()), 255)),
-        Math.min(0, Math.max(Integer.parseInt(greenText.getText()), 255)),
-        Math.min(0, Math.max(Integer.parseInt(blueText.getText()), 255)));
-    return new Motion(selectedShape, keyFrames.get(selectedShape).get(0).getType(),
+    Color c = new Color(Math.max(0, Math.min(Integer.parseInt(redText.getText()), 255)),
+        Math.max(0, Math.min(Integer.parseInt(greenText.getText()), 255)),
+        Math.max(0, Math.min(Integer.parseInt(blueText.getText()), 255)));
+    return new Motion(listOfShapes.getSelectedValue(),
+        keyFrames.get(listOfShapes.getSelectedValue()).get(0).getType(),
         selectedMotion.getStartTime(),
         Integer.parseInt(this.xText.getText()), Integer.parseInt(this.yText.getText()),
         Integer.parseInt(this.widthText.getText()),
@@ -336,14 +332,19 @@ public class EditorPanel extends JPanel implements ItemListener,
     return selectedMotion;
   }
 
-  public SimpleShape getSelectedShape() {
-    selectedShape = shapeName.getText();
-    selectedType = "ellipse";
+  public SimpleShape getCreatedShape() {
+    String selectedType = "ellipse";
     if (rectangleButton.isSelected()) {
       selectedType = "rectangle";
     }
-    displayShapes();
-    return new SimpleShape(selectedShape, selectedType);
+    return new SimpleShape(shapeName.getText(), selectedType);
+  }
+
+  public String getSelectedShape() {
+    if(listOfShapes.getSelectedValue() == null) {
+      throw new IllegalArgumentException("need to select shape");
+    }
+    return listOfShapes.getSelectedValue();
   }
 
 
@@ -352,7 +353,7 @@ public class EditorPanel extends JPanel implements ItemListener,
     @Override
     public void valueChanged(ListSelectionEvent e) {
 
-      List<Motion> lom = keyFrames.get(listOfStrings.getSelectedValue());
+      List<Motion> lom = keyFrames.get(listOfShapes.getSelectedValue());
       for (Motion m : lom) {
         if (m.getStartTime() == Integer.parseInt(listOfMotions.getSelectedValue())) {
           String[] strArr = m.getTextResult().split(" ");
@@ -386,14 +387,13 @@ public class EditorPanel extends JPanel implements ItemListener,
 
   @Override
   public void valueChanged(ListSelectionEvent e) {
-    selectedShape = listOfStrings.getSelectedValue();
-    displayMotions(selectedShape);
+    displayMotions(listOfShapes.getSelectedValue());
 
   }
 
   public void setKeyFrames(Map<String, List<Motion>> keyFrames) {
     this.keyFrames = keyFrames;
-    this.displayMotions(selectedShape);
+    this.displayMotions(listOfShapes.getSelectedValue());
   }
 }
 

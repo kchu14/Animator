@@ -63,7 +63,7 @@ public class AnimatorModelImpl implements AnimatorModel {
     this.setTicks();
   }
 
-  // todo remove shape, redesign gui, error message, visitor for buttons, testing (fix old tests),
+  // todo redesign gui, error message, visitor for buttons, testing (fix old tests),
   // todo documentation of changes, readme, extra credit, jar file, java docs,
   // todo check each public method belongs to interface, make fields private add getters
 
@@ -157,7 +157,7 @@ public class AnimatorModelImpl implements AnimatorModel {
     }
     for (List<Motion> lom : nameMotion.values()) {
       for (Motion m : lom) {
-        if (tick >= m.startTime && tick < m.endTime) {
+        if (tick >= m.startTime && tick <= m.endTime) {
           newShapes.add(m.executeMotion(tick));
         }
       }
@@ -219,6 +219,9 @@ public class AnimatorModelImpl implements AnimatorModel {
   public void removeShape(String name) {
     this.shapes.remove(name);
     this.nameType.remove(name);
+    this.nameMotion.remove(name);
+    setTicks();
+    System.out.println("removed shape " + name);
   }
 
   public void addNewMotion(Motion newMotion) {
@@ -297,23 +300,36 @@ public class AnimatorModelImpl implements AnimatorModel {
     setTicks();
   }
 
-  public void removeMotion(Motion motion) {
+  public void removeMotion(Motion keyframe) {
 
-    String name = motion.name;
-    System.out.println(nameMotion.get(name).size());
+    String name = keyframe.name;
     if (this.nameMotion.containsKey(name)) {
       List<Motion> lom = nameMotion.get(name);
+      if(lom.size() == 1) {
+        if(keyframe.startTime == lom.get(0).startTime) {
+          lom.get(0).becomesKeyframe(true);
+        }
+        else {
+          lom.get(0).becomesKeyframe(false);
+        }
+        checkForValidMotions();
+        setTicks();
+        return;
+      }
       for (int i = 0; i < lom.size(); i++) {
-        Motion m = lom.get(i);
-        if (i == 0 && m.compareTo(motion) == 0) {
-          nameMotion.get(name).remove(m);
-        } else if (m.startTime == motion.startTime) {
+        Motion motion = lom.get(i);
+        if (i == 0 && motion.compareTo(keyframe) == 0) {
+          nameMotion.get(name).remove(motion);
+        } else if (motion.startTime == keyframe.startTime) {
           if (i < lom.size() - 1) {
             lom.get(i - 1).fixEndings(lom.get(i + 1));
+          } else {
+            lom.get(i - 1).fixLastEndings(motion);
+
           }
-          nameMotion.get(name).remove(m);
-        } else if (m.endTime == motion.startTime && i == lom.size() - 1) {
-          nameMotion.get(name).remove(m);
+          nameMotion.get(name).remove(motion);
+        } else if (motion.endTime == keyframe.startTime && i == lom.size() - 1) {
+          nameMotion.get(name).remove(motion);
         }
       }
 

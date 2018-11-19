@@ -110,10 +110,12 @@ public class Motion implements Comparable<Motion> {
    */
   public IShape executeMotion(int tick) {
     int totalTicks = endTime - startTime;
-    shape.changeColor(startColor, endColor, totalTicks, tick, startTime, endTime);
-    shape.changeSize(startWidth, startHeight, endWidth, endHeight, totalTicks, tick, startTime,
-        endTime);
-    shape.move(startX, startY, endX, endY, totalTicks, tick, startTime, endTime);
+    if (totalTicks != 0) {
+      shape.changeColor(startColor, endColor, totalTicks, tick, startTime, endTime);
+      shape.changeSize(startWidth, startHeight, endWidth, endHeight, totalTicks, tick, startTime,
+          endTime);
+      shape.move(startX, startY, endX, endY, totalTicks, tick, startTime, endTime);
+    }
     return new SimpleShape((SimpleShape)shape);
   }
 
@@ -218,5 +220,33 @@ public class Motion implements Comparable<Motion> {
 
   public int getEndTime() {
     return this.endTime;
+  }
+
+  public void fixLastEndings(Motion m) {
+    this.endX = m.endX;
+    this.endY = m.endY;
+    this.endWidth = m.endWidth;
+    this.endHeight = m.endHeight;
+    this.endColor = m.endColor;
+    this.endTime = m.endTime;
+  }
+
+  public void becomesKeyframe(boolean isEndKeyFrame) {
+    if (isEndKeyFrame) {
+      this.startX = this.endX;
+      this.startY = this.endY;
+      this.startWidth = this.endWidth;
+      this.startHeight = this.endHeight;
+      this.startColor = this.endColor;
+      this.startTime = this.endTime;
+    }
+    else {
+      this.endX = this.startX;
+      this.endY = this.startY;
+      this.endWidth = this.startWidth;
+      this.endHeight = this.startHeight;
+      this.endColor = this.startColor;
+      this.endTime = this.startTime;
+    }
   }
 }

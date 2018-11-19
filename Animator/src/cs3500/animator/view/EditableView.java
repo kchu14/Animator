@@ -1,6 +1,7 @@
 package cs3500.animator.view;
 
 import cs3500.animator.model.AnimatorModel;
+import cs3500.animator.model.IShape;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.ReadOnlyModel;
 import cs3500.animator.model.SimpleShape;
@@ -17,6 +18,7 @@ import java.util.Map.Entry;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -42,7 +44,7 @@ public class EditableView extends JFrame implements IEditView {
     this.setTitle("Editor");
     this.setSize(1600, 900);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setLayout(new GridLayout(1,2,3,3)); //3,3 are gaps
+    this.setLayout(new GridLayout(1, 2, 3, 3)); //3,3 are gaps
     ePane = new EditorPanel(keyFrames, model.getNameType());
     this.add(ePane);
 
@@ -51,7 +53,6 @@ public class EditableView extends JFrame implements IEditView {
     this.animatorPanel = new AnimatorPanel();
     graphicsView.initiateTimer(model, animatorPanel);
     this.add(animatorPanel);
-
 
     this.setVisible(true);
 
@@ -69,17 +70,28 @@ public class EditableView extends JFrame implements IEditView {
 
   @Override
   public Motion modifiedMotion() {
-    return  ePane.modifiedMotion();
+    return ePane.modifiedMotion();
   }
 
   @Override
-  public SimpleShape getSelectedShape() {
-    return ePane.getSelectedShape();
+  public SimpleShape getCreatedShape() {
+    return ePane.getCreatedShape();
   }
 
   @Override
   public void setNameType(Map<String, String> nameType) {
     ePane.setNameType(nameType);
+  }
+
+  @Override
+  public String getSelectedShape() {
+    return ePane.getSelectedShape();
+  }
+
+  @Override
+  public void showError(String message) {
+    JOptionPane.showMessageDialog(this, message, "Error",
+        JOptionPane.ERROR_MESSAGE);
   }
 
 
