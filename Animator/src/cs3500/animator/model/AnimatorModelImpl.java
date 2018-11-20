@@ -4,13 +4,10 @@ import cs3500.animator.util.AnimationBuilder;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * This class represents an animator model and implements all of its associated operations.
@@ -63,9 +60,8 @@ public class AnimatorModelImpl implements AnimatorModel {
     this.setTicks();
   }
 
-  // todo redesign gui, error message, visitor for buttons, testing (fix old tests),
-  // todo documentation of changes, readme, extra credit, jar file, java docs,
-  // todo check each public method belongs to interface, make fields private add getters
+  // todo testing (fix old tests),
+  // todo documentation of changes, readme, jar file, java docs,
 
 
   @Override
@@ -150,6 +146,10 @@ public class AnimatorModelImpl implements AnimatorModel {
   }
 
 
+  /**
+   * Updates the model by executing all animations on all the shapes per a given tick.
+   * @param tick the given tick (time of the animation)
+   */
   private void update(int tick) {
     List<IShape> newShapes = new ArrayList<>();
     if (nameMotion == null) {
@@ -165,6 +165,10 @@ public class AnimatorModelImpl implements AnimatorModel {
     tickListShapes.put(tick, newShapes);
   }
 
+  /**
+   * Loops through the animation from start to finish to produce a map of ticks and all the
+   * shapes drawn on each tick.
+   */
   private void setTicks() {
     Collections.sort(tickList);
 //    int firstTick = tickList.get(0);
@@ -196,6 +200,7 @@ public class AnimatorModelImpl implements AnimatorModel {
   }
 
 
+  @Override
   public void addShape(Motion m) {
     String key = m.name;
     if (!shapes.containsKey(key)) {
@@ -205,6 +210,7 @@ public class AnimatorModelImpl implements AnimatorModel {
     }
   }
 
+  @Override
   public void declareNewShape(SimpleShape shape) {
     if (this.nameType == null) {
       this.nameType = new LinkedHashMap<>();
@@ -216,6 +222,7 @@ public class AnimatorModelImpl implements AnimatorModel {
     }
   }
 
+  @Override
   public void removeShape(String name) {
     this.shapes.remove(name);
     this.nameType.remove(name);
@@ -223,7 +230,7 @@ public class AnimatorModelImpl implements AnimatorModel {
     setTicks();
     System.out.println("removed shape " + name);
   }
-
+  @Override
   public void addNewMotion(Motion newMotion) {
     List<Motion> lom = nameMotion.get(newMotion.name);
     if (lom == null) {
@@ -233,53 +240,32 @@ public class AnimatorModelImpl implements AnimatorModel {
       return;
     }
     Collections.sort(lom);
-
     for (int i = 0; i < lom.size(); i++) {
       System.out.println(lom.get(i).getStartTime());
       Motion curMotion = lom.get(i);
       if (i == 0 && newMotion.getStartTime() < curMotion.getStartTime()) {
-
         newMotion.fixEndings(lom.get(0));
-
-
       } else if (i == lom.size() - 1 && curMotion.getEndTime() < newMotion.getStartTime()) {
-        System.out.println("last keyframe");
-        System.out.println("new start " + newMotion.getStartTime());
-        System.out.println("new end " + newMotion.getEndTime());
-        System.out.println("next start " + curMotion.getStartTime());
-        System.out.println("next end " + curMotion.getEndTime());
-
         newMotion.fixBeginning(curMotion);
-        System.out.println("new start " + newMotion.getStartTime());
-        System.out.println("new end " + newMotion.getEndTime());
-        System.out.println("next start " + curMotion.getStartTime());
-        System.out.println("next end " + curMotion.getEndTime());
-
-
       } else if (curMotion.startTime < newMotion.startTime
           && curMotion.endTime > newMotion.startTime && i == lom.size() - 1) {
         newMotion.fixBeginning(lom.get(i - 1));
         curMotion.fixBeginning(newMotion);
       } else if (curMotion.startTime < newMotion.startTime
           && curMotion.endTime > newMotion.startTime && i < lom.size() - 1) {
-        System.out.println("else case");
         Motion nextMotion = lom.get(i + 1);
-
         curMotion.fixEndings(newMotion);
         newMotion.fixEndings(nextMotion);
-
       }
     }
-
     lom.add(newMotion);
     nameMotion.put(newMotion.name, lom);
     checkForValidMotions();
     tickList.add(newMotion.endTime);
     setTicks();
   }
-
+  @Override
   public void editMotion(Motion newMotion) {
-    System.out.println("modified");
     for (int i = 0; i < nameMotion.get(newMotion.name).size(); i++) {
       Motion m = nameMotion.get(newMotion.name).get(i);
       if (m.getStartTime() == newMotion.getStartTime()) {
@@ -287,21 +273,17 @@ public class AnimatorModelImpl implements AnimatorModel {
         if (i != 0) {
           nameMotion.get(newMotion.name).get(i - 1).fixEndings(m);
         }
-        System.out.println("changed to new motion case 1");
-
       } else if (m.getEndTime() == newMotion.getStartTime()
           && i == nameMotion.get(newMotion.name).size() - 1) {
         m.fixEndings(newMotion);
-        System.out.println("changed to new motion case 2");
       }
     }
     checkForValidMotions();
     tickList.add(newMotion.endTime);
     setTicks();
   }
-
+  @Override
   public void removeMotion(Motion keyframe) {
-
     String name = keyframe.name;
     if (this.nameMotion.containsKey(name)) {
       List<Motion> lom = nameMotion.get(name);
@@ -332,7 +314,6 @@ public class AnimatorModelImpl implements AnimatorModel {
           nameMotion.get(name).remove(motion);
         }
       }
-
       checkForValidMotions();
       setTicks();
     }

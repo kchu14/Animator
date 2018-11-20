@@ -20,7 +20,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -62,7 +61,7 @@ public class EditorPanel extends JPanel implements ItemListener,
    * Constructs the animation panel and sets the shapes list to an array list.
    */
 
-  public EditorPanel(Map<String, List<Motion>> keyFrames, Map<String, String> nameType) {
+  protected EditorPanel(Map<String, List<Motion>> keyFrames, Map<String, String> nameType) {
     super();
     // Sets layout
     this.nameType = nameType;
@@ -106,7 +105,6 @@ public class EditorPanel extends JPanel implements ItemListener,
     JTabbedPane tabbedPane = new JTabbedPane();
     JPanel shapeAttributes = new JPanel();
     shapeAttributes.setLayout(new FlowLayout());
-    shapeAttributes.setBorder(BorderFactory.createTitledBorder("Shape/Keyframe Attributes"));
     time = new JTextField(4);
     shapeAttributes.add(time);
     JTextArea timeButton = new JTextArea("Time");
@@ -201,9 +199,6 @@ public class EditorPanel extends JPanel implements ItemListener,
 
     // Animation modifying buttons
     JPanel newMotionShapeButtonsPanel = new JPanel(new FlowLayout());
-    //newMotionShapeButtonsPanel.add(addShapeButton);
-    //  newMotionShapeButtonsPanel.add(addMotionButton);
-    //newMotionShapeButtonsPanel.add(modifyMotionButton);
     middleButtonsPanel.add(newMotionShapeButtonsPanel, BorderLayout.SOUTH);
     this.add(middleButtonsPanel, BorderLayout.CENTER);
 
@@ -278,26 +273,25 @@ public class EditorPanel extends JPanel implements ItemListener,
     listOfMotions.setPreferredSize(new Dimension(300, 350));
     motionPanel.add(new JScrollPane(listOfMotions));
     shapesAndMotions.add(motionPanel, BorderLayout.CENTER);
-    //this.add(shapesAndMotions, "North");
     selectedMotion = null;
     this.updateUI();
 
   }
 
-  public void setNameType(Map<String, String> nameType) {
+  protected void setNameType(Map<String, String> nameType) {
     this.nameType = nameType;
     displayShapes();
   }
 
 
-  public void setButtonListeners(ActionListener e) {
+  protected void setButtonListeners(ActionListener e) {
     for (JButton b : listOfButtons) {
       b.addActionListener(e);
       b.setActionCommand(b.getText());
     }
   }
 
-  public Motion newMotion() {
+  protected Motion newMotion() {
 
     Color c = new Color(Math.max(0, Math.min(Integer.parseInt(redText.getText()), 255)),
         Math.max(0, Math.min(Integer.parseInt(greenText.getText()), 255)),
@@ -313,7 +307,10 @@ public class EditorPanel extends JPanel implements ItemListener,
         Integer.parseInt(this.heightText.getText()), c);
   }
 
-  public Motion modifiedMotion() {
+  protected Motion modifiedMotion() {
+    if (selectedMotion.getStartTime() != Integer.parseInt(time.getText())) {
+      throw new IllegalArgumentException("times must be equal");
+    }
     Color c = new Color(Math.max(0, Math.min(Integer.parseInt(redText.getText()), 255)),
         Math.max(0, Math.min(Integer.parseInt(greenText.getText()), 255)),
         Math.max(0, Math.min(Integer.parseInt(blueText.getText()), 255)));
@@ -328,20 +325,23 @@ public class EditorPanel extends JPanel implements ItemListener,
         Integer.parseInt(this.heightText.getText()), c);
   }
 
-  public Motion getSelectedMotion() {
+  protected Motion getSelectedMotion() {
     return selectedMotion;
   }
 
-  public SimpleShape getCreatedShape() {
+  protected SimpleShape getCreatedShape() {
     String selectedType = "ellipse";
     if (rectangleButton.isSelected()) {
       selectedType = "rectangle";
     }
+    if (shapeName.getText().equals("")) {
+      throw new IllegalArgumentException("must have name");
+    }
     return new SimpleShape(shapeName.getText(), selectedType);
   }
 
-  public String getSelectedShape() {
-    if(listOfShapes.getSelectedValue() == null) {
+  protected String getSelectedShape() {
+    if (listOfShapes.getSelectedValue() == null) {
       throw new IllegalArgumentException("need to select shape");
     }
     return listOfShapes.getSelectedValue();
@@ -382,7 +382,7 @@ public class EditorPanel extends JPanel implements ItemListener,
 
   @Override
   public void itemStateChanged(ItemEvent e) {
-
+    return;
   }
 
   @Override
@@ -391,7 +391,7 @@ public class EditorPanel extends JPanel implements ItemListener,
 
   }
 
-  public void setKeyFrames(Map<String, List<Motion>> keyFrames) {
+  protected void setKeyFrames(Map<String, List<Motion>> keyFrames) {
     this.keyFrames = keyFrames;
     this.displayMotions(listOfShapes.getSelectedValue());
   }

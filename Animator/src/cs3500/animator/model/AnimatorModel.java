@@ -1,6 +1,5 @@
 package cs3500.animator.model;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +16,6 @@ public interface AnimatorModel {
    */
   int getLastTick();
 
-//  /**
-//   * Updates the IShapes in the animation based on the tick that the animation is currently at.
-//   * @param tick  The current tick of the animation.
-//   */
-//  void update(int tick);
 
   /**
    * Allows the caller to see the shapes to be animated on every tick.
