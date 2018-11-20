@@ -101,7 +101,7 @@ public class AnimatorModelImpl implements AnimatorModel {
 
         i++;
       }
-      for (int j = 1; j < result2.size(); j++) {
+      for (int j = 1; j < 3; j++) {
         if (result2.get(j).compareTo(result2.get(j - 1)) == 0) {
           result2.remove(j - 1);
           this.removeMotion(result2.get(j - 1));
