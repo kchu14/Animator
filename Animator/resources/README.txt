@@ -27,3 +27,34 @@ CHANGE LOG assignment 5-6
 - Added checkOverlaps to the build() method to enforce class invariants.
 - Added a motion class to represent changes in our shapes as opposed to commands.
 - Modified our SimpleShape and Motion classes to output themselves in a formatted string based on SVG
+
+/**
+ * CHANGE LOG Added the controller class and interface to allow the view to pass inputs to the
+ * model. The controller then updates the view with the new model information.
+ */
+
+/**
+ * CHANGE LOG Added implementation for the add / remove shape and motion methods. Also added a
+ * modify motion method. These methods were added to support editable view functionality.
+ */
+
+/**
+ * CHANGE LOG Added several methods that mutate the motion so that's endings /  beginnings
+ * match the given motion. We did this because we wanted the flexibility of keyframes while
+ * continuing to use our motion implementation.
+ */
+
+/**
+ * CHANGE LOG Created a read only model to be passed into the view. This allows the view to gather 
+ * the information from the model without mutation being allowed.
+ */
+s
+/**
+ * CHANGE LOG Changed the timer to support the different editable view functions such as pause and
+ * fastforwards.
+ */
+
+/**
+ * CHANGE LOG Added methods that allowed the panel to support functionality from the editable view.
+ * Functionality included fast forwarding and pause.
+ */

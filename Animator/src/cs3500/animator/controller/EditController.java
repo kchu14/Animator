@@ -4,6 +4,10 @@ import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.view.IEditView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+/**
+ * CHANGE LOG Added the controller class and interface to allow the view to pass inputs to the
+ * model. The controller then updates the view with the new model information.
+ */
 
 /**
  * This class represents the implementation of a IController. This controller takes in the mouse
@@ -14,6 +18,7 @@ public class EditController implements IController, ActionListener {
   private AnimatorModel model;
   private IEditView view;
   private boolean isAnimationOver;
+  protected String errmsg;
 
   /**
    * Constructs a controller for our animator.
@@ -27,6 +32,7 @@ public class EditController implements IController, ActionListener {
     view.setButtonListeners(this);
   }
 
+
   @Override
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
@@ -36,8 +42,9 @@ public class EditController implements IController, ActionListener {
           model.addNewMotion(view.newMotion());
           view.setKeyFrames(model.getKeyFrames());
         } catch (Exception err) {
-          view.showError("Be sure that you have all of the fields"
-              + " filled out and a shape selected in the top left corner");
+          errmsg = "Be sure that you have all of the fields"
+              + " filled out and a shape selected in the top left corner";
+          view.showError(errmsg);
         }
         break;
       case "Remove keyframe":
@@ -45,7 +52,8 @@ public class EditController implements IController, ActionListener {
           model.removeMotion(view.getSelectedMotion());
           view.setKeyFrames(model.getKeyFrames());
         } catch (Exception err) {
-          view.showError("Be sure have selected a keyframe.");
+          errmsg = "Be sure have selected a keyframe.";
+          view.showError(errmsg);
         }
         break;
 
@@ -54,8 +62,9 @@ public class EditController implements IController, ActionListener {
           model.editMotion(view.modifiedMotion());
           view.setKeyFrames(model.getKeyFrames());
         } catch (Exception err) {
-          view.showError("Be sure you have a keyframe selected and all of the fields are filled "
-              + "out. Also the time of the modified frame must equal the selected frame.");
+          errmsg = "Be sure you have a keyframe selected and all of the fields are filled "
+              + "out. Also the time of the modified frame must equal the selected frame.";
+          view.showError(errmsg);
         }
         break;
 
@@ -64,8 +73,9 @@ public class EditController implements IController, ActionListener {
           model.declareNewShape(view.getCreatedShape());
           view.setNameType(model.getNameType());
         } catch (Exception err) {
-          view.showError("Be sure that all of the shape fields are filled out and shape "
-              + "names are unique.");
+          errmsg = "Be sure that all of the shape fields are filled out and shape "
+              + "names are unique.";
+          view.showError(errmsg);
         }
         break;
 
@@ -75,7 +85,8 @@ public class EditController implements IController, ActionListener {
           view.setNameType(model.getNameType());
           view.setKeyFrames(model.getKeyFrames());
         } catch (Exception err) {
-          view.showError("Be sure you have a shape selected in the top left box.");
+          errmsg = "Be sure you have a shape selected in the top left box.";
+          view.showError(errmsg);
         }
         break;
 

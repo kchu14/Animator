@@ -3,6 +3,10 @@ package cs3500.animator.model;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+/**
+ * CHANGE LOG Created a read only model to be passed into the view. This allows the view to gather
+ * the information from the model without mutation being allowed.
+ */
 
 /**
  * This class represents a read only model of the given AnimatorModelImpl. This class only contains

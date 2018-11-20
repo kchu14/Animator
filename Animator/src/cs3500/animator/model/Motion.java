@@ -1,6 +1,11 @@
 package cs3500.animator.model;
 
 import java.awt.Color;
+/**
+ * CHANGE LOG Added several methods that mutate the motion so that's endings /  beginnings
+ * match the given motion. We did this because we wanted the flexibility of keyframes while
+ * continuing to use our motion implementation.
+ */
 
 /**
  * This class represents a motion object. A motion is defined as a set of two key frames that a user

@@ -6,6 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 /**
+ * CHANGE LOG Changed the timer to support the different editable view functions such as pause and
+ * fastforwards.
+ */
+
+/**
  * This is an implementation of the action listener interface. It represents our action listener
  * that is used to control the speed of the animation.
  */

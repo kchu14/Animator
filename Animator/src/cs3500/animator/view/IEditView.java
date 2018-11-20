@@ -1,6 +1,7 @@
 package cs3500.animator.view;
 
 import cs3500.animator.model.Motion;
+import cs3500.animator.model.ReadOnlyModel;
 import cs3500.animator.model.SimpleShape;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -109,4 +110,19 @@ public interface IEditView extends AnimatorView {
    * @param message the given message to be displayed.
    */
   void showError(String message);
+
+  /**
+   * Sets the editor's panel based on the information inside of the read only model.
+   *
+   * @param model The read only version of a animator model implementation.
+   */
+  void setEPane(ReadOnlyModel model);
+
+  /**
+   * Sets the text fields of the editor panel to the given string.
+   *
+   * @param name the given shape name to be set.
+   * @param value the given string to be set to.
+   */
+  void setTextFields(String name, String value);
 }

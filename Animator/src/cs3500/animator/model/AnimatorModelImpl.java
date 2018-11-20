@@ -10,6 +10,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
+ * CHANGE LOG Added implementation for the add / remove shape and motion methods. Also added a
+ * modify motion method. These methods were added to support editable view functionality.
+ */
+
+/**
  * This class represents an animator model and implements all of its associated operations.
  * Operations include, producing the text view ouput, building the model and checking for valid
  * inputs (motions are correct and not overlapping on the same shape).
@@ -59,9 +64,6 @@ public class AnimatorModelImpl implements AnimatorModel {
     this.checkForValidMotions();
     this.setTicks();
   }
-
-  // todo testing controller and listener
-  // todo documentation of changes, readme, jar file, java docs,
 
 
   @Override

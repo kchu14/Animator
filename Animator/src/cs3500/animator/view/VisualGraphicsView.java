@@ -10,6 +10,11 @@ import javax.swing.JScrollPane;
 import javax.swing.Timer;
 
 /**
+ * CHANGE LOG Added methods that allowed the panel to support functionality from the editable view.
+ * Functionality included fast forwarding and pause.
+ */
+
+/**
  * This is an implementation of the Animator View interface that uses Java Swing to draw the results
  * of the animation. It plays the animation using a timer to the users specified speed.
  */

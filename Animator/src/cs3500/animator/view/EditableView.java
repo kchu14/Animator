@@ -33,20 +33,23 @@ public class EditableView extends JFrame implements IEditView {
 
   @Override
   public void playAnimation(ReadOnlyModel model) {
-    this.model = model;
-    this.keyFrames = model.getKeyFrames();
     this.setTitle("Editor");
     this.setSize(1600, 900);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new GridLayout(1, 2, 3, 3));
-    ePane = new EditorPanel(keyFrames, model.getNameType());
-    this.add(ePane);
+    this.model = model;
+    this.keyFrames = model.getKeyFrames();
+    setEPane(model);
     this.animatorPanel = new AnimatorPanel();
     graphicsView.initiateTimer(model, animatorPanel);
     this.add(animatorPanel);
-
     this.setVisible(true);
+  }
 
+  @Override
+  public void setEPane(ReadOnlyModel model) {
+    ePane = new EditorPanel(keyFrames, model.getNameType());
+    this.add(ePane);
   }
 
   @Override
@@ -127,5 +130,10 @@ public class EditableView extends JFrame implements IEditView {
   @Override
   public Motion newMotion() {
     return ePane.newMotion();
+  }
+
+  @Override
+  public void setTextFields(String name, String s) {
+    ePane.setTextFields(name, s);
   }
 }

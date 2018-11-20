@@ -395,6 +395,7 @@ public class EditorPanel extends JPanel implements ItemListener,
     if (listOfShapes.getSelectedValue() == null) {
       throw new IllegalArgumentException("need to select shape");
     }
+
     return listOfShapes.getSelectedValue();
   }
 
@@ -452,6 +453,26 @@ public class EditorPanel extends JPanel implements ItemListener,
   protected void setKeyFrames(Map<String, List<Motion>> keyFrames) {
     this.keyFrames = keyFrames;
     this.displayMotions(listOfShapes.getSelectedValue());
+  }
+
+  /**
+   * Sets the text fields of the editor panel to the given string.
+   *
+   * @param name the given shape name to be set.
+   * @param s the given string to be set to.
+   */
+
+  public void setTextFields(String name, String s) {
+    redText.setText(s);
+    greenText.setText(s);
+    blueText.setText(s);
+    widthText.setText(s);
+    heightText.setText(s);
+    xText.setText(s);
+    yText.setText(s);
+    rectangleButton.setSelected(true);
+    time.setText(s);
+    shapeName.setText(name);
   }
 }
 
