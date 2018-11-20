@@ -64,7 +64,6 @@ class MyTimerActionListener implements ActionListener {
     }
     if (endOnNextLoop && (tick > model.getLastTick() || tick <= 0)) {
       t.stop();
-      System.out.println("animation ended");
     }
     if (tick > model.getLastTick()) {
       tick = originalTick;
@@ -99,7 +98,6 @@ class MyTimerActionListener implements ActionListener {
     } else {
       t.setDelay(t.getDelay() / 5);
     }
-    System.out.println(t.getDelay());
   }
 
 
@@ -112,7 +110,6 @@ class MyTimerActionListener implements ActionListener {
     } else {
       t.setDelay(t.getDelay() * 5);
     }
-    System.out.println(t.getDelay());
   }
 
   /**

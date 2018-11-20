@@ -91,11 +91,13 @@ public class AnimatorModelImpl implements AnimatorModel {
                 m.startColor,
                 m.startTime, m.startX, m.startY, m.startWidth, m.startHeight, m.startColor));
         if (i == n && (i != 0 || m.getStartTime() != m.getEndTime())) {
+
           result2.add(
               new Motion(m.name, m.type, m.endTime, m.endX, m.endY, m.endWidth, m.endHeight,
                   m.endColor,
                   m.endTime, m.endX, m.endY, m.endWidth, m.endHeight, m.endColor));
         }
+
         i++;
       }
       for (int j = 1; j < result2.size(); j++) {
@@ -301,6 +303,7 @@ public class AnimatorModelImpl implements AnimatorModel {
         setTicks();
         return;
       }
+
       for (int i = 0; i < lom.size(); i++) {
         Motion motion = lom.get(i);
         if (i == 0 && motion.compareTo(keyframe) == 0) {
