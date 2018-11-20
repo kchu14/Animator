@@ -90,6 +90,7 @@ public class AnimatorModelImpl implements AnimatorModel {
                 m.startHeight,
                 m.startColor,
                 m.startTime, m.startX, m.startY, m.startWidth, m.startHeight, m.startColor));
+
         if (i == n && (i != 0 || m.getStartTime() != m.getEndTime())) {
 
           result2.add(
@@ -102,7 +103,8 @@ public class AnimatorModelImpl implements AnimatorModel {
       }
       for (int j = 1; j < result2.size(); j++) {
         if (result2.get(j).compareTo(result2.get(j - 1)) == 0) {
-          result2.remove(j);
+          result2.remove(j - 1);
+          this.removeMotion(result2.get(j - 1));
         }
       }
       result.put(set.getKey(), result2);
@@ -117,28 +119,31 @@ public class AnimatorModelImpl implements AnimatorModel {
   private void checkForValidMotions() {
     try {
       for (List<Motion> listOfMotion : nameMotion.values()) {
-        Collections.sort(listOfMotion);
-        this.addShape(listOfMotion.get(0));
-        int prevEndTime = listOfMotion.get(0).startTime;
-        int prevX = listOfMotion.get(0).startX;
-        int prevY = listOfMotion.get(0).startY;
-        int prevWidth = listOfMotion.get(0).startWidth;
-        int prevHeight = listOfMotion.get(0).startHeight;
-        Color prevColor = listOfMotion.get(0).startColor;
-        for (Motion m : listOfMotion) {
-          if (m.startTime != prevEndTime) {
-            throw new IllegalArgumentException("added an overlapping or gaping motion");
+        if (!listOfMotion.isEmpty()) {
+          Collections.sort(listOfMotion);
+          this.addShape(listOfMotion.get(0));
+          int prevEndTime = listOfMotion.get(0).startTime;
+          int prevX = listOfMotion.get(0).startX;
+          int prevY = listOfMotion.get(0).startY;
+          int prevWidth = listOfMotion.get(0).startWidth;
+          int prevHeight = listOfMotion.get(0).startHeight;
+          Color prevColor = listOfMotion.get(0).startColor;
+
+          for (Motion m : listOfMotion) {
+            if (m.startTime != prevEndTime) {
+              throw new IllegalArgumentException("added an overlapping or gaping motion");
+            }
+            if (m.startX != prevX || m.startY != prevY || m.startWidth != prevWidth ||
+                m.startHeight != prevHeight || !m.startColor.equals(prevColor)) {
+              throw new IllegalArgumentException("shape motion must be continuous");
+            }
+            prevEndTime = m.endTime;
+            prevX = m.endX;
+            prevY = m.endY;
+            prevWidth = m.endWidth;
+            prevHeight = m.endHeight;
+            prevColor = m.endColor;
           }
-          if (m.startX != prevX || m.startY != prevY || m.startWidth != prevWidth ||
-              m.startHeight != prevHeight || !m.startColor.equals(prevColor)) {
-            throw new IllegalArgumentException("shape motion must be continuous");
-          }
-          prevEndTime = m.endTime;
-          prevX = m.endX;
-          prevY = m.endY;
-          prevWidth = m.endWidth;
-          prevHeight = m.endHeight;
-          prevColor = m.endColor;
         }
       }
     } catch (NullPointerException e) {
@@ -293,6 +298,14 @@ public class AnimatorModelImpl implements AnimatorModel {
     if (this.nameMotion.containsKey(name)) {
       List<Motion> lom = nameMotion.get(name);
       if (lom.size() == 1) {
+        if (lom.get(0).startTime == lom.get(0).endTime && keyframe.startTime == lom
+            .get(0).startTime) {
+          nameMotion.get(name).remove(lom.get(0));
+          checkForValidMotions();
+          tickList.remove((Integer) keyframe.endTime);
+          setTicks();
+          return;
+        }
         if (keyframe.startTime == lom.get(0).startTime) {
           lom.get(0).becomesKeyframe(true);
         } else {
