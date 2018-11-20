@@ -3,12 +3,15 @@ package cs3500.animator.view;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.ReadOnlyModel;
 import cs3500.animator.model.SimpleShape;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * This class represents implementations of an IEditView. This kind of view allows for the user to
@@ -35,6 +38,7 @@ public class EditableView extends JFrame implements IEditView {
   public void playAnimation(ReadOnlyModel model) {
     this.setTitle("Editor");
     this.setSize(1600, 900);
+    // this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new GridLayout(1, 2, 3, 3));
     this.model = model;
@@ -42,7 +46,11 @@ public class EditableView extends JFrame implements IEditView {
     setEPane(model);
     this.animatorPanel = new AnimatorPanel();
     graphicsView.initiateTimer(model, animatorPanel);
-    this.add(animatorPanel);
+    animatorPanel.setPreferredSize(new Dimension(model.getWidth(), model.getHeight()));
+    JScrollPane animatorScrollPane =new JScrollPane(animatorPanel);
+    animatorScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    animatorScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+    this.add(animatorScrollPane);
     this.setVisible(true);
   }
 

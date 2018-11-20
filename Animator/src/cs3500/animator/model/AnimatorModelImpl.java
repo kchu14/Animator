@@ -301,7 +301,7 @@ public class AnimatorModelImpl implements AnimatorModel {
         if (lom.get(0).startTime == lom.get(0).endTime && keyframe.startTime == lom
             .get(0).startTime) {
           nameMotion.get(name).remove(lom.get(0));
-          checkForValidMotions();
+          //checkForValidMotions();
           tickList.remove((Integer) keyframe.endTime);
           setTicks();
           return;
