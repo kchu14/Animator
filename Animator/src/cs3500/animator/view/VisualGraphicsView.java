@@ -1,12 +1,8 @@
 package cs3500.animator.view;
 
-import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.ReadOnlyModel;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,7 +18,6 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
   private AnimatorPanel animatorPanel;
   private int speed;
   private MyTimerActionListener listener;
-  private ReadOnlyModel model;
 
 
   /**
@@ -49,12 +44,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
     JOptionPane.showMessageDialog(this, error, "Error", JOptionPane.ERROR_MESSAGE);
   }
 
-  /**
-   * Refreshes the panel with the new shapes that are drawn.
-   */
-  private void refresh() {
-    this.repaint();
-  }
+
 
   @Override
   public void playAnimation(ReadOnlyModel model) {
@@ -70,8 +60,6 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
     this.pack();
     makeVisible();
     initiateTimer(model, animatorPanel);
-
-
   }
 
   @Override
@@ -83,6 +71,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
     t.start();
   }
 
+  @Override
   public void setIsAnimationOver(Boolean b) {
     listener.setIsAnimationOver(b);
   }
@@ -110,17 +99,6 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
 
   @Override
   public JPanel getAnimation() {
-//    animatorPanel = new AnimatorPanel();
-//    animatorPanel.setPreferredSize(new Dimension(model.getWidth(), model.getHeight()));
-//    JScrollPane pane = new JScrollPane(animatorPanel);
-//    this.add(pane, BorderLayout.CENTER);
-//    this.pack();
-//    makeVisible();
-//    int i = 0;
-//    Timer t = new Timer(1000 / speed, null);
-//    ActionListener listener = new MyTimerActionListener(i, model, t);
-//    t.addActionListener(listener);
-//    t.start();
     return animatorPanel;
   }
 

@@ -72,7 +72,6 @@ public class AnimatorModelImpl implements AnimatorModel {
 
   @Override
   public Map<Integer, List<IShape>> getTickListShapes() {
-
     return new LinkedHashMap<>(this.tickListShapes);
   }
 
@@ -95,7 +94,6 @@ public class AnimatorModelImpl implements AnimatorModel {
                   m.endColor,
                   m.endTime, m.endX, m.endY, m.endWidth, m.endHeight, m.endColor));
         }
-
         i++;
       }
       for (int j = 1; j < result2.size(); j++) {
@@ -103,7 +101,6 @@ public class AnimatorModelImpl implements AnimatorModel {
           result2.remove(j);
         }
       }
-
       result.put(set.getKey(), result2);
     }
     return result;
@@ -148,6 +145,7 @@ public class AnimatorModelImpl implements AnimatorModel {
 
   /**
    * Updates the model by executing all animations on all the shapes per a given tick.
+   *
    * @param tick the given tick (time of the animation)
    */
   private void update(int tick) {
@@ -166,8 +164,8 @@ public class AnimatorModelImpl implements AnimatorModel {
   }
 
   /**
-   * Loops through the animation from start to finish to produce a map of ticks and all the
-   * shapes drawn on each tick.
+   * Loops through the animation from start to finish to produce a map of ticks and all the shapes
+   * drawn on each tick.
    */
   private void setTicks() {
     Collections.sort(tickList);
@@ -228,8 +226,8 @@ public class AnimatorModelImpl implements AnimatorModel {
     this.nameType.remove(name);
     this.nameMotion.remove(name);
     setTicks();
-    System.out.println("removed shape " + name);
   }
+
   @Override
   public void addNewMotion(Motion newMotion) {
     List<Motion> lom = nameMotion.get(newMotion.name);
@@ -264,6 +262,7 @@ public class AnimatorModelImpl implements AnimatorModel {
     tickList.add(newMotion.endTime);
     setTicks();
   }
+
   @Override
   public void editMotion(Motion newMotion) {
     for (int i = 0; i < nameMotion.get(newMotion.name).size(); i++) {
@@ -282,16 +281,16 @@ public class AnimatorModelImpl implements AnimatorModel {
     tickList.add(newMotion.endTime);
     setTicks();
   }
+
   @Override
   public void removeMotion(Motion keyframe) {
     String name = keyframe.name;
     if (this.nameMotion.containsKey(name)) {
       List<Motion> lom = nameMotion.get(name);
-      if(lom.size() == 1) {
-        if(keyframe.startTime == lom.get(0).startTime) {
+      if (lom.size() == 1) {
+        if (keyframe.startTime == lom.get(0).startTime) {
           lom.get(0).becomesKeyframe(true);
-        }
-        else {
+        } else {
           lom.get(0).becomesKeyframe(false);
         }
         checkForValidMotions();

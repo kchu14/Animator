@@ -19,44 +19,44 @@ public class AnimatorModelImplTest {
 
     assertEquals(10, m.getLastTick());
   }
-/*
+
   @Test
   public void testProduceTextView() {
-    AnimatorModel m;
+    ReadOnlyModel m;
     TextView view = new TextView("asdfasdf");
-    m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+    m = new ReadOnlyModel(new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
         .declareShape("r", "rectangle")
         .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
-            10, 100, 100, 50, 50, 0, 0, 255).build();
+            10, 100, 100, 50, 50, 0, 0, 255).build());
     view.playAnimation(m);
     assertEquals("Shape r rectangle\n"
         + "motion r 0 100 100 50 50 255 0 0 10 100 100 50 50 0 255 0 \n", view.getFileOutput());
-  }*/
+  }
 
-//  @Test
-//  public void testUpdate() {
-//    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
-//        .declareShape("r", "rectangle")
-//        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
-//            10, 100, 100, 50, 50, 255, 0, 0).build();
-//
-//    ArrayList<IShape> ls = new ArrayList<>();
-//    ls.add(new SimpleShape("r", "rectangle", 100.0, 100.0, 50.0, 50.0, new Color(255, 0, 0)));
-//    assertEquals(ls.get(0).toSVG(), m.update(9).get(0).toSVG());
-//  }
+  @Test
+  public void testUpdate() {
+    ReadOnlyModel m = new ReadOnlyModel(new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle")
+        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+            10, 100, 100, 50, 50, 255, 0, 0).build());
+
+    ArrayList<IShape> ls = new ArrayList<>();
+    ls.add(new SimpleShape("r", "rectangle", 100.0, 100.0, 50.0, 50.0, new Color(255, 0, 0)));
+    assertEquals(ls.get(0).toSVG(), m.update(9).get(0).toSVG());
+  }
 
   @Test(expected = IllegalArgumentException.class)
   public void testUpdateNoMotion() {
-    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
-        .declareShape("r", "rectangle").build();
+    ReadOnlyModel m = new ReadOnlyModel(new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle").build());
 
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testAddMotionNoShape() {
-    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+    ReadOnlyModel m = new ReadOnlyModel(new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
         .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
-            10, 100, 100, 50, 50, 0, 0, 255).build();
+            10, 100, 100, 50, 50, 0, 0, 255).build());
   }
 
 
@@ -69,34 +69,6 @@ public class AnimatorModelImplTest {
   }
 
 
-//  @Test(expected = IllegalArgumentException.class)
-//  public void testInvalidMotion() {
-//    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
-//        .declareShape("r", "rectangle")
-//        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
-//            10, 100, 100, 50, 50, 0, 0, 255)
-//        .addMotion("r", 6, 100, 100, 50, 50, 255, 0, 0,
-//            13, 100, 100, 50, 50, 0, 0, 255).build();
-//
-//    m.checkForValidMotions();
-//  }
-//
-//  @Test
-//  public void testValidMotions() {
-//    TextView view = new TextView("outtie");
-//    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
-//        .declareShape("r", "rectangle")
-//        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
-//            10, 100, 100, 50, 50, 0, 0, 255)
-//        .addMotion("r", 10, 100, 100, 50, 50, 0, 0, 255,
-//            14, 100, 100, 50, 50, 0, 0, 255).build();
-//
-//    m.checkForValidMotions();
-//    view.playAnimation(m);
-//    assertEquals("Shape r rectangle\n"
-//        + "motion r 0 100 100 50 50 255 0 0 10 100 100 50 50 0 255 0 \n"
-//        + "motion r 10 100 100 50 50 0 255 0 14 100 100 50 50 0 255 0 \n", view.getFileOutput());
-//  }
 
 
   @Test(expected = IllegalArgumentException.class)
@@ -117,57 +89,143 @@ public class AnimatorModelImplTest {
     assertEquals(3,m.getShapes().size());
   }
 
-//  @Test
-//  public void testCreateShape() {
-//    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
-//        .declareShape("r", "rectangle")
-//        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0, 10, 100, 100, 50, 50, 0, 0, 255).build();
-//    m.checkForValidMotions();
-//    assertEquals(1, m.getShapes().size());
-//  }
-//
-//
-//  @Test
-//  public void testOverlap() {
-//    TextView view = new TextView("outtie2");
-//    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
-//        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
-//            50, 300, 300, 50, 100, 255, 0, 0)
-//        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
-//            10, 200, 200, 50, 100, 255, 0, 0)
-//        .build();
-//    m.checkForValidMotions();
-//    view.playAnimation(m);
-//    assertEquals("Shape r rectangle\n"
-//        + "motion r 1 200 200 50 100 255 0 0 10 200 200 50 100 255 0 0 \n"
-//        + "motion r 10 200 200 50 100 255 0 0 50 300 300 50 100 255 0 0 \n", view.getFileOutput());
-//  }
 
-//  @Test(expected = IllegalArgumentException.class)
-//  public void testOverlapFail() {
-//    SvgView view = new SvgView("out", 1);
-//    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
-//        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
-//            50, 300, 300, 50, 100, 255, 0, 0)
-//        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
-//            9, 200, 200, 50, 100, 255, 0, 0)
-//        .build();
-//    m.checkForValidMotions();
-//    assertEquals("", view.getOutPutText());
-//  }
-//
-//  @Test(expected = IllegalArgumentException.class)
-//  public void testTeleport() {
-//    SvgView view = new SvgView("out", 1);
-//    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
-//        .declareShape("r", "rectangle").addMotion("r", 10, 201, 200, 50, 100, 255, 0, 0,
-//            50, 300, 300, 50, 100, 255, 0, 0)
-//        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
-//            10, 200, 200, 50, 100, 255, 0, 0)
-//        .build();
-//    m.checkForValidMotions();
-//    assertEquals("", view.getOutPutText());
-//  }
+
+  @Test
+  public void testOverlap() {
+    TextView view = new TextView("outtie2");
+    ReadOnlyModel m = new ReadOnlyModel(new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+            10, 200, 200, 50, 100, 255, 0, 0)
+        .build());
+    view.playAnimation(m);
+    assertEquals("Shape r rectangle\n"
+        + "motion r 1 200 200 50 100 255 0 0 10 200 200 50 100 255 0 0 \n"
+        + "motion r 10 200 200 50 100 255 0 0 50 300 300 50 100 255 0 0 \n", view.getFileOutput());
+  }
+
+
+
+
+  @Test
+  public void testdeclareNewShape() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+            10, 200, 200, 50, 100, 255, 0, 0)
+        .build();
+    assertEquals(1, m.getNameType().size());
+    m.declareNewShape(new SimpleShape("c", "ellipse"));
+    assertEquals(2, m.getNameType().size());
+  }
+
+  @Test
+  public void testRemoveShape() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+            10, 200, 200, 50, 100, 255, 0, 0)
+        .build();
+    assertEquals(1, m.getNameType().size());
+    m.removeShape("r");
+    assertEquals(0, m.getNameType().size());
+  }
+
+  @Test
+  public void testAddNewMotion() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .build();
+    assertEquals(1, m.getMotions().size());
+    m.addNewMotion(new Motion("r", "rectangle" 1, 200, 200, 50, 100, 255, 0, 0,
+        10, 200, 200, 50, 100, 255, 0, 0));
+    assertEquals(2, m.getMotions().size());
+  }
+
+  @Test
+  public void testEditMotion() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .build();
+    assertEquals(1, m.getMotions().size());
+    m.editMotion(new Motion("r", "rectangle", 10, 200, 200, 50, 100, 255, 0, 0,
+        10, 200, 200, 50, 100, 255, 0, 0));
+    assertEquals(1, m.getMotions().size());
+    m.removeMotion(new Motion("r", "rectangle", 10, 200, 200, 50, 100, 255, 0, 0,
+        50, 300, 300, 50, 100, 255, 0, 0));
+    assertEquals(1, m.getMotions().size());
+    m.removeMotion(new Motion("r", "rectangle", 10, 200, 200, 50, 100, 255, 0, 0,
+        10, 200, 200, 50, 100, 255, 0, 0));
+    assertEquals(0, m.getMotions().size());
+  }
+
+  @Test
+  public void testRemoveMotion() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+            10, 200, 200, 50, 100, 255, 0, 0)
+        .build();
+    assertEquals(2, m.getMotions().size());
+    m.removeMotion(new Motion("r", "rectangle", 1, 200, 200, 50, 100, 255, 0, 0,
+        10, 200, 200, 50, 100, 255, 0, 0));
+    assertEquals(1, m.getMotions().size());
+  }
+
+  @Test
+  public void testAddShape() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .build();
+    assertEquals(1, m.getShapes().size());
+    m.addShape(new Motion("c", "ellipse", 10, 200, 200, 50, 100, 255, 0, 0,
+        50, 300, 300, 50, 100, 255, 0, 0));
+    assertEquals(2, m.getShapes().size());
+  }
+
+  @Test
+  public void testAddSameShape() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .build();
+    assertEquals(1, m.getShapes().size());
+    m.addShape(new Motion("r", "ellipse", 10, 200, 200, 50, 100, 255, 0, 0,
+        50, 300, 300, 50, 100, 255, 0, 0));
+    assertEquals(1, m.getShapes().size());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void declareSameNamedShape() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .build();
+    m.declareNewShape(new SimpleShape("r", "ellipse"));
+  }
+
+  @Test
+  public void testGetKeyFramesAndMotions() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
+        .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
+            50, 300, 300, 50, 100, 255, 0, 0)
+        .build();
+    assertEquals(1, m.getMotions().get("r").size());
+    assertEquals(2, m.getKeyFrames().get("r").size());
+    m.addNewMotion(new Motion("r", "rectangle", 50, 200, 200, 50, 100, 255, 0, 0,
+        80, 200, 200, 50, 100, 255, 0, 0));
+    assertEquals(2, m.getMotions().get("r").size());
+    assertEquals(3, m.getKeyFrames().get("r").size());
+  }
+
 
 
 }

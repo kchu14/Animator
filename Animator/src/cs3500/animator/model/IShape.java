@@ -70,7 +70,19 @@ public interface IShape {
    * @return string formatted to fit svg parameters.
    */
   String toSVG();
+
+  /**
+   * Allows the user to get the given name of a shape.
+   *
+   * @return the given unique name of a shape.
+   */
   String getName();
+
+  /**
+   * Allows the user to get the type of this shape.
+   *
+   * @return The type of this shape (rectangle or ellipse)
+   */
   String getType();
 
 }

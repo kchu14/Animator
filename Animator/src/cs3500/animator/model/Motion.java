@@ -108,7 +108,7 @@ public class Motion implements Comparable<Motion> {
    *
    * @return An updated shape based on the motion that should be happening at this tick.
    */
-  public IShape executeMotion(int tick) {
+  protected IShape executeMotion(int tick) {
     int totalTicks = endTime - startTime;
     if (totalTicks != 0) {
       shape.changeColor(startColor, endColor, totalTicks, tick, startTime, endTime);
@@ -116,7 +116,7 @@ public class Motion implements Comparable<Motion> {
           endTime);
       shape.move(startX, startY, endX, endY, totalTicks, tick, startTime, endTime);
     }
-    return new SimpleShape((SimpleShape)shape);
+    return new SimpleShape((SimpleShape) shape);
   }
 
   /**
@@ -191,7 +191,13 @@ public class Motion implements Comparable<Motion> {
     return result;
   }
 
-  public void changeTo(Motion newMotion) {
+
+  /**
+   * Mutates this motion into the given motion.
+   *
+   * @param newMotion the given motion that this motion is changing into.
+   */
+  protected void changeTo(Motion newMotion) {
     this.startX = newMotion.startX;
     this.startY = newMotion.startY;
     this.startWidth = newMotion.startWidth;
@@ -200,7 +206,12 @@ public class Motion implements Comparable<Motion> {
     this.shape = new SimpleShape(name, type, startX, startY, startWidth, startHeight, startColor);
   }
 
-  public void fixEndings(Motion m) {
+  /**
+   * Fixes the ending attributes of this motion to match the starting ones of the given motion.
+   *
+   * @param m the given motion that this motions ending attributes will align with.
+   */
+  protected void fixEndings(Motion m) {
     this.endX = m.startX;
     this.endY = m.startY;
     this.endWidth = m.startWidth;
@@ -209,7 +220,12 @@ public class Motion implements Comparable<Motion> {
     this.endTime = m.startTime;
   }
 
-  public void fixBeginning(Motion m) {
+  /**
+   * Fixes the beginnings of this motion to match the ending attributes of the given motion.
+   *
+   * @param m the given motion for this motion to align with.
+   */
+  protected void fixBeginning(Motion m) {
     this.startX = m.endX;
     this.startY = m.endY;
     this.startWidth = m.endWidth;
@@ -218,11 +234,22 @@ public class Motion implements Comparable<Motion> {
     this.startTime = m.endTime;
   }
 
+  /**
+   * Allows the user to see the end time of this motion.
+   *
+   * @return the end time of this motion.
+   */
   public int getEndTime() {
     return this.endTime;
   }
 
-  public void fixLastEndings(Motion m) {
+  /**
+   * Fixes this motions endings to align with the given motions endings. Used when the last motion
+   * on a shape is deleted.
+   *
+   * @param m the given motion to be aligned with.
+   */
+  protected void fixLastEndings(Motion m) {
     this.endX = m.endX;
     this.endY = m.endY;
     this.endWidth = m.endWidth;
@@ -231,7 +258,13 @@ public class Motion implements Comparable<Motion> {
     this.endTime = m.endTime;
   }
 
-  public void becomesKeyframe(boolean isEndKeyFrame) {
+  /**
+   * Converts a motion into a keyframe.
+   *
+   * @param isEndKeyFrame true if this motion is becoming a keyframe based on this motions ending
+   * time.
+   */
+  protected void becomesKeyframe(boolean isEndKeyFrame) {
     if (isEndKeyFrame) {
       this.startX = this.endX;
       this.startY = this.endY;
@@ -239,8 +272,7 @@ public class Motion implements Comparable<Motion> {
       this.startHeight = this.endHeight;
       this.startColor = this.endColor;
       this.startTime = this.endTime;
-    }
-    else {
+    } else {
       this.endX = this.startX;
       this.endY = this.startY;
       this.endWidth = this.startWidth;

@@ -71,8 +71,6 @@ public class SvgView implements ISvgView {
 
   @Override
   public String getOutPutText() {
-    return new String(outPutText);
+    return outPutText;
   }
-
-
 }

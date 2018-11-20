@@ -7,6 +7,7 @@ package cs3500.animator.controller;
  */
 public interface IController {
   // Currently no benefit to having any controller specific methods. This interface is available
-  // for further extension of different controller implementations.
+  // for further extension of different controller implementations. Our current implementation
+  // is for the edit view. If future controllers are needed they will implement this interface.
 
 }

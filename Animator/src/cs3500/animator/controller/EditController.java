@@ -5,12 +5,21 @@ import cs3500.animator.view.IEditView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class represents the implementation of a IController. This controller takes in the mouse
+ * and keyboard commands given from the view and delegates them to the model to be handled.
+ */
 public class EditController implements IController, ActionListener {
 
   private AnimatorModel model;
   private IEditView view;
   private boolean isAnimationOver;
 
+  /**
+   * Constructs a controller for our animator.
+   * @param model the given model for the animator
+   * @param view the given view for the animator. (View has to be an edit view)
+   */
   public EditController(AnimatorModel model, IEditView view) {
     this.model = model;
     this.view = view;

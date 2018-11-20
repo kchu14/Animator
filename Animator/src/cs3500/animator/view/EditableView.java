@@ -1,38 +1,32 @@
 package cs3500.animator.view;
 
-import cs3500.animator.model.AnimatorModel;
-import cs3500.animator.model.IShape;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.ReadOnlyModel;
 import cs3500.animator.model.SimpleShape;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 
+/**
+ * This class represents implementations of an IEditView. This kind of view allows for the user to
+ * make changes to the animation through the use of JButtons and JTextFields.
+ */
 public class EditableView extends JFrame implements IEditView {
 
-  IVisualGraphicsView graphicsView;
+  private IVisualGraphicsView graphicsView;
   private Map<String, List<Motion>> keyFrames;
-  private JList<String> listOfStrings;
-  private JList<String> listOfMotions;
   private EditorPanel ePane;
   private ReadOnlyModel model;
   private AnimatorPanel animatorPanel;
 
+  /**
+   * Constructs an editable view.
+   *
+   * @param graphicsView the given graphics view that is edited.
+   */
   public EditableView(IVisualGraphicsView graphicsView) {
     this.graphicsView = graphicsView;
   }
@@ -44,12 +38,9 @@ public class EditableView extends JFrame implements IEditView {
     this.setTitle("Editor");
     this.setSize(1600, 900);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setLayout(new GridLayout(1, 2, 3, 3)); //3,3 are gaps
+    this.setLayout(new GridLayout(1, 2, 3, 3));
     ePane = new EditorPanel(keyFrames, model.getNameType());
     this.add(ePane);
-
-    //this.pack();
-
     this.animatorPanel = new AnimatorPanel();
     graphicsView.initiateTimer(model, animatorPanel);
     this.add(animatorPanel);
@@ -58,6 +49,7 @@ public class EditableView extends JFrame implements IEditView {
 
   }
 
+  @Override
   public void setKeyFrames(Map<String, List<Motion>> keyFrames) {
     this.keyFrames = keyFrames;
     ePane.setKeyFrames(keyFrames);
@@ -94,11 +86,12 @@ public class EditableView extends JFrame implements IEditView {
         JOptionPane.ERROR_MESSAGE);
   }
 
-
+  @Override
   public void setButtonListeners(ActionListener e) {
     ePane.setButtonListeners(e);
   }
 
+  @Override
   public void setIsAnimationOver(Boolean b) {
     graphicsView.setIsAnimationOver(b);
   }

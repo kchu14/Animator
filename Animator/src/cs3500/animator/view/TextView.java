@@ -19,7 +19,7 @@ import java.util.Map.Entry;
 public class TextView implements ITextView {
 
   private String fileOutput;
-  protected String fileOutputString;
+  private String fileOutputString;
 
 
   /**
@@ -33,7 +33,7 @@ public class TextView implements ITextView {
 
   @Override
   public String getFileOutput() {
-    return new String(fileOutputString);
+    return fileOutputString;
   }
 
   /**
@@ -41,7 +41,7 @@ public class TextView implements ITextView {
    *
    * @return A String representing the animation through a list of motions.
    */
-  private String produceTextView(Map<String, List<Motion>> nameMotion,
+  public String produceTextView(Map<String, List<Motion>> nameMotion,
       Map<String, String> nameType) {
     StringBuilder result = new StringBuilder();
     for (Entry<String, List<Motion>> set : nameMotion.entrySet()) {
@@ -72,7 +72,7 @@ public class TextView implements ITextView {
             new FileOutputStream(fileOutput)));
         for (String m : motions) {
           writer.write(m);
-           writer.newLine();
+          writer.newLine();
         }
 
       } catch (IOException ex) {
@@ -86,6 +86,4 @@ public class TextView implements ITextView {
       }
     }
   }
-
-
 }

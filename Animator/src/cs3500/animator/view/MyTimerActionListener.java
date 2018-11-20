@@ -1,6 +1,5 @@
 package cs3500.animator.view;
 
-import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.ReadOnlyModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -64,45 +63,39 @@ class MyTimerActionListener implements ActionListener {
     }
     if (tick > model.getLastTick()) {
       tick = originalTick;
-    }
-    else if (tick < 1) {
+    } else if (tick < 1) {
       tick = model.getLastTick();
     }
   }
 
-  public void setIsAnimationOver(Boolean b) {
+  protected void setIsAnimationOver(Boolean b) {
     this.isAnimationOver = b;
   }
 
-  public void rewind() {
+  protected void rewind() {
     isForward = !isForward;
   }
 
-  public void fastforward() {
-    if (t.getDelay() == 1 ) {
+  protected void fastforward() {
+    if (t.getDelay() == 1) {
       t.setDelay(t.getInitialDelay());
-    }
-    else {
+    } else {
       t.setDelay(t.getDelay() / 5);
     }
     System.out.println(t.getDelay());
   }
 
-  public void stop() {
-    t.stop();
-  }
 
-  public void slowDown() {
+  protected void slowDown() {
     if (t.getDelay() >= 1000) {
       t.setDelay(t.getInitialDelay());
-    }
-    else {
+    } else {
       t.setDelay(t.getDelay() * 5);
     }
     System.out.println(t.getDelay());
   }
 
-  public void pause() {
+  protected void pause() {
     isPaused = !isPaused;
   }
 }

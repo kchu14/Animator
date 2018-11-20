@@ -41,8 +41,13 @@ public class SimpleShape implements IShape {
     this.height = height;
     this.color = color;
     getCurShape();
-
   }
+
+  /**
+   * Constructs a simple shape given a shape.
+   *
+   * @param shape the given shape.
+   */
   public SimpleShape(SimpleShape shape) {
     this.name = shape.name;
     this.type = shape.type;
@@ -53,6 +58,13 @@ public class SimpleShape implements IShape {
     this.color = shape.color;
     getCurShape();
   }
+
+  /**
+   * Constructs a simple shape containing only the name and type of the shape.
+   *
+   * @param name the given name of the shape.
+   * @param type the given type of the shape.
+   */
   public SimpleShape(String name, String type) {
     this.name = name;
     this.type = type;
@@ -64,7 +76,6 @@ public class SimpleShape implements IShape {
   private void getCurShape() {
     if (type.equals("rectangle")) {
       this.shape = new Rectangle2D.Double(x, y, width, height);
-
     }
     if (type.equals("ellipse")) {
       this.shape = new Ellipse2D.Double(x, y, width, height);
@@ -167,10 +178,12 @@ public class SimpleShape implements IShape {
     return thisType;
   }
 
+  @Override
   public String getName() {
     return this.name;
   }
 
+  @Override
   public String getType() {
     return this.type;
   }

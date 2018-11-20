@@ -75,17 +75,48 @@ public interface AnimatorModel {
    */
   Map<String, String> getNameType();
 
-
+  /**
+   * Allows the caller to see a copy of the keyframes map. Converts our motions which contain
+   * a start and end time into keyframe variations which have the same start and end time. These
+   * key frames are used in displaying the editable keyframes in the editable view.
+   *
+   * @return A copy of the map shape names and the keyframes for the shape.
+   */
   Map<String, List<Motion>> getKeyFrames();
 
+  /**
+   * Allows the user to declare a new shape (add a shape to the model)
+   *
+   * @param shape The given shape to be added to the model.
+   */
   void declareNewShape(SimpleShape shape);
 
+  /**
+   * Removes a given shape from the model.
+   *
+   * @param name the name of the shape to be removed.
+   */
   void removeShape(String name);
 
+  /**
+   * Adds a given motion to the model.
+   *
+   * @param m The given motion to be added to the model.
+   */
   void addNewMotion(Motion m);
 
+  /**
+   * Edits a given motion inside the model.
+   *
+   * @param newMotion the given motion to be edited.
+   */
   void editMotion(Motion newMotion);
 
+  /**
+   * Removes a motion from the model.
+   *
+   * @param motion The given motion to be removed from the model.
+   */
   void removeMotion(Motion motion);
 
   /**

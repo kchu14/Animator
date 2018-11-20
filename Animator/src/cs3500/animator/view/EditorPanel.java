@@ -31,6 +31,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+/**
+ * This class represents the editor panel that is contained inside of the editor view. This panel
+ * contains all the controls and functionality that the user is allowed to use to modify the
+ * animation.
+ */
 public class EditorPanel extends JPanel implements ItemListener,
     ListSelectionListener {
 
@@ -57,8 +62,12 @@ public class EditorPanel extends JPanel implements ItemListener,
   private Map<String, String> nameType;
   private JScrollPane losScroll;
 
+
   /**
-   * Constructs the animation panel and sets the shapes list to an array list.
+   * Constructs an editor panel to be used in the editable view.
+   *
+   * @param keyFrames the keyframes to be displayed in the panel.
+   * @param nameType the name and type of the shape to be displayed in the panel.
    */
 
   protected EditorPanel(Map<String, List<Motion>> keyFrames, Map<String, String> nameType) {
@@ -228,6 +237,9 @@ public class EditorPanel extends JPanel implements ItemListener,
 
   }
 
+  /**
+   * Displays the given shapes available for modification on the panel.
+   */
   private void displayShapes() {
     if (shapeNamesPanel.getComponents().length >= 2) {
       shapeNamesPanel.remove(losScroll);
@@ -242,7 +254,6 @@ public class EditorPanel extends JPanel implements ItemListener,
     listOfShapes = new JList<>(dataForListOfStrings);
     listOfShapes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     listOfShapes.addListSelectionListener(this);
-    // listOfStrings.setPreferredSize(new Dimension(100, 200));
     losScroll = new JScrollPane(listOfShapes);
     losScroll.setPreferredSize(new Dimension(100, 200));
     shapeNamesPanel.add(losScroll, BorderLayout.NORTH);
@@ -251,6 +262,11 @@ public class EditorPanel extends JPanel implements ItemListener,
     this.updateUI();
   }
 
+  /**
+   * Displays the motions able to be modified for a given shape on the panel.
+   *
+   * @param shapeName the given shape for which the desired motions are displayed.
+   */
   private void displayMotions(String shapeName) {
     motionPanel.removeAll();
     JPanel empty = new JPanel();
@@ -278,12 +294,22 @@ public class EditorPanel extends JPanel implements ItemListener,
 
   }
 
+  /**
+   * Sets the name type map to the given map.
+   *
+   * @param nameType the given name and type map.
+   */
   protected void setNameType(Map<String, String> nameType) {
     this.nameType = nameType;
     displayShapes();
   }
 
 
+  /**
+   * Sets all of our buttons to have action listeners.
+   *
+   * @param e the given action listener.
+   */
   protected void setButtonListeners(ActionListener e) {
     for (JButton b : listOfButtons) {
       b.addActionListener(e);
@@ -291,8 +317,12 @@ public class EditorPanel extends JPanel implements ItemListener,
     }
   }
 
+  /**
+   * Returns the new keyframe that the user inputted using the gui and text fields.
+   *
+   * @return the new keyframe that the user inputted.
+   */
   protected Motion newMotion() {
-
     Color c = new Color(Math.max(0, Math.min(Integer.parseInt(redText.getText()), 255)),
         Math.max(0, Math.min(Integer.parseInt(greenText.getText()), 255)),
         Math.max(0, Math.min(Integer.parseInt(blueText.getText()), 255)));
@@ -307,6 +337,12 @@ public class EditorPanel extends JPanel implements ItemListener,
         Integer.parseInt(this.heightText.getText()), c);
   }
 
+  /**
+   * Returns the modified keyframe that the user inputted. Differs from new keyframe in that the
+   * user cannot change the time of the keyframe.
+   *
+   * @return the modified keyframe.
+   */
   protected Motion modifiedMotion() {
     if (selectedMotion.getStartTime() != Integer.parseInt(time.getText())) {
       throw new IllegalArgumentException("times must be equal");
@@ -325,10 +361,20 @@ public class EditorPanel extends JPanel implements ItemListener,
         Integer.parseInt(this.heightText.getText()), c);
   }
 
+  /**
+   * Returns the keyframe that the user currently has selected in the gui.
+   *
+   * @return the keyframe that the user currently has selected.
+   */
   protected Motion getSelectedMotion() {
     return selectedMotion;
   }
 
+  /**
+   * Returns the new shape that the user has created.
+   *
+   * @return the shape that the user inputted into the gui.
+   */
   protected SimpleShape getCreatedShape() {
     String selectedType = "ellipse";
     if (rectangleButton.isSelected()) {
@@ -340,6 +386,11 @@ public class EditorPanel extends JPanel implements ItemListener,
     return new SimpleShape(shapeName.getText(), selectedType);
   }
 
+  /**
+   * Returns the name of the shape that the user has selected in the gui.
+   *
+   * @return the shape that the user has selected.
+   */
   protected String getSelectedShape() {
     if (listOfShapes.getSelectedValue() == null) {
       throw new IllegalArgumentException("need to select shape");
@@ -347,7 +398,10 @@ public class EditorPanel extends JPanel implements ItemListener,
     return listOfShapes.getSelectedValue();
   }
 
-
+  /**
+   * This class represents implementation of a list selection listener. It is used to identify the
+   * clicks and values changed on our Jlist panels.
+   */
   private class MotionListener implements ListSelectionListener {
 
     @Override
@@ -388,9 +442,13 @@ public class EditorPanel extends JPanel implements ItemListener,
   @Override
   public void valueChanged(ListSelectionEvent e) {
     displayMotions(listOfShapes.getSelectedValue());
-
   }
 
+  /**
+   * Sets the keyframes to be displayed and refreshes the gui menu.
+   *
+   * @param keyFrames the given keyframes to be displayed.
+   */
   protected void setKeyFrames(Map<String, List<Motion>> keyFrames) {
     this.keyFrames = keyFrames;
     this.displayMotions(listOfShapes.getSelectedValue());
