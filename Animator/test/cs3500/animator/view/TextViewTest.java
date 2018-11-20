@@ -39,4 +39,8 @@ public class TextViewTest {
     view.playAnimation(m);
   }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> bad431b695fb8eb6fc1eeaa1f6d181b4d1a2de96

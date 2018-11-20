@@ -1,3 +1,7 @@
 
 *.xml
 Animator/test/cs3500/animator/model/MotionTest.java
+Animator/test/cs3500/animator/view/TextViewTest.java
+Animator/test/cs3500/animator/view/SvgViewTest.java
+Animator/test/cs3500/animator/model/MotionTest.java
+Animator/test/cs3500/animator/model/AnimatorModelImplTest.java
