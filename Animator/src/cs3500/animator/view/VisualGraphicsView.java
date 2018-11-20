@@ -102,7 +102,4 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
     return animatorPanel;
   }
 
-
-
-
 }

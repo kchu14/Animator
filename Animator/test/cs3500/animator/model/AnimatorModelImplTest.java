@@ -2,10 +2,8 @@ package cs3500.animator.model;
 
 import static org.junit.Assert.assertEquals;
 
-import cs3500.animator.view.SvgView;
 import cs3500.animator.view.TextView;
 import java.awt.Color;
-import java.util.ArrayList;
 import org.junit.Test;
 
 public class AnimatorModelImplTest {
@@ -20,30 +18,8 @@ public class AnimatorModelImplTest {
     assertEquals(10, m.getLastTick());
   }
 
-  @Test
-  public void testProduceTextView() {
-    ReadOnlyModel m;
-    TextView view = new TextView("asdfasdf");
-    m = new ReadOnlyModel(new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
-        .declareShape("r", "rectangle")
-        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
-            10, 100, 100, 50, 50, 0, 0, 255).build());
-    view.playAnimation(m);
-    assertEquals("Shape r rectangle\n"
-        + "motion r 0 100 100 50 50 255 0 0 10 100 100 50 50 0 255 0 \n", view.getFileOutput());
-  }
 
-  @Test
-  public void testUpdate() {
-    ReadOnlyModel m = new ReadOnlyModel(new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
-        .declareShape("r", "rectangle")
-        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
-            10, 100, 100, 50, 50, 255, 0, 0).build());
 
-    ArrayList<IShape> ls = new ArrayList<>();
-    ls.add(new SimpleShape("r", "rectangle", 100.0, 100.0, 50.0, 50.0, new Color(255, 0, 0)));
-    assertEquals(ls.get(0).toSVG(), m.update(9).get(0).toSVG());
-  }
 
   @Test(expected = IllegalArgumentException.class)
   public void testUpdateNoMotion() {
@@ -69,8 +45,6 @@ public class AnimatorModelImplTest {
   }
 
 
-
-
   @Test(expected = IllegalArgumentException.class)
   public void testTwoShapesSameName() {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
@@ -86,9 +60,8 @@ public class AnimatorModelImplTest {
         .addMotion("o", 0, 100, 100, 50, 50, 255, 0, 0, 10, 100, 100, 50, 50, 0, 0, 255)
         .addMotion("o2", 0, 100, 100, 50, 50, 255, 0, 0, 10, 100, 100, 50, 50, 0, 0, 255)
         .build();
-    assertEquals(3,m.getShapes().size());
+    assertEquals(3, m.getShapes().size());
   }
-
 
 
   @Test
@@ -105,8 +78,6 @@ public class AnimatorModelImplTest {
         + "motion r 1 200 200 50 100 255 0 0 10 200 200 50 100 255 0 0 \n"
         + "motion r 10 200 200 50 100 255 0 0 50 300 300 50 100 255 0 0 \n", view.getFileOutput());
   }
-
-
 
 
   @Test
@@ -141,10 +112,10 @@ public class AnimatorModelImplTest {
         .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
             50, 300, 300, 50, 100, 255, 0, 0)
         .build();
-    assertEquals(1, m.getMotions().size());
-    m.addNewMotion(new Motion("r", "rectangle" 1, 200, 200, 50, 100, 255, 0, 0,
-        10, 200, 200, 50, 100, 255, 0, 0));
-    assertEquals(2, m.getMotions().size());
+    assertEquals(1, m.getMotions().get("r").size());
+    m.addNewMotion(new Motion("r", "rectangle", 1, 200, 200, 50, 100, new Color(255, 0, 0),
+        10, 200, 200, 50, 100, new Color(255, 0, 0)));
+    assertEquals(2, m.getMotions().get("r").size());
   }
 
   @Test
@@ -152,17 +123,13 @@ public class AnimatorModelImplTest {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
         .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
             50, 300, 300, 50, 100, 255, 0, 0)
+    .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+        10, 200, 200, 50, 100, 255, 0, 0)
         .build();
-    assertEquals(1, m.getMotions().size());
-    m.editMotion(new Motion("r", "rectangle", 10, 200, 200, 50, 100, 255, 0, 0,
-        10, 200, 200, 50, 100, 255, 0, 0));
-    assertEquals(1, m.getMotions().size());
-    m.removeMotion(new Motion("r", "rectangle", 10, 200, 200, 50, 100, 255, 0, 0,
-        50, 300, 300, 50, 100, 255, 0, 0));
-    assertEquals(1, m.getMotions().size());
-    m.removeMotion(new Motion("r", "rectangle", 10, 200, 200, 50, 100, 255, 0, 0,
-        10, 200, 200, 50, 100, 255, 0, 0));
-    assertEquals(0, m.getMotions().size());
+    m.editMotion(new Motion("r", "rectangle", 10, 200, 200, 50, 100, new Color(0, 0, 255),
+        10, 200, 200, 50, 100, new Color(0, 0, 255)));
+    assertEquals(new Color(0, 0, 255), m.getMotions().get("r").get(0).endColor);
+
   }
 
   @Test
@@ -173,10 +140,10 @@ public class AnimatorModelImplTest {
         .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
             10, 200, 200, 50, 100, 255, 0, 0)
         .build();
-    assertEquals(2, m.getMotions().size());
-    m.removeMotion(new Motion("r", "rectangle", 1, 200, 200, 50, 100, 255, 0, 0,
-        10, 200, 200, 50, 100, 255, 0, 0));
-    assertEquals(1, m.getMotions().size());
+    assertEquals(2, m.getMotions().get("r").size());
+    m.removeMotion(new Motion("r", "rectangle", 1, 200, 200, 50, 100, new Color(255, 0, 0),
+        10, 200, 200, 50, 100, new Color(255, 0, 0)));
+    assertEquals(1, m.getMotions().get("r").size());
   }
 
   @Test
@@ -186,8 +153,9 @@ public class AnimatorModelImplTest {
             50, 300, 300, 50, 100, 255, 0, 0)
         .build();
     assertEquals(1, m.getShapes().size());
-    m.addShape(new Motion("c", "ellipse", 10, 200, 200, 50, 100, 255, 0, 0,
-        50, 300, 300, 50, 100, 255, 0, 0));
+    m.declareNewShape(new SimpleShape("c", "ellipse"));
+    m.addShape(new Motion("c", "ellipse", 51, 200, 200, 50, 100, new Color(255, 0, 0),
+        55, 300, 300, 50, 100, new Color(255, 0, 0)));
     assertEquals(2, m.getShapes().size());
   }
 
@@ -198,8 +166,8 @@ public class AnimatorModelImplTest {
             50, 300, 300, 50, 100, 255, 0, 0)
         .build();
     assertEquals(1, m.getShapes().size());
-    m.addShape(new Motion("r", "ellipse", 10, 200, 200, 50, 100, 255, 0, 0,
-        50, 300, 300, 50, 100, 255, 0, 0));
+    m.addShape(new Motion("r", "ellipse", 10, 200, 200, 50, 100, new Color(255, 0, 0),
+        50, 300, 300, 50, 100, new Color(255, 0, 0)));
     assertEquals(1, m.getShapes().size());
   }
 
@@ -220,12 +188,11 @@ public class AnimatorModelImplTest {
         .build();
     assertEquals(1, m.getMotions().get("r").size());
     assertEquals(2, m.getKeyFrames().get("r").size());
-    m.addNewMotion(new Motion("r", "rectangle", 50, 200, 200, 50, 100, 255, 0, 0,
-        80, 200, 200, 50, 100, 255, 0, 0));
+    m.addNewMotion(new Motion("r", "rectangle", 51, 200, 200, 50, 100, new Color(255, 0, 0),
+        80, 200, 200, 50, 100, new Color(255, 0, 0)));
     assertEquals(2, m.getMotions().get("r").size());
     assertEquals(3, m.getKeyFrames().get("r").size());
   }
-
 
 
 }

@@ -68,14 +68,26 @@ class MyTimerActionListener implements ActionListener {
     }
   }
 
+  /**
+   * Sets if the animation is over.
+   *
+   * @param b boolean stating whether if the animation is over.
+   */
   protected void setIsAnimationOver(Boolean b) {
     this.isAnimationOver = b;
   }
 
+
+  /**
+   * Rewinds the animations. (Plays the animation in reverse)
+   */
   protected void rewind() {
     isForward = !isForward;
   }
 
+  /**
+   * Speeds up the rate at which the animation is displayed.
+   */
   protected void fastforward() {
     if (t.getDelay() == 1) {
       t.setDelay(t.getInitialDelay());
@@ -86,6 +98,9 @@ class MyTimerActionListener implements ActionListener {
   }
 
 
+  /**
+   * Slows down the rate at which the animation is displayed.
+   */
   protected void slowDown() {
     if (t.getDelay() >= 1000) {
       t.setDelay(t.getInitialDelay());
@@ -95,6 +110,9 @@ class MyTimerActionListener implements ActionListener {
     System.out.println(t.getDelay());
   }
 
+  /**
+   * Pauses the animation. And flips the button if paused turns to resume.
+   */
   protected void pause() {
     isPaused = !isPaused;
   }

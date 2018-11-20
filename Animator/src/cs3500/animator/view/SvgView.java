@@ -3,7 +3,6 @@ package cs3500.animator.view;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
 
-import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.ReadOnlyModel;
 import java.io.BufferedOutputStream;
@@ -16,8 +15,8 @@ import java.util.List;
 import java.util.Map.Entry;
 
 /**
- * This is an implementation of the Animator View interface that represents the svg view. It
- * outputs our animation to a svg file that can be played in browser.
+ * This is an implementation of the Animator View interface that represents the svg view. It outputs
+ * our animation to a svg file that can be played in browser.
  */
 public class SvgView implements ISvgView {
 

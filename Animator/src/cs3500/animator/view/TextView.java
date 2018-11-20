@@ -1,13 +1,11 @@
 package cs3500.animator.view;
 
-import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.ReadOnlyModel;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;

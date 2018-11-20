@@ -60,7 +60,7 @@ public class AnimatorModelImpl implements AnimatorModel {
     this.setTicks();
   }
 
-  // todo testing (fix old tests),
+  // todo testing controller and listener
   // todo documentation of changes, readme, jar file, java docs,
 
 
@@ -235,6 +235,7 @@ public class AnimatorModelImpl implements AnimatorModel {
       lom = new ArrayList<>();
       lom.add(newMotion);
       nameMotion.put(newMotion.name, lom);
+      tickList.add(newMotion.getEndTime());
       return;
     }
     Collections.sort(lom);
@@ -294,6 +295,7 @@ public class AnimatorModelImpl implements AnimatorModel {
           lom.get(0).becomesKeyframe(false);
         }
         checkForValidMotions();
+        tickList.remove((Integer) keyframe.endTime);
         setTicks();
         return;
       }
@@ -314,6 +316,7 @@ public class AnimatorModelImpl implements AnimatorModel {
         }
       }
       checkForValidMotions();
+      tickList.remove((Integer) keyframe.endTime);
       setTicks();
     }
 
