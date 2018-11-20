@@ -45,5 +45,64 @@ public class MotionTest {
             + "attributeName=\"height\" from=\"100.0\" to=\"200.0\" fill=\"freeze\"/>\n",
         m.toSVG(1));
   }
+  
+  @Test
+  public void testChangeTo() {
+    Motion earlier = new Motion("R", "rectangle", 1, 200, 200, 50, 100,
+        new Color(255, 0, 0), 10, 200, 200, 50, 200, new Color(255, 0, 0));
+    Motion later = new Motion("R", "rectangle", 20, 200, 200, 50, 100,
+        new Color(255, 0, 0), 300, 200, 200, 50, 200, new Color(255, 0, 0));
+    assertEquals(19, later.compareTo(earlier));
+    assertEquals(0, later.compareTo(earlier.changeTo(later)));
+  }
+  
+  @Test
+  public void testFixEndings() {
+    Motion earlier = new Motion("R", "rectangle", 1, 200, 200, 50, 100,
+        new Color(255, 0, 0), 10, 200, 200, 50, 200, new Color(255, 0, 0));
+    Motion later = new Motion("R", "rectangle", 20, 200, 200, 50, 100,
+        new Color(255, 0, 0), 300, 200, 200, 50, 200, new Color(255, 0, 0));
+    assertEquals(19, later.compareTo(earlier));
+    assertEquals(-19, earlier.compareTo(later));
+    assertEquals(19, later.compareTo(earlier.fixEndings(later)));
+    assertEquals(0, earlier.compareTo(later.fixEndings(earlier)));
+  }
+  
+  @Test
+  public void testFixBeginning() {
+    Motion earlier = new Motion("R", "rectangle", 1, 200, 200, 50, 100,
+        new Color(255, 0, 0), 10, 200, 200, 50, 200, new Color(255, 0, 0));
+    Motion later = new Motion("R", "rectangle", 20, 200, 200, 50, 100,
+        new Color(255, 0, 0), 300, 200, 200, 50, 200, new Color(255, 0, 0));
+    assertEquals(19, later.compareTo(earlier));
+    assertEquals(-19, earlier.compareTo(later));
+    assertEquals(0, later.compareTo(earlier.fixBeginning(later)));
+    assertEquals(0, earlier.compareTo(later.fixBeginning(earlier)));
+  }
+  
+  @Test
+  public void testFixLastEndings() {
+    Motion earlier = new Motion("R", "rectangle", 1, 200, 200, 50, 100,
+        new Color(255, 0, 0), 10, 200, 200, 50, 200, new Color(255, 0, 0));
+    Motion later = new Motion("R", "rectangle", 20, 200, 200, 50, 100,
+        new Color(255, 0, 0), 300, 200, 200, 50, 200, new Color(255, 0, 0));
+    assertEquals(19, later.compareTo(earlier));
+    assertEquals(-19, earlier.compareTo(later));
+    assertEquals(19, later.compareTo(earlier.fixLastEndings(later)));
+    assertEquals(-19, earlier.compareTo(later.fixLastEndings(earlier)));
+    assertEquals(0, earlier.getEndTime() - later.getEndTime());
+  }
+  
+  @Test
+  public void testBecomesKeyFrame() {
+    Motion earlier = new Motion("R", "rectangle", 1, 200, 200, 50, 100,
+        new Color(255, 0, 0), 10, 200, 200, 50, 200, new Color(255, 0, 0));
+    Motion later = new Motion("R", "rectangle", 20, 200, 200, 50, 100,
+        new Color(255, 0, 0), 300, 200, 200, 50, 200, new Color(255, 0, 0));
+    assertEquals(19, later.compareTo(earlier));
+    assertEquals(-19, earlier.compareTo(later));
+    assertEquals(-19, earlier.compareTo(later.becomesKeyFrame(false)));
+    assertEquals(0, later.compareTo(earlier.becomesKeyFrame(true)));
+  }
 
 }
