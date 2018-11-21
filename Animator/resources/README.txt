@@ -20,6 +20,14 @@ We also used dynamic dispatch and allowed motions and shapes to output formatted
 In regards to the visual view, we updated our list of shapes every tick, and utilized Java's Shape class to draw these
 images onto a canvas.
 
+We implemented our Editable view by creating a window that contained two panels. One of these panels was our visualGraphicsView output of the model, and the other view was the edit panel. This panel consisted of several buttons, fields, and lists, that each had some action associated with them in our controller.
+
+Our controller for the editable view is an actionListener that has an AnimatorModel and an EditableView. Since this controller
+is an action listener, it is able to take the input from the editable view and call methods that recreate our lists of keyframes.
+We chose to have our keyframes be constantly reproduced so that our ReadOnlyModel could be able to get those values and keep
+them immutable. We valued immutability for our read-only model higher than performance, but If we were to allow the model
+to be directly sent to the view and encourage mutation within that, it would be able to produce the larger files much more quickly.
+
 CHANGE LOG assignment 5-6
 - Removed function objects (commands) which were being used to manipulate shapes
 - Removed complex shape class which was unnecessary for assignments 5 and 6
@@ -28,33 +36,23 @@ CHANGE LOG assignment 5-6
 - Added a motion class to represent changes in our shapes as opposed to commands.
 - Modified our SimpleShape and Motion classes to output themselves in a formatted string based on SVG
 
-/**
- * CHANGE LOG Added the controller class and interface to allow the view to pass inputs to the
- * model. The controller then updates the view with the new model information.
- */
+CHANGE LOG Assignment 6-7
+-Added the controller class and interface to allow the view to pass inputs to the
+ model. The controller then updates the view with the new model information.
 
-/**
- * CHANGE LOG Added implementation for the add / remove shape and motion methods. Also added a
- * modify motion method. These methods were added to support editable view functionality.
- */
+-Added implementation for the add / remove shape and motion methods in our modelImpl class. Also added a
+ modify motion method. These methods were added to support editable view functionality.
 
-/**
- * CHANGE LOG Added several methods that mutate the motion so that's endings /  beginnings
- * match the given motion. We did this because we wanted the flexibility of keyframes while
- * continuing to use our motion implementation.
- */
+-Added several methods to motion class that mutate the motion so that's endings /  beginnings
+ match the given motion. We did this because we wanted the flexibility of keyframes while
+ continuing to use our motion implementation.
 
-/**
- * CHANGE LOG Created a read only model to be passed into the view. This allows the view to gather 
- * the information from the model without mutation being allowed.
- */
-s
-/**
- * CHANGE LOG Changed the timer to support the different editable view functions such as pause and
- * fastforwards.
- */
+-Created a read only model to be passed into the view. This allows the view to gather 
+ the information from the model without mutation being allowed.
 
-/**
- * CHANGE LOG Added methods that allowed the panel to support functionality from the editable view.
- * Functionality included fast forwarding and pause.
- */
+-Changed the timer to support the different editable view functions such as pause and
+ fastforwards.
+ 
+ -Added methods that allowed the panel to support functionality from the editable view.
+ Functionality included fast forwarding and pause.
+ 
