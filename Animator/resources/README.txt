@@ -55,4 +55,8 @@ CHANGE LOG Assignment 6-7
  
  -Added methods that allowed the panel to support functionality from the editable view.
  Functionality included fast forwarding and pause.
+<<<<<<< HEAD
  
+=======
+ 
+>>>>>>> ecb4e964a2144c3e7cdc5d4fa7ed9afc3e4a7e26
