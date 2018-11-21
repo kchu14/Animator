@@ -2,9 +2,9 @@ package cs3500.animator.model;
 
 import java.awt.Color;
 /**
- * CHANGE LOG Added several methods that mutate the motion so that's endings /  beginnings
- * match the given motion. We did this because we wanted the flexibility of keyframes while
- * continuing to use our motion implementation.
+ * CHANGE LOG Added several methods that mutate the motion so that's endings /  beginnings match the
+ * given motion. We did this because we wanted the flexibility of keyframes while continuing to use
+ * our motion implementation.
  */
 
 /**
@@ -267,8 +267,9 @@ public class Motion implements Comparable<Motion> {
    * Converts a motion into a keyframe.
    *
    * @param isEndKeyFrame true if this motion is becoming a keyframe based on this motions ending
-   * time.
+   *                      time.
    */
+
   protected void becomesKeyframe(boolean isEndKeyFrame) {
     if (isEndKeyFrame) {
       this.startX = this.endX;

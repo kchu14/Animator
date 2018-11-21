@@ -47,9 +47,12 @@ public class EditableView extends JFrame implements IEditView {
     this.animatorPanel = new AnimatorPanel();
     graphicsView.initiateTimer(model, animatorPanel);
     animatorPanel.setPreferredSize(new Dimension(model.getWidth(), model.getHeight()));
-    JScrollPane animatorScrollPane =new JScrollPane(animatorPanel);
-    animatorScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    animatorScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+    JScrollPane animatorScrollPane = new JScrollPane(animatorPanel);
+    animatorScrollPane.setVerticalScrollBarPolicy(
+        ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    animatorScrollPane
+        .setHorizontalScrollBarPolicy(
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
     this.add(animatorScrollPane);
     this.setVisible(true);
   }

@@ -1,7 +1,6 @@
 package cs3500.animator.view;
 
 
-import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.ReadOnlyModel;
 import javax.swing.JPanel;
 

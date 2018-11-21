@@ -19,8 +19,6 @@ public class AnimatorModelImplTest {
   }
 
 
-
-
   @Test(expected = IllegalArgumentException.class)
   public void testUpdateNoMotion() {
     ReadOnlyModel m = new ReadOnlyModel(new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
@@ -123,8 +121,8 @@ public class AnimatorModelImplTest {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(0, 0, 100, 100)
         .declareShape("r", "rectangle").addMotion("r", 10, 200, 200, 50, 100, 255, 0, 0,
             50, 300, 300, 50, 100, 255, 0, 0)
-    .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
-        10, 200, 200, 50, 100, 255, 0, 0)
+        .addMotion("r", 1, 200, 200, 50, 100, 255, 0, 0,
+            10, 200, 200, 50, 100, 255, 0, 0)
         .build();
     m.editMotion(new Motion("r", "rectangle", 10, 200, 200, 50, 100, new Color(0, 0, 255),
         10, 200, 200, 50, 100, new Color(0, 0, 255)));

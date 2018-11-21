@@ -85,7 +85,7 @@ public interface AnimatorModel {
   Map<String, List<Motion>> getKeyFrames();
 
   /**
-   * Allows the user to declare a new shape (add a shape to the model)
+   * Allows the user to declare a new shape (add a shape to the model).
    *
    * @param shape The given shape to be added to the model.
    */

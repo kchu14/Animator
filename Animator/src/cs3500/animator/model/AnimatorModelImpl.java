@@ -136,8 +136,8 @@ public class AnimatorModelImpl implements AnimatorModel {
             if (m.startTime != prevEndTime) {
               throw new IllegalArgumentException("added an overlapping or gaping motion");
             }
-            if (m.startX != prevX || m.startY != prevY || m.startWidth != prevWidth ||
-                m.startHeight != prevHeight || !m.startColor.equals(prevColor)) {
+            if (m.startX != prevX || m.startY != prevY || m.startWidth != prevWidth
+                || m.startHeight != prevHeight || !m.startColor.equals(prevColor)) {
               throw new IllegalArgumentException("shape motion must be continuous");
             }
             prevEndTime = m.endTime;
@@ -181,23 +181,12 @@ public class AnimatorModelImpl implements AnimatorModel {
    */
   private void setTicks() {
     Collections.sort(tickList);
-//    int firstTick = tickList.get(0);
     int lastTick = tickList.get(tickList.size() - 1);
     for (int i = 0; i <= lastTick; i++) {
       this.update(i);
     }
   }
 
-
-//  private void fixTicks(int startTime, int endTime, String shapeName) {
-//    for (int i = startTime; i <= endTime; i++) {
-//      for (IShape s : tickListShapes.get(i)) {
-//        if (s.getName().equals(shapeName)) {
-//          tickListShapes.get(i).remove(s);
-//        }
-//      }
-//    }
-//  }
 
   @Override
   public int getHeight() {

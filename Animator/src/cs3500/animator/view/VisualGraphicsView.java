@@ -50,7 +50,6 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
   }
 
 
-
   @Override
   public void playAnimation(ReadOnlyModel model) {
     this.setTitle("Animator");
@@ -89,7 +88,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
 
   @Override
   public void fastforward() {
-      listener.fastforward();
+    listener.fastforward();
   }
 
   @Override

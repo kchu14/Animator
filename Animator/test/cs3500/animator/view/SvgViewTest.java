@@ -3,7 +3,6 @@ package cs3500.animator.view;
 
 import static org.junit.Assert.assertEquals;
 
-import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.AnimatorModelImpl;
 import cs3500.animator.model.ReadOnlyModel;
 import org.junit.Test;
@@ -13,9 +12,10 @@ public class SvgViewTest {
   @Test
   public void testSvgOutputChangeColor() {
     SvgView view = new SvgView("asdf", 1);
-    ReadOnlyModel m = new ReadOnlyModel(new AnimatorModelImpl.Builder().declareShape("r", "rectangle")
-        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
-            10, 100, 100, 50, 50, 0, 0, 255).build());
+    ReadOnlyModel m = new ReadOnlyModel(
+        new AnimatorModelImpl.Builder().declareShape("r", "rectangle")
+            .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+                10, 100, 100, 50, 50, 0, 0, 255).build());
     view.playAnimation(m);
     assertEquals(
         "<svg width=\"0\" height=\"0\" version=\"1.1\" "
@@ -33,9 +33,10 @@ public class SvgViewTest {
   @Test
   public void testSvgOutputMove() {
     SvgView view = new SvgView("asdff", 1);
-    ReadOnlyModel m = new ReadOnlyModel(new AnimatorModelImpl.Builder().declareShape("r", "rectangle")
-        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
-            10, 150, 250, 50, 50, 255, 0, 0).build());
+    ReadOnlyModel m = new ReadOnlyModel(
+        new AnimatorModelImpl.Builder().declareShape("r", "rectangle")
+            .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+                10, 150, 250, 50, 50, 255, 0, 0).build());
     view.playAnimation(m);
     assertEquals(
         "<svg width=\"0\" height=\"0\" version=\"1.1\" "
@@ -55,9 +56,10 @@ public class SvgViewTest {
   @Test
   public void testSvgOutputNoChange() {
     SvgView view = new SvgView("asdfff", 1);
-    ReadOnlyModel m = new ReadOnlyModel(new AnimatorModelImpl.Builder().declareShape("r", "rectangle")
-        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
-            10, 100, 100, 50, 50, 0, 0, 255).build());
+    ReadOnlyModel m = new ReadOnlyModel(
+        new AnimatorModelImpl.Builder().declareShape("r", "rectangle")
+            .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+                10, 100, 100, 50, 50, 0, 0, 255).build());
     view.playAnimation(m);
     assertEquals(
         "<svg width=\"0\" height=\"0\" version=\"1.1\" "
@@ -72,9 +74,10 @@ public class SvgViewTest {
   @Test
   public void testSvgOutputChangeSize() {
     SvgView view = new SvgView("asdfffa", 1);
-    ReadOnlyModel m = new ReadOnlyModel(new AnimatorModelImpl.Builder().declareShape("r", "rectangle")
-        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
-            10, 100, 100, 50, 50, 0, 0, 255).build());
+    ReadOnlyModel m = new ReadOnlyModel(
+        new AnimatorModelImpl.Builder().declareShape("r", "rectangle")
+            .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+                10, 100, 100, 50, 50, 0, 0, 255).build());
     view.playAnimation(m);
     assertEquals(
         "<svg width=\"0\" height=\"0\" version=\"1.1\" "

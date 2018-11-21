@@ -70,7 +70,7 @@ public final class Excellence {
     }
     ReadOnlyModel readOnlyModel = new ReadOnlyModel(model);
     view.playAnimation(readOnlyModel);
-    if(view instanceof EditableView) {
+    if (view instanceof EditableView) {
       IController controller = new EditController(model, (EditableView) view);
     }
 

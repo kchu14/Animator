@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
  */
 
 /**
- * This class represents the implementation of a IController. This controller takes in the mouse
- * and keyboard commands given from the view and delegates them to the model to be handled.
+ * This class represents the implementation of a IController. This controller takes in the mouse and
+ * keyboard commands given from the view and delegates them to the model to be handled.
  */
 public class EditController implements IController, ActionListener {
 
@@ -22,6 +22,7 @@ public class EditController implements IController, ActionListener {
 
   /**
    * Constructs a controller for our animator.
+   *
    * @param model the given model for the animator
    * @param view the given view for the animator. (View has to be an edit view)
    */
@@ -114,6 +115,10 @@ public class EditController implements IController, ActionListener {
         this.isAnimationOver = !isAnimationOver;
         view.setIsAnimationOver(isAnimationOver);
         System.out.println(isAnimationOver);
+        break;
+      default:
+        errmsg = "Be sure everything is filled out";
+        view.showError(errmsg);
         break;
     }
   }
