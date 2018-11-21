@@ -22,6 +22,11 @@ images onto a canvas.
 
 We implemented our Editable view by creating a window that contained two panels. One of these panels was our visualGraphicsView output of the model, and the other view was the edit panel. This panel consisted of several buttons, fields, and lists, that each had some action associated with them in our controller.
 
+Our editable view allows for the user to add keyframes before or after the first or last 
+Keyframe on a shape. We did this because it seemed to provide the user with the most
+funcionality. This allows the user to add a shape and fill out all the keyframes for the
+Shape. A user could create a whole animation from a blank animation if wanted.
+
 Our controller for the editable view is an actionListener that has an AnimatorModel and an EditableView. Since this controller
 is an action listener, it is able to take the input from the editable view and call methods that recreate our lists of keyframes.
 We chose to have our keyframes be constantly reproduced so that our ReadOnlyModel could be able to get those values and keep
@@ -39,9 +44,14 @@ CHANGE LOG assignment 5-6
 CHANGE LOG Assignment 6-7
 -Added the controller class and interface to allow the view to pass inputs to the
  model. The controller then updates the view with the new model information.
+We made this change because the new assignment allows for modification of the model.
+The user is allowed to mutate the model in this assignment so we needed a controller 
+To pass the necessary modifications to the model to be changed.
 
 -Added implementation for the add / remove shape and motion methods in our modelImpl class. Also added a
  modify motion method. These methods were added to support editable view functionality.
+We fully implemented these methods because the assignment finally specified the full
+Functionality. We were able to mutate the model according to the user now.
 
 -Added several methods to motion class that mutate the motion so that's endings /  beginnings
  match the given motion. We did this because we wanted the flexibility of keyframes while
@@ -55,8 +65,4 @@ CHANGE LOG Assignment 6-7
  
  -Added methods that allowed the panel to support functionality from the editable view.
  Functionality included fast forwarding and pause.
-<<<<<<< HEAD
  
-=======
- 
->>>>>>> ecb4e964a2144c3e7cdc5d4fa7ed9afc3e4a7e26
