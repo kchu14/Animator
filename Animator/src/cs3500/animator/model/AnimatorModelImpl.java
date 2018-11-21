@@ -33,6 +33,7 @@ public class AnimatorModelImpl implements AnimatorModel {
   private int animationHeight;
   private List<Integer> tickList;
   private Map<Integer, List<IShape>> tickListShapes;
+  private Map<String, List<Motion>> keyFrames;
 
 
   /**
@@ -79,7 +80,11 @@ public class AnimatorModelImpl implements AnimatorModel {
 
   @Override
   public Map<String, List<Motion>> getKeyFrames() {
-    Map<String, List<Motion>> result = new LinkedHashMap<>();
+    if (keyFrames == null) {
+      keyFrames = new LinkedHashMap<>();
+    } else {
+      keyFrames.clear();
+    }
     for (Entry<String, List<Motion>> set : nameMotion.entrySet()) {
       List<Motion> result2 = new ArrayList<>();
       int n = set.getValue().size() - 1;
@@ -101,15 +106,13 @@ public class AnimatorModelImpl implements AnimatorModel {
 
         i++;
       }
-      for (int j = 1; j < 3; j++) {
-        if (result2.get(j).compareTo(result2.get(j - 1)) == 0) {
-          result2.remove(j - 1);
-          this.removeMotion(result2.get(j - 1));
-        }
+
+      if (result2.get(0).getStartTime() == result2.get(1).getStartTime()) {
+        result2.remove(0);
       }
-      result.put(set.getKey(), result2);
+      keyFrames.put(set.getKey(), result2);
     }
-    return result;
+    return keyFrames;
   }
 
   /**
@@ -180,11 +183,21 @@ public class AnimatorModelImpl implements AnimatorModel {
     Collections.sort(tickList);
 //    int firstTick = tickList.get(0);
     int lastTick = tickList.get(tickList.size() - 1);
-
     for (int i = 0; i <= lastTick; i++) {
       this.update(i);
     }
   }
+
+
+//  private void fixTicks(int startTime, int endTime, String shapeName) {
+//    for (int i = startTime; i <= endTime; i++) {
+//      for (IShape s : tickListShapes.get(i)) {
+//        if (s.getName().equals(shapeName)) {
+//          tickListShapes.get(i).remove(s);
+//        }
+//      }
+//    }
+//  }
 
   @Override
   public int getHeight() {
