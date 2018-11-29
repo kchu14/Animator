@@ -1,8 +1,13 @@
 package cs3500.animator.model;
 
+import cs3500.animator.provider.model.AnimationTuple;
 import cs3500.animator.provider.model.ExcelAnimatorModel;
+import cs3500.animator.provider.model.ShapeTuple;
 import java.awt.Shape;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
+import sun.java2d.pipe.SpanShapeRenderer.Simple;
 
 /**
  * Represents an adapter to allow our AnimatorModel implementation to implement the methods from
@@ -19,7 +24,6 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
    */
   public ProviderModelAdapter(AnimatorModel ourModel) {
     this.ourModel = ourModel;
-
 
   }
 
@@ -40,7 +44,7 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
 
   @Override
   public String textView() {
-    return null;
+    throw new UnsupportedOperationException("This method is never used in the provided views.");
   }
 
   @Override
@@ -52,7 +56,12 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
 
   @Override
   public List<ShapeTuple> getShapes() {
-    return null;
+    List<ShapeTuple> result = new ArrayList<>();
+    for (Entry<String, IShape> shape : ourModel.getShapes().entrySet()) {
+      result.add(new ShapeTuple(shape.getKey(), new ShapeAdapter(shape.getValue())));
+    }
+
+    return
   }
 
   @Override

@@ -73,7 +73,7 @@ public class SimpleShape implements IShape {
   /**
    * This method resets the shapes.
    */
-  private void getCurShape() {
+  protected void getCurShape() {
     if (type.equals("rectangle")) {
       this.shape = new Rectangle2D.Double(x, y, width, height);
     }
