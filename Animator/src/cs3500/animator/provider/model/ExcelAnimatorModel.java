@@ -1,10 +1,6 @@
 package cs3500.animator.provider.model;
 
 
-import cs3500.model.animation.AnimationTuple;
-import cs3500.model.shape.Shape;
-import cs3500.model.shape.ShapeTuple;
-import java.awt.Shape;
 import java.util.List;
 
 //CHANGES FROM HOMEWORK 6: Added methods to add, remove, and update keyframes on shapes

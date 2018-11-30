@@ -1,0 +1,6 @@
+- tuples
+- not delegating to model
+- view takes in model and is mutating it
+- no comments for private methods
+- thread .sleep instead of timer
+- incomplete functionality

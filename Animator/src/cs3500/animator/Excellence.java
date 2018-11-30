@@ -5,6 +5,9 @@ import cs3500.animator.controller.IController;
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.AnimatorModelImpl;
 import cs3500.animator.model.ReadOnlyModel;
+import cs3500.animator.model.adapters.ProviderModelAdapter;
+import cs3500.animator.provider.view.EditorView;
+import cs3500.animator.provider.view.VisualView;
 import cs3500.animator.util.AnimationReader;
 import cs3500.animator.view.AnimatorView;
 import cs3500.animator.view.EditableView;
@@ -52,14 +55,16 @@ public final class Excellence {
     }
 
     AnimatorModel model;
-    AnimatorView view = constructView(viewType, outType, speed);
-
-    if (view == null || error) {
-      IVisualGraphicsView v = new VisualGraphicsView(speed);
-      v.showErrorMessage(errorMsg);
-      System.exit(0);
+    AnimatorView view = null;
+    if (viewType != "provider") {
+      view = constructView(viewType, outType, speed);
+    } else {
+      if (view == null || error) {
+        IVisualGraphicsView v = new VisualGraphicsView(speed);
+        v.showErrorMessage(errorMsg);
+        System.exit(0);
+      }
     }
-
     try {
       FileReader fr =
           new FileReader(fileName);
@@ -68,10 +73,16 @@ public final class Excellence {
     } catch (Exception e) {
       throw new IllegalArgumentException(e.getMessage());
     }
-    ReadOnlyModel readOnlyModel = new ReadOnlyModel(model);
-    view.playAnimation(readOnlyModel);
-    if (view instanceof EditableView) {
-      IController controller = new EditController(model, (EditableView) view);
+
+    if (viewType.equals("provider")) {
+      EditorView providerView = new EditorView(new ProviderModelAdapter(model), speed);
+      providerView.play();
+    } else {
+      ReadOnlyModel readOnlyModel = new ReadOnlyModel(model);
+      view.playAnimation(readOnlyModel);
+      if (view instanceof EditableView) {
+        IController controller = new EditController(model, (EditableView) view);
+      }
     }
 
   }

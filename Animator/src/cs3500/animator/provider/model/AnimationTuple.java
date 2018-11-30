@@ -1,13 +1,14 @@
 package cs3500.animator.provider.model;
 
 
-import javafx.animation.Animation;
-
 /**
  * Represents an animation and its location in time relative to the model's scale.
  */
 
-public class AnimationTuple implements Tuple {
+public class AnimationTuple implements Tuple<Animation, Integer> {
+
+  private Animation animation;
+  private int startTick;
 
   /**
    * Constructs an animation tuple given an animation and start tick.
@@ -16,14 +17,19 @@ public class AnimationTuple implements Tuple {
    * @param startTick start tick for animation
    */
   public AnimationTuple(Animation animation, Integer startTick) {
-
-    public Animation getKey () {
-    }
-    public Integer getValue () {
-    }
-    public boolean equals (Object o){
-    }
-
+    this.animation = animation;
+    this.startTick = startTick;
 
   }
+
+  @Override
+  public Animation getKey() {
+    return this.animation;
+  }
+
+  @Override
+  public Integer getValue() {
+    return this.startTick;
+  }
+
 }

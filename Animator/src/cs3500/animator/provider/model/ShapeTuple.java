@@ -1,6 +1,7 @@
 package cs3500.animator.provider.model;
 
 
+
 public class ShapeTuple implements Tuple<String, Shape> {
 
   /**
@@ -26,16 +27,17 @@ public class ShapeTuple implements Tuple<String, Shape> {
     this.shape = shape;
   }
 
+  @Override
   public String getKey() {
+    return this.name;
   }
 
 
+  @Override
   public Shape getValue() {
+    return this.shape;
   }
 
-
-  public boolean equals(Object o) {
-  }
 
 
 }

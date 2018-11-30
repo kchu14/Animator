@@ -1,8 +1,10 @@
-package cs3500.animator.model;
+package cs3500.animator.model.adapters;
 
+import cs3500.animator.model.SimpleShape;
 import cs3500.animator.provider.model.Shape;
 import java.awt.Color;
 import java.awt.Point;
+import sun.java2d.pipe.SpanShapeRenderer.Simple;
 
 /**
  * Represents an adapter to allow our SimpleShape implementation to implement the methods from
@@ -11,7 +13,7 @@ import java.awt.Point;
 public class ShapeAdapter extends SimpleShape implements Shape {
 
   /**
-   * Constructs a shape.
+   * Constructs a ShapeAdapter given the fields of a SimpleShape.
    *
    * @param name the given name
    * @param type the given type (rectangle, ellipse)
@@ -25,6 +27,15 @@ public class ShapeAdapter extends SimpleShape implements Shape {
       Color color) {
     super(name, type, x, y, width, height, color);
     this.getCurShape();
+  }
+
+  /**
+   * Constructs a ShapeAdapter given an IShape.
+   *
+   * @param shape the given shape.
+   */
+  public ShapeAdapter(SimpleShape shape) {
+    super(shape);
   }
 
   @Override

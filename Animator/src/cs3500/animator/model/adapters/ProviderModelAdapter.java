@@ -1,9 +1,13 @@
-package cs3500.animator.model;
+package cs3500.animator.model.adapters;
 
+import cs3500.animator.model.AnimatorModel;
+import cs3500.animator.model.IShape;
+import cs3500.animator.model.Motion;
+import cs3500.animator.model.SimpleShape;
 import cs3500.animator.provider.model.AnimationTuple;
 import cs3500.animator.provider.model.ExcelAnimatorModel;
+import cs3500.animator.provider.model.Shape;
 import cs3500.animator.provider.model.ShapeTuple;
-import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -29,17 +33,21 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
 
   @Override
   public List<Shape> getAnimationState(int n) {
-    return null;
+    List<Shape> shapeList = new ArrayList<>();
+    for (IShape shape : ourModel.getTickListShapes().get(n)) {
+      shapeList.add(new ShapeAdapter((SimpleShape) shape));
+    }
+    return shapeList;
   }
 
   @Override
   public ExcelAnimatorModel addAnimation(AnimationTuple animT) {
-    return null;
+    throw new UnsupportedOperationException("This method is never used in the provided views.");
   }
 
   @Override
   public ExcelAnimatorModel removeAnimation(AnimationTuple animT) {
-    return null;
+    throw new UnsupportedOperationException("This method is never used in the provided views.");
   }
 
   @Override
@@ -58,15 +66,21 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
   public List<ShapeTuple> getShapes() {
     List<ShapeTuple> result = new ArrayList<>();
     for (Entry<String, IShape> shape : ourModel.getShapes().entrySet()) {
-      result.add(new ShapeTuple(shape.getKey(), new ShapeAdapter(shape.getValue())));
+      result.add(new ShapeTuple(shape.getKey(), new ShapeAdapter((SimpleShape) shape.getValue())));
     }
 
-    return
+    return result;
   }
 
   @Override
   public List<AnimationTuple> getMotionsOfShape(String name) {
-    return null;
+    List<AnimationTuple> result = new ArrayList<>();
+
+    for(Motion m : ourModel.getMotions().get(name)) {
+      result.add(new AnimationTuple(new Animation(m), m.getStartTime()));
+    }
+
+    return result;
   }
 
   @Override

@@ -1,12 +1,13 @@
 package cs3500.animator.provider.view;
 
+import cs3500.animator.provider.model.AnimationTuple;
 import cs3500.animator.provider.model.ExcelAnimatorModel;
-import cs3500.model.shape.Ellipse;
-import cs3500.model.shape.Rectangle;
+import cs3500.animator.provider.model.Keyframe;
+import cs3500.animator.provider.model.Shape;
+import cs3500.animator.provider.model.ShapeTuple;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,13 +27,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import java.awt.BorderLayout;
-
-import cs3500.animator.provider.view.model.ExcelAnimatorModel;
-import cs3500.model.shape.Shape;
-import cs3500.model.animation.Keyframe;
-import cs3500.model.animation.AnimationTuple;
-import cs3500.model.shape.ShapeTuple;
-
 public class EditorView extends JFrame implements ExcelAnimatorView {
 
   private Double speed;
@@ -468,9 +462,9 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
           break;
         case "addRect":
           try {
-            model.addShape(
-                new ShapeTuple(newShapeController.getText(), new Rectangle(1, 1, new Point(0, 0),
-                    Color.WHITE)));
+//            model.addShape(
+//                new ShapeTuple(newShapeController.getText(), new Rectangle(1, 1, new Point(0, 0),
+//                    Color.WHITE)));
           } catch (IllegalArgumentException except) {
             //Do nothing
           }
@@ -482,9 +476,9 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
           break;
         case "addEllipse":
           try {
-            model.addShape(
-                new ShapeTuple(newShapeController.getText(), new Ellipse(1, 1, new Point(0, 0),
-                    Color.WHITE)));
+//            model.addShape(
+//                new ShapeTuple(newShapeController.getText(), new Ellipse(1, 1, new Point(0, 0),
+//                    Color.WHITE)));
           } catch (IllegalArgumentException except) {
             //Do nothing
           }
