@@ -1,10 +1,11 @@
 package cs3500.animator.provider.view;
 
 import cs3500.animator.provider.model.AnimationTuple;
-import cs3500.animator.provider.model.ExcelAnimatorModel;
 import cs3500.animator.provider.model.Keyframe;
-import cs3500.animator.provider.model.Shape;
 import cs3500.animator.provider.model.ShapeTuple;
+import cs3500.animator.provider.model.ExcelAnimatorModel;
+import cs3500.animator.view.ExcelAnimatorView;
+import cs3500.animator.view.VisualView;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import java.awt.BorderLayout;
+
 public class EditorView extends JFrame implements ExcelAnimatorView {
 
   private Double speed;
@@ -52,16 +54,19 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
     this.speed = speed;
     this.isOn = true;
     JPanel container = new JPanel();
-    this.setPreferredSize(new Dimension(3000, 800));
+    this.setPreferredSize(new Dimension(1000, 800));
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());
     this.panel = new VisualView.VisualPanel();
     int[] bounds = this.model.getBounds();
     this.panel.setPreferredSize(new Dimension(bounds[0] + bounds[2], bounds[1] + bounds[3]));
     scrollPane = new JScrollPane(this.panel);
-    scrollPane.setBounds(0, 0, 1920, 800);
+    //scrollPane.setBounds(0, 0, 3000, 800);
     this.interactPanel = new InteractivePanel();
-    container.add(this.interactPanel);
+    JScrollPane ipScrollPane = new JScrollPane(this.interactPanel);
+    ipScrollPane.setPreferredSize(new Dimension(1000,200 ));
+    ipScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    container.add(ipScrollPane);
     container.add(this.panel);
     this.add(container, BorderLayout.CENTER);
 
@@ -196,20 +201,25 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
     for (AnimationTuple animationTuple : this.model.getMotionsOfShape(shapeTuple.getKey())) {
       //System.out.println(animationTuple.getValue());
       if (tick > animationTuple.getValue() && tick < animationTuple.getKey().getLength()) {
+
         for (int i = 0; i < animationTuple.getKey().getFrames().size(); i++) {
           if (tick != animationTuple.getKey().getFrames().get(i).getValue()) {
-            return animationTuple.getKey().addFrame(tick, i, animationTuple.getValue(),
-                shapeTuple.getKey());
+            System.out.println(tick);
+            return animationTuple.getKey().addFrame(tick - animationTuple.getValue(), i,
+                    animationTuple.getValue(),
+                shapeTuple);
           }
         }
 
         break;
-      } else {
-        //System.out.println("noadd");
       }
 
     }
-    return null;
+
+    AnimationTuple temp_tuple = new AnimationTuple(new AnimationImp(shapeTuple), tick);
+    this.model.addAnimation(temp_tuple);
+    System.out.println("addKeyFrame tick: " + tick);
+    return temp_tuple.getKey().addFrame(tick, -1, temp_tuple.getValue(), shapeTuple);
   }
 
   private void deleteKeyFrame(ShapeTuple shapeTuple, Keyframe keyframe) {
@@ -412,6 +422,16 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
 
     }
 
+    private void repopulateShapes() {
+      shapesFromModelModel.clear();
+      for (ShapeTuple shape : model.getShapes()) {
+        shapesFromModelModel.addElement(shape);
+        this.shapesFromModel.setSelectedValue(shape, true);
+      }
+      this.repopulateFrames(this.shapesFromModel.getSelectedValue());
+      this.updateUI();
+    }
+
     private void populateFrames(ShapeTuple shape) {
       shapesFromContainerModel = new DefaultListModel<Keyframe>();
       List<AnimationTuple> motions = model.getMotionsOfShape(shape.getKey());
@@ -429,8 +449,65 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
 
     }
 
+    private void repopulateFrames(ShapeTuple shape) {
+      shapesFromContainerModel.clear();
+      List<AnimationTuple> motions = model.getMotionsOfShape(shape.getKey());
+      //System.out.println(motions);
+
+      //Traverse the list of motions then add the keyframes of each motion in model time
+      for (AnimationTuple motion : motions) {
+        for (Keyframe frame : motion.getKey().getFrames()) {
+          //System.out.println(frame);
+          shapesFromContainerModel
+                  .addElement(new Keyframe(frame.getKey(), frame.getValue() + motion.getValue()));
+        }
+      }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+      Integer newX;
+      Integer newY;
+      Integer newW;
+      Integer newH;
+      Integer newR;
+      Integer newG;
+      Integer newB;
+      try {
+        newX = Integer.parseInt(this.shapeX.getText());
+      }catch (NumberFormatException nfe) {
+        newX = 0;
+      }
+      try {
+        newY = Integer.parseInt(this.shapeY.getText());
+      }catch (NumberFormatException nfe) {
+        newY = 0;
+      }
+      try {
+        newW = Integer.parseInt(this.shapeW.getText());
+      }catch (NumberFormatException nfe) {
+        newW = 10;
+      }
+      try {
+        newH = Integer.parseInt(this.shapeH.getText());
+      }catch (NumberFormatException nfe) {
+        newH = 10;
+      }
+      try {
+        newR = Integer.parseInt(this.shapeR.getText());
+      }catch (NumberFormatException nfe) {
+        newR = 100;
+      }
+      try {
+        newG = Integer.parseInt(this.shapeG.getText());
+      }catch (NumberFormatException nfe) {
+        newG = 100;
+      }
+      try {
+        newB = Integer.parseInt(this.shapeB.getText());
+      }catch (NumberFormatException nfe) {
+        newB = 100;
+      }
       String action = e.getActionCommand();
       switch (action) {
         case "togglePlay":
@@ -462,31 +539,35 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
           break;
         case "addRect":
           try {
-//            model.addShape(
-//                new ShapeTuple(newShapeController.getText(), new Rectangle(1, 1, new Point(0, 0),
-//                    Color.WHITE)));
+            model.addShape(
+                new ShapeTuple(newShapeController.getText(), new Rectangle(newW, newH,
+                        new Point(newX,
+                        newY),
+                    new Color(newR, newG, newB))));
           } catch (IllegalArgumentException except) {
-            //Do nothing
+            //nothing
           }
-          this.populateShapes();
-          shapesFromModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-          shapeContainer = new JScrollPane(shapesFromModel);
+          this.repopulateShapes();
+//          this.populateShapes();
+//          shapesFromModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//          shapeContainer = new JScrollPane(shapesFromModel);
           newShapeController.setText("");
-          this.updateUI();
+          //this.updateUI();
           break;
         case "addEllipse":
           try {
-//            model.addShape(
-//                new ShapeTuple(newShapeController.getText(), new Ellipse(1, 1, new Point(0, 0),
-//                    Color.WHITE)));
+            model.addShape(
+                new ShapeTuple(newShapeController.getText(), new Ellipse(newW, newH, new Point(newX,
+                        newY),
+                    new Color(newR, newG, newB))));
           } catch (IllegalArgumentException except) {
             //Do nothing
           }
-          this.populateShapes();
-          shapesFromModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-          shapeContainer = new JScrollPane(shapesFromModel);
+          this.repopulateShapes();
+//          shapesFromModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//          shapeContainer = new JScrollPane(shapesFromModel);
           newShapeController.setText("");
-          this.updateUI();
+          //this.updateUI();
           break;
         case "deleteShape":
           try {
@@ -495,12 +576,14 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
             //Do Nothing
           }
 
-          this.populateShapes();
-          this.updateUI();
+          this.repopulateShapes();
+          //this.updateUI();
           break;
         case "addKeyframe":
           Keyframe keyframe = addKeyFrame(this.shapesFromModel.getSelectedValue(),
               Integer.parseInt(this.keyframeController.getText()));
+          System.out.println("Keyframe before list index: " + keyframe.getValue());
+
           int addIndex = 0;
           for (int i = 0; i < this.shapesFromContainerModel.getSize(); i++) {
             if (keyframe.getValue() < this.shapesFromContainerModel.get(i).getValue()) {
@@ -508,29 +591,43 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
               break;
             }
           }
+          if (this.shapesFromContainerModel.getSize() > 0) {
+            if (keyframe.getValue() > this.shapesFromContainerModel.get(this.shapesFromContainerModel.getSize() - 1).getValue()) {
+              addIndex = this.shapesFromContainerModel.getSize();
+            }
+            if (addIndex == 0) {
+              if (keyframe.getValue() > this.shapesFromContainerModel.get(0).getValue()) {
+                addIndex = 1;
+                System.out.println("set index to 1");
+              }
+            }
+          }
+
+          //this.repopulateShapes();
           this.shapesFromContainerModel.add(addIndex, keyframe);
           this.updateUI();
           break;
         case "updateKeyframe":
           ShapeTuple shapeToBeModified = this.shapesFromModel.getSelectedValue();
           int tickOfFrameToBeModified = this.shapeFrames.getSelectedValue().getValue();
-          Double newX = Double.parseDouble(this.shapeX.getText());
-          Double newY = Double.parseDouble(this.shapeY.getText());
-          Double newW = Double.parseDouble(this.shapeW.getText());
-          Double newH = Double.parseDouble(this.shapeH.getText());
-          Double newR = Double.parseDouble(this.shapeR.getText());
-          Double newG = Double.parseDouble(this.shapeG.getText());
-          Double newB = Double.parseDouble(this.shapeB.getText());
+          Double newX_d = Double.parseDouble(this.shapeX.getText());
+          Double newY_d = Double.parseDouble(this.shapeY.getText());
+          Double newW_d = Double.parseDouble(this.shapeW.getText());
+          Double newH_d = Double.parseDouble(this.shapeH.getText());
+          Double newR_d = Double.parseDouble(this.shapeR.getText());
+          Double newG_d = Double.parseDouble(this.shapeG.getText());
+          Double newB_d = Double.parseDouble(this.shapeB.getText());
           ShapeTuple updatedShape = new ShapeTuple(shapeToBeModified.getKey(),
               shapeToBeModified.getValue()
-                  .remake(newW.intValue(), newH.intValue(), newX.intValue(), newY.intValue(),
-                      newR.intValue(), newG.intValue(), newB.intValue()));
+                  .remake(newW_d.intValue(), newH_d.intValue(), newX_d.intValue(),
+                          newY_d.intValue(),
+                      newR_d.intValue(), newG_d.intValue(), newB_d.intValue()));
           try {
+            System.out.println("tick of frame modified: " + tickOfFrameToBeModified);
             model.updateKeyframeOfAnimation(updatedShape, tickOfFrameToBeModified);
           } catch (IllegalArgumentException e2) {
-            //Do Nothing
           }
-
+          //this.repopulateShapes();
           this.updateUI();
           break;
         default:
@@ -547,24 +644,30 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-      interactPanel.shapesFromContainerModel.clear();
-      List<AnimationTuple> motions =
-          model.getMotionsOfShape(interactPanel.shapesFromModel.getSelectedValue().getKey());
-      //System.out.println(motions);
 
-      //Traverse the list of motions then add the keyframes of each motion in model time
-      for (AnimationTuple motion : motions) {
-        for (Keyframe frame : motion.getKey().getFrames()) {
-          //System.out.println(frame);
-          interactPanel.shapesFromContainerModel.addElement(new Keyframe(frame.getKey(),
-              frame.getValue() + motion.getValue()));
+      try {
+        interactPanel.shapesFromContainerModel.clear();
+        List<AnimationTuple> motions = model.getMotionsOfShape(interactPanel.shapesFromModel.getSelectedValue()
+                .getKey());
+        //System.out.println(motions);
+        for (AnimationTuple motion : motions) {
+          for (Keyframe frame : motion.getKey().getFrames()) {
+            //System.out.println(frame);
+            interactPanel.shapesFromContainerModel.addElement(new Keyframe(frame.getKey(),
+                    frame.getValue() + motion.getValue()));
+          }
         }
+        //interactPanel.keyFrameContainer = new JScrollPane(interactPanel.shapeFrames);
+        //Remove the default keyframe list and replace it with the new one, happens to be at index 9
+        //interactPanel.remove(9);
+        //interactPanel.add(interactPanel.keyFrameContainer, 9);
+        interactPanel.updateUI();
       }
-      //interactPanel.keyFrameContainer = new JScrollPane(interactPanel.shapeFrames);
-      //Remove the default keyframe list and replace it with the new one, happens to be at index 9
-      //interactPanel.remove(9);
-      //interactPanel.add(interactPanel.keyFrameContainer, 9);
-      interactPanel.updateUI();
+      catch (NullPointerException npe) {
+
+      }
+      //Traverse the list of motions then add the keyframes of each motion in model time
+
     }
   }
 
@@ -577,6 +680,8 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
     @Override
     public void valueChanged(ListSelectionEvent e) {
       Keyframe frame = interactPanel.shapeFrames.getSelectedValue();
+      System.out.println(frame);
+      System.out.println("Update Keyframe Fields");
       interactPanel.shapeX.setText(frame.getKey().getValue().getLocation().getX() + "");
       interactPanel.shapeY.setText(frame.getKey().getValue().getLocation().getY() + "");
       interactPanel.shapeW.setText(frame.getKey().getValue().getWidth() + "");

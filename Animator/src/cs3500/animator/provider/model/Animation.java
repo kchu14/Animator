@@ -11,8 +11,8 @@ import java.util.List;
 public interface Animation {
 
   /**
-   * Generates a 2-Dimensional Array of colors, representing a pixel-by-pixel visual representation
-   * of the frame of the animation at the given tick.
+   * Generates a 2-Dimensional Array of colors, representing a pixel-by-pixel visual
+   * representation of the frame of the animation at the given tick.
    *
    * @param n the tick at which the frame is being pulled
    * @param width the width of the canvas on which the frame would be drawn
@@ -82,7 +82,7 @@ public interface Animation {
    * @param name the name of the shape to which the keyframe is being added
    * @return the keyframe with values equal to the given parameters
    */
-  public Keyframe addFrame(int tick, int index, int startN, String name);
+  public Keyframe addFrame(int tick, int index, int startN, ShapeTuple name);
 
   /**
    * Updates the keyframe at the given tick (in relative time) with the given ShapeTuple.
