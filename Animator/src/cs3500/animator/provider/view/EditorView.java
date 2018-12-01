@@ -2,10 +2,10 @@ package cs3500.animator.provider.view;
 
 import cs3500.animator.provider.model.AnimationTuple;
 import cs3500.animator.provider.model.Keyframe;
+import cs3500.animator.provider.model.Shape;
 import cs3500.animator.provider.model.ShapeTuple;
 import cs3500.animator.provider.model.ExcelAnimatorModel;
 import cs3500.animator.view.ExcelAnimatorView;
-import cs3500.animator.view.VisualView;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;

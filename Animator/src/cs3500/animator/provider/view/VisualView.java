@@ -1,5 +1,8 @@
-package cs3500.animator.view;
+package cs3500.animator.provider.view;
 
+import cs3500.animator.provider.model.ExcelAnimatorModel;
+import cs3500.animator.provider.model.Shape;
+import cs3500.animator.view.ExcelAnimatorView;
 import java.awt.Graphics2D;
 import java.awt.Graphics;
 import java.awt.Dimension;
@@ -13,8 +16,6 @@ import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
-import cs3500.model.ExcelAnimatorModel;
-import cs3500.model.shape.Shape;
 
 //CHANGES FROM HOMEWORK 6: Made VisualPanel Package-Private and static to be used in the EditorView
 
