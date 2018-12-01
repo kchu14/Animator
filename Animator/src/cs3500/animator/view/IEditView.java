@@ -1,5 +1,7 @@
 package cs3500.animator.view;
 
+import cs3500.animator.model.IMotion;
+import cs3500.animator.model.IReadOnlyModel;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.ReadOnlyModel;
 import cs3500.animator.model.SimpleShape;
@@ -57,14 +59,14 @@ public interface IEditView extends AnimatorView {
    *
    * @return the new keyframe that the user inputted.
    */
-  Motion newMotion();
+  IMotion newMotion();
 
   /**
    * Sets the keyframes to be displayed and refreshes the gui menu.
    *
    * @param keyFrames the given keyframes to be displayed.
    */
-  void setKeyFrames(Map<String, List<Motion>> keyFrames);
+  void setKeyFrames(Map<String, List<IMotion>> keyFrames);
 
 
   /**
@@ -72,7 +74,7 @@ public interface IEditView extends AnimatorView {
    *
    * @return the keyframe that the user currently has selected.
    */
-  Motion getSelectedMotion();
+  IMotion getSelectedMotion();
 
 
   /**
@@ -81,7 +83,7 @@ public interface IEditView extends AnimatorView {
    *
    * @return the modified keyframe.
    */
-  Motion modifiedMotion();
+  IMotion modifiedMotion();
 
   /**
    * Returns the new shape that the user has created.
@@ -116,7 +118,7 @@ public interface IEditView extends AnimatorView {
    *
    * @param model The read only version of a animator model implementation.
    */
-  void setEPane(ReadOnlyModel model);
+  void setEPane(IReadOnlyModel model);
 
   /**
    * Sets the text fields of the editor panel to the given string.

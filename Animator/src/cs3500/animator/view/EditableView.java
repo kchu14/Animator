@@ -1,5 +1,7 @@
 package cs3500.animator.view;
 
+import cs3500.animator.model.IMotion;
+import cs3500.animator.model.IReadOnlyModel;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.ReadOnlyModel;
 import cs3500.animator.model.SimpleShape;
@@ -20,9 +22,9 @@ import javax.swing.ScrollPaneConstants;
 public class EditableView extends JFrame implements IEditView {
 
   private IVisualGraphicsView graphicsView;
-  private Map<String, List<Motion>> keyFrames;
+  private Map<String, List<IMotion>> keyFrames;
   private EditorPanel ePane;
-  private ReadOnlyModel model;
+  private IReadOnlyModel model;
   private AnimatorPanel animatorPanel;
 
   /**
@@ -35,7 +37,7 @@ public class EditableView extends JFrame implements IEditView {
   }
 
   @Override
-  public void playAnimation(ReadOnlyModel model) {
+  public void playAnimation(IReadOnlyModel model) {
     this.setTitle("Editor");
     this.setSize(1600, 900);
     // this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -58,24 +60,24 @@ public class EditableView extends JFrame implements IEditView {
   }
 
   @Override
-  public void setEPane(ReadOnlyModel model) {
+  public void setEPane(IReadOnlyModel model) {
     ePane = new EditorPanel(keyFrames, model.getNameType());
     this.add(ePane);
   }
 
   @Override
-  public void setKeyFrames(Map<String, List<Motion>> keyFrames) {
+  public void setKeyFrames(Map<String, List<IMotion>> keyFrames) {
     this.keyFrames = keyFrames;
     ePane.setKeyFrames(keyFrames);
   }
 
   @Override
-  public Motion getSelectedMotion() {
+  public IMotion getSelectedMotion() {
     return ePane.getSelectedMotion();
   }
 
   @Override
-  public Motion modifiedMotion() {
+  public IMotion modifiedMotion() {
     return ePane.modifiedMotion();
   }
 
@@ -139,7 +141,7 @@ public class EditableView extends JFrame implements IEditView {
   }
 
   @Override
-  public Motion newMotion() {
+  public IMotion newMotion() {
     return ePane.newMotion();
   }
 

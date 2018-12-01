@@ -1,6 +1,7 @@
 package cs3500.animator.provider.model;
 
 
+import cs3500.animator.model.adapters.ShapeAdapter;
 
 public class ShapeTuple implements Tuple<String, Shape> {
 
@@ -24,7 +25,7 @@ public class ShapeTuple implements Tuple<String, Shape> {
    */
   public ShapeTuple(String name, Shape shape) {
     this.name = name;
-    this.shape = shape;
+    this.shape = new ShapeAdapter(name, shape);
   }
 
   @Override

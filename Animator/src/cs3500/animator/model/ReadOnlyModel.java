@@ -72,7 +72,7 @@ public class ReadOnlyModel implements IReadOnlyModel {
   }
 
   @Override
-  public Map<String, List<Motion>> getKeyFrames() {
+  public Map<String, List<IMotion>> getKeyFrames() {
     return Collections.unmodifiableMap(model.getKeyFrames());
   }
 

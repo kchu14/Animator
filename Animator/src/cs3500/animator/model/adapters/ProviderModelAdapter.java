@@ -4,6 +4,8 @@ import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.IShape;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.SimpleShape;
+import cs3500.animator.provider.model.Animation;
+import cs3500.animator.provider.model.AnimationImp;
 import cs3500.animator.provider.model.AnimationTuple;
 import cs3500.animator.provider.model.ExcelAnimatorModel;
 import cs3500.animator.provider.model.Shape;
@@ -11,7 +13,6 @@ import cs3500.animator.provider.model.ShapeTuple;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
-import sun.java2d.pipe.SpanShapeRenderer.Simple;
 
 /**
  * Represents an adapter to allow our AnimatorModel implementation to implement the methods from
@@ -76,8 +77,9 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
   public List<AnimationTuple> getMotionsOfShape(String name) {
     List<AnimationTuple> result = new ArrayList<>();
 
-    for(Motion m : ourModel.getMotions().get(name)) {
-      result.add(new AnimationTuple(new Animation(m), m.getStartTime()));
+    for (Motion m : ourModel.getMotions().get(name)) {
+      ShapeTuple st = new ShapeTuple(m.getName(), new ShapeAdapter((SimpleShape) m.getShape()));
+      result.add(new AnimationTuple(new AnimationImp(st), m.getStartTime()));
     }
 
     return result;

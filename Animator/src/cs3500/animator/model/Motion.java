@@ -11,7 +11,7 @@ import java.awt.Color;
  * This class represents a motion object. A motion is defined as a set of two key frames that a user
  * may input into the animation to cause movement from the first key frame to the next.
  */
-public class Motion implements Comparable<Motion> {
+public class Motion implements IMotion {
 
   protected String name;
   protected String type;
@@ -69,11 +69,8 @@ public class Motion implements Comparable<Motion> {
     this.shape = new SimpleShape(name, type, startX, startY, startWidth, startHeight, startColor);
   }
 
-  /**
-   * Formats the motion into a readable version that displays each of the factors of the motion.
-   *
-   * @return A string representing the motion.
-   */
+
+  @Override
   public String getTextResult() {
     return String.format(
         "motion %s %d %d %d %d %d %d %d %d "
@@ -84,27 +81,19 @@ public class Motion implements Comparable<Motion> {
         endColor.getGreen(), endColor.getBlue());
   }
 
-  /**
-   * Outputs the start time of this tick for use of other classes.
-   *
-   * @return An integer representing the starting tick for this motion
-   */
+  @Override
   public int getStartTime() {
     return this.startTime;
   }
 
-  /**
-   * Outputs the type of the shape the motion is acting upon.
-   *
-   * @return An string denoting the type.
-   */
+  @Override
   public String getType() {
     return this.type;
   }
 
   @Override
-  public int compareTo(Motion m) {
-    return this.startTime - m.startTime;
+  public int compareTo(IMotion m) {
+    return this.startTime - m.getStartTime();
   }
 
   /**
@@ -124,13 +113,7 @@ public class Motion implements Comparable<Motion> {
     return new SimpleShape((SimpleShape) shape);
   }
 
-  /**
-   * This method converts the motions properties into an svg formatted string that represents
-   * animate.
-   *
-   * @param speed the given speed of the animation.
-   * @return the svg formatted string of the motion.
-   */
+  @Override
   public String toSVG(double speed) {
     String result = "";
     String thisScaleType1 = "";
@@ -239,13 +222,19 @@ public class Motion implements Comparable<Motion> {
     this.startTime = m.endTime;
   }
 
-  /**
-   * Allows the user to see the end time of this motion.
-   *
-   * @return the end time of this motion.
-   */
+  @Override
   public int getEndTime() {
     return this.endTime;
+  }
+
+  @Override
+  public String getName() {
+    return this.name;
+  }
+
+  @Override
+  public IShape getShape() {
+    return this.shape;
   }
 
   /**
@@ -267,7 +256,7 @@ public class Motion implements Comparable<Motion> {
    * Converts a motion into a keyframe.
    *
    * @param isEndKeyFrame true if this motion is becoming a keyframe based on this motions ending
-   *                      time.
+   * time.
    */
 
   protected void becomesKeyframe(boolean isEndKeyFrame) {

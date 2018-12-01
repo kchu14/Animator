@@ -78,5 +78,5 @@ public interface IReadOnlyModel {
    *
    * @return A copy of the map shape names and the keyframes for the shape.
    */
-  Map<String, List<Motion>> getKeyFrames();
+  Map<String, List<IMotion>> getKeyFrames();
 }

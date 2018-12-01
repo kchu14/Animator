@@ -1,6 +1,7 @@
 package cs3500.animator.view;
 
 
+import cs3500.animator.model.IReadOnlyModel;
 import cs3500.animator.model.ReadOnlyModel;
 import javax.swing.JPanel;
 
@@ -29,7 +30,7 @@ public interface IVisualGraphicsView extends AnimatorView {
    * @param model the given model of the animation to be run.
    * @param animatorPanel the given panel that the animation is drawn on.
    */
-  void initiateTimer(ReadOnlyModel model, AnimatorPanel animatorPanel);
+  void initiateTimer(IReadOnlyModel model, AnimatorPanel animatorPanel);
 
   /**
    * Sets if the animation is over.
@@ -43,7 +44,7 @@ public interface IVisualGraphicsView extends AnimatorView {
    *
    * @param model the model of the animation to played backwards.
    */
-  void rewind(ReadOnlyModel model);
+  void rewind(IReadOnlyModel model);
 
   /**
    * Speeds up the rate at which the animation is displayed.

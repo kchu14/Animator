@@ -1,6 +1,7 @@
 package cs3500.animator.view;
 
 
+import cs3500.animator.model.IMotion;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.SimpleShape;
 import java.awt.BorderLayout;
@@ -42,7 +43,7 @@ public class EditorPanel extends JPanel implements ItemListener,
 
   private JPanel motionPanel;
   private JPanel shapesAndMotions;
-  private Map<String, List<Motion>> keyFrames;
+  private Map<String, List<IMotion>> keyFrames;
   private JList<String> listOfShapes;
   private JList<String> listOfMotions;
   private JTextField redText;
@@ -57,7 +58,7 @@ public class EditorPanel extends JPanel implements ItemListener,
   private JTextField time;
   private JTextField shapeName;
   private List<JButton> listOfButtons;
-  private Motion selectedMotion;
+  private IMotion selectedMotion;
   private JPanel shapeNamesPanel;
   private Map<String, String> nameType;
   private JScrollPane losScroll;
@@ -70,7 +71,7 @@ public class EditorPanel extends JPanel implements ItemListener,
    * @param nameType the name and type of the shape to be displayed in the panel.
    */
 
-  protected EditorPanel(Map<String, List<Motion>> keyFrames, Map<String, String> nameType) {
+  protected EditorPanel(Map<String, List<IMotion>> keyFrames, Map<String, String> nameType) {
     super();
     // Sets layout
     this.nameType = nameType;
@@ -277,9 +278,9 @@ public class EditorPanel extends JPanel implements ItemListener,
       shapesAndMotions.add(motionPanel, BorderLayout.CENTER);
       return;
     }
-    List<Motion> lom = keyFrames.get(shapeName);
+    List<IMotion> lom = keyFrames.get(shapeName);
     Collections.sort(lom);
-    for (Motion m : lom) {
+    for (IMotion m : lom) {
       dataForListOfMotions.addElement("" + m.getStartTime());
     }
 
@@ -322,7 +323,7 @@ public class EditorPanel extends JPanel implements ItemListener,
    *
    * @return the new keyframe that the user inputted.
    */
-  protected Motion newMotion() {
+  protected IMotion newMotion() {
     Color c = new Color(Math.max(0, Math.min(Integer.parseInt(redText.getText()), 255)),
         Math.max(0, Math.min(Integer.parseInt(greenText.getText()), 255)),
         Math.max(0, Math.min(Integer.parseInt(blueText.getText()), 255)));
@@ -343,7 +344,7 @@ public class EditorPanel extends JPanel implements ItemListener,
    *
    * @return the modified keyframe.
    */
-  protected Motion modifiedMotion() {
+  protected IMotion modifiedMotion() {
     if (selectedMotion.getStartTime() != Integer.parseInt(time.getText())) {
       throw new IllegalArgumentException("times must be equal");
     }
@@ -366,7 +367,7 @@ public class EditorPanel extends JPanel implements ItemListener,
    *
    * @return the keyframe that the user currently has selected.
    */
-  protected Motion getSelectedMotion() {
+  protected IMotion getSelectedMotion() {
     return selectedMotion;
   }
 
@@ -408,8 +409,8 @@ public class EditorPanel extends JPanel implements ItemListener,
     @Override
     public void valueChanged(ListSelectionEvent e) {
 
-      List<Motion> lom = keyFrames.get(listOfShapes.getSelectedValue());
-      for (Motion m : lom) {
+      List<IMotion> lom = keyFrames.get(listOfShapes.getSelectedValue());
+      for (IMotion m : lom) {
         if (m.getStartTime() == Integer.parseInt(listOfMotions.getSelectedValue())) {
           String[] strArr = m.getTextResult().split(" ");
           selectedMotion = m;
@@ -450,7 +451,7 @@ public class EditorPanel extends JPanel implements ItemListener,
    *
    * @param keyFrames the given keyframes to be displayed.
    */
-  protected void setKeyFrames(Map<String, List<Motion>> keyFrames) {
+  protected void setKeyFrames(Map<String, List<IMotion>> keyFrames) {
     this.keyFrames = keyFrames;
     this.displayMotions(listOfShapes.getSelectedValue());
   }

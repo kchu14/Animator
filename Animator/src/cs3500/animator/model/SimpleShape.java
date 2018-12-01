@@ -70,6 +70,7 @@ public class SimpleShape implements IShape {
     this.type = type;
   }
 
+
   /**
    * This method resets the shapes.
    */

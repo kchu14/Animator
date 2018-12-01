@@ -1,6 +1,7 @@
 package cs3500.animator.model.adapters;
 
 import cs3500.animator.model.SimpleShape;
+import cs3500.animator.provider.model.Rectangle;
 import cs3500.animator.provider.model.Shape;
 import java.awt.Color;
 import java.awt.Point;
@@ -36,6 +37,11 @@ public class ShapeAdapter extends SimpleShape implements Shape {
    */
   public ShapeAdapter(SimpleShape shape) {
     super(shape);
+  }
+
+  public ShapeAdapter(String name, Shape shape) {
+    super(name, (shape instanceof Rectangle) ? "rectangle" : "ellipse", shape.getLocation().getX(),
+        shape.getLocation().getY(), shape.getWidth(), shape.getHeight(), shape.getColor());
   }
 
   @Override

@@ -82,7 +82,7 @@ public interface AnimatorModel {
    *
    * @return A copy of the map shape names and the keyframes for the shape.
    */
-  Map<String, List<Motion>> getKeyFrames();
+  Map<String, List<IMotion>> getKeyFrames();
 
   /**
    * Allows the user to declare a new shape (add a shape to the model).
@@ -103,27 +103,27 @@ public interface AnimatorModel {
    *
    * @param m The given motion to be added to the model.
    */
-  void addNewMotion(Motion m);
+  void addNewMotion(IMotion m);
 
   /**
    * Edits a given motion inside the model.
    *
    * @param newMotion the given motion to be edited.
    */
-  void editMotion(Motion newMotion);
+  void editMotion(IMotion newMotion);
 
   /**
    * Removes a motion from the model.
    *
    * @param motion The given motion to be removed from the model.
    */
-  void removeMotion(Motion motion);
+  void removeMotion(IMotion motion);
 
   /**
    * Adds a shape to our shapes map given a motion (the initial shape of this motion).
    *
    * @param m the given motion that is acted on a shape.
    */
-  void addShape(Motion m);
+  void addShape(IMotion m);
 
 }

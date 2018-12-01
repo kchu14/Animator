@@ -1,5 +1,6 @@
 package cs3500.animator.view;
 
+import cs3500.animator.model.IReadOnlyModel;
 import cs3500.animator.model.ReadOnlyModel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -51,7 +52,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
 
 
   @Override
-  public void playAnimation(ReadOnlyModel model) {
+  public void playAnimation(IReadOnlyModel model) {
     this.setTitle("Animator");
     this.setSize(model.getWidth(), model.getHeight());
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,7 +68,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
   }
 
   @Override
-  public void initiateTimer(ReadOnlyModel model, AnimatorPanel animatorPanel) {
+  public void initiateTimer(IReadOnlyModel model, AnimatorPanel animatorPanel) {
     int i = 0;
     Timer t = new Timer(1000 / speed, null);
     listener = new MyTimerActionListener(i, model, t, animatorPanel);
@@ -82,7 +83,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
 
 
   @Override
-  public void rewind(ReadOnlyModel model) {
+  public void rewind(IReadOnlyModel model) {
     listener.rewind();
   }
 

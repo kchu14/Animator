@@ -33,7 +33,7 @@ public class AnimatorModelImpl implements AnimatorModel {
   private int animationHeight;
   private List<Integer> tickList;
   private Map<Integer, List<IShape>> tickListShapes;
-  private Map<String, List<Motion>> keyFrames;
+  private Map<String, List<IMotion>> keyFrames;
 
 
   /**
@@ -79,14 +79,14 @@ public class AnimatorModelImpl implements AnimatorModel {
   }
 
   @Override
-  public Map<String, List<Motion>> getKeyFrames() {
+  public Map<String, List<IMotion>> getKeyFrames() {
     if (keyFrames == null) {
       keyFrames = new LinkedHashMap<>();
     } else {
       keyFrames.clear();
     }
     for (Entry<String, List<Motion>> set : nameMotion.entrySet()) {
-      List<Motion> result2 = new ArrayList<>();
+      List<IMotion> result2 = new ArrayList<>();
       int n = set.getValue().size() - 1;
       int i = 0;
       for (Motion m : set.getValue()) {
@@ -210,7 +210,8 @@ public class AnimatorModelImpl implements AnimatorModel {
 
 
   @Override
-  public void addShape(Motion m) {
+  public void addShape(IMotion im) {
+    Motion m = (Motion) im;
     String key = m.name;
     if (!shapes.containsKey(key)) {
       shapes.put(key,
@@ -240,7 +241,8 @@ public class AnimatorModelImpl implements AnimatorModel {
   }
 
   @Override
-  public void addNewMotion(Motion newMotion) {
+  public void addNewMotion(IMotion im) {
+    Motion newMotion = (Motion) im;
     List<Motion> lom = nameMotion.get(newMotion.name);
     if (lom == null) {
       lom = new ArrayList<>();
@@ -276,7 +278,8 @@ public class AnimatorModelImpl implements AnimatorModel {
   }
 
   @Override
-  public void editMotion(Motion newMotion) {
+  public void editMotion(IMotion im) {
+    Motion newMotion = (Motion) im;
     for (int i = 0; i < nameMotion.get(newMotion.name).size(); i++) {
       Motion m = nameMotion.get(newMotion.name).get(i);
       if (m.getStartTime() == newMotion.getStartTime()) {
@@ -295,7 +298,8 @@ public class AnimatorModelImpl implements AnimatorModel {
   }
 
   @Override
-  public void removeMotion(Motion keyframe) {
+  public void removeMotion(IMotion im) {
+    Motion keyframe = (Motion) im;
     String name = keyframe.name;
     if (this.nameMotion.containsKey(name)) {
       List<Motion> lom = nameMotion.get(name);
