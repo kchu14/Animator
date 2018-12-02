@@ -8,6 +8,7 @@ import cs3500.animator.provider.model.Animation;
 import cs3500.animator.provider.model.AnimationImp;
 import cs3500.animator.provider.model.AnimationTuple;
 import cs3500.animator.provider.model.ExcelAnimatorModel;
+import cs3500.animator.provider.model.Keyframe;
 import cs3500.animator.provider.model.Shape;
 import cs3500.animator.provider.model.ShapeTuple;
 import java.util.ArrayList;
@@ -79,7 +80,11 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
 
     for (IMotion m : ourModel.getMotions().get(name)) {
       ShapeTuple st = new ShapeTuple(m.getName(), new ShapeAdapter((SimpleShape) m.getShape()));
-      result.add(new AnimationTuple(new AnimationImp(st), m.getStartTime()));
+      MotionAdapter mo = new MotionAdapter(new AnimationImp(st), m.getStartTime());
+      mo.addFrame(m.getStartTime(), 0, 0, st);
+      result.add(new AnimationTuple(mo,
+          m.getStartTime()));
+
     }
 
     return result;

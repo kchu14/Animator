@@ -1,6 +1,8 @@
 package cs3500.animator.provider.model;
 
 
+import cs3500.animator.model.adapters.MotionAdapter;
+
 /**
  * Represents an animation and its location in time relative to the model's scale.
  */

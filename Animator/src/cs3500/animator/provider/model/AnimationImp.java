@@ -1,6 +1,8 @@
 package cs3500.animator.provider.model;
 
 
+import cs3500.animator.model.IMotion;
+import cs3500.animator.model.Motion;
 import java.awt.Color;
 import java.util.List;
 
@@ -14,51 +16,53 @@ public class AnimationImp implements Animation {
 
   @Override
   public Color[][] getVisualFrame(int n, int width, int height) {
-    return new Color[0][];
+    throw new UnsupportedOperationException("This method is not called in our implementation.");
   }
 
   @Override
   public String getTextFrame(int n) {
-    return null;
+    throw new UnsupportedOperationException("This method is not called in our implementation.");
   }
 
   @Override
   public Shape getState(int n, int startN) {
-    return null;
+    throw new UnsupportedOperationException("This method is not called in our implementation.");
   }
 
   @Override
   public int getLength() {
-    return 0;
+    throw new UnsupportedOperationException("This method is not called in our implementation.");
+
   }
 
   @Override
   public ShapeTuple getOriginalShape() {
-    return null;
+    return this.shapeTuple;
   }
 
   @Override
   public ShapeTuple getFinalShape() {
-    return null;
+    throw new UnsupportedOperationException("This method is not called in our implementation.");
   }
 
   @Override
   public List<Keyframe> getFrames() {
-    return null;
+    throw new UnsupportedOperationException("This method is not called in our implementation.");
+
   }
 
   @Override
   public void deleteFrame(Keyframe keyframe) {
-
+    throw new UnsupportedOperationException("This method is not called in our implementation.");
   }
 
   @Override
   public Keyframe addFrame(int tick, int index, int startN, ShapeTuple name) {
-    return null;
+    throw new UnsupportedOperationException("This method is not called in our implementation.");
   }
 
   @Override
   public void updateKeyframe(ShapeTuple shape, int tick) {
-
+    throw new UnsupportedOperationException("This method is not called in our implementation.");
   }
 }

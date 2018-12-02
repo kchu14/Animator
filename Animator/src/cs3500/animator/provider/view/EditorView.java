@@ -442,11 +442,11 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
 
       //Traverse the list of motions then add the keyframes of each motion in model time
       for (AnimationTuple motion : motions) {
-//        for (Keyframe frame : motion.getKey().getFrames()) {
-//          //System.out.println(frame);
-//          shapesFromContainerModel
-//              .addElement(new Keyframe(frame.getKey(), frame.getValue() + motion.getValue()));
-//        }
+        for (Keyframe frame : motion.getKey().getFrames()) {
+          //System.out.println(frame);
+          shapesFromContainerModel
+              .addElement(new Keyframe(frame.getKey(), frame.getValue() + motion.getValue()));
+        }
       }
       //System.out.println(shapesFromContainerModel);
 

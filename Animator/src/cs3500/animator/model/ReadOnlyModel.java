@@ -57,7 +57,7 @@ public class ReadOnlyModel implements IReadOnlyModel {
   }
 
   @Override
-  public Map<String, List<Motion>> getMotions() {
+  public Map<String, List<IMotion>> getMotions() {
     return Collections.unmodifiableMap(model.getMotions());
   }
 

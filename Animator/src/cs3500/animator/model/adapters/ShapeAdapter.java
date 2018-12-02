@@ -51,7 +51,9 @@ public class ShapeAdapter extends SimpleShape implements Shape {
 
   @Override
   public String getTextRepresentation() {
-    return this.getType();
+    String result = getType();
+    result = result.substring(0,1).toUpperCase() + result.substring(1);
+    return result;
   }
 
   @Override

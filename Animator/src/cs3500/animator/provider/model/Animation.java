@@ -77,7 +77,7 @@ public interface Animation {
    * Adds a keyframe with the given parameters to this motion.
    *
    * @param tick the absolute tick at which the keyframe is being added
-   * @param index the index of the
+   * @param index the index of the keyframe in the list of keyframes (-1 if first keyframe)
    * @param startN the local tick at which the keyframe is being added
    * @param name the name of the shape to which the keyframe is being added
    * @return the keyframe with values equal to the given parameters

@@ -126,7 +126,7 @@ public class AnimatorModelImplTest {
         .build();
     m.editMotion(new Motion("r", "rectangle", 10, 200, 200, 50, 100, new Color(0, 0, 255),
         10, 200, 200, 50, 100, new Color(0, 0, 255)));
-    assertEquals(new Color(0, 0, 255), m.getMotions().get("r").get(0).endColor);
+    assertEquals(new Color(0, 0, 255), m.getMotions().get("r").get(0).getEndColor());
 
   }
 

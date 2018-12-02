@@ -3,6 +3,7 @@ package cs3500.animator.view;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
 
+import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IReadOnlyModel;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.ReadOnlyModel;
@@ -43,11 +44,11 @@ public class SvgView implements ISvgView {
     inSvg.append("<svg width=\"" + model.getWidth() + "\" height=\"" + model.getHeight()
         + "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n\n");
 
-    for (Entry<String, List<Motion>> set : model.getMotions().entrySet()) {
+    for (Entry<String, List<IMotion>> set : model.getMotions().entrySet()) {
       String key = set.getKey();
-      List<Motion> lom = set.getValue();
+      List<IMotion> lom = set.getValue();
       inSvg.append(model.getShapes().get(key).toSVG());
-      for (Motion m : lom) {
+      for (IMotion m : lom) {
         inSvg.append(m.toSVG(speed));
       }
       if (model.getNameType().get(key).equals("rectangle")) {

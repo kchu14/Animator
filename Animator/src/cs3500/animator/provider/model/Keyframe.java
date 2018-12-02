@@ -31,4 +31,9 @@ public class Keyframe implements Tuple<ShapeTuple, Integer> {
   public Integer getValue() {
     return this.tick;
   }
+
+  @Override
+  public String toString() {
+    return this.tick + "";
+  }
 }

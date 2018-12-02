@@ -39,6 +39,8 @@ public class ShapeTuple implements Tuple<String, Shape> {
     return this.shape;
   }
 
-
-
+  @Override
+  public String toString() {
+    return this.getKey();
+  }
 }

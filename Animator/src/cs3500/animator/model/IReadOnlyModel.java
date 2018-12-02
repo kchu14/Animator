@@ -55,7 +55,7 @@ public interface IReadOnlyModel {
    *
    * @return A copy of the map of motions of this animation.
    */
-  Map<String, List<Motion>> getMotions();
+  Map<String, List<IMotion>> getMotions();
 
   /**
    * Allows the caller to see a copy of the map of shapes of this animation.

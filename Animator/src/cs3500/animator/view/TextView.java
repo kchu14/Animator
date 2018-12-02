@@ -1,5 +1,6 @@
 package cs3500.animator.view;
 
+import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IReadOnlyModel;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.ReadOnlyModel;
@@ -40,14 +41,14 @@ public class TextView implements ITextView {
    *
    * @return A String representing the animation through a list of motions.
    */
-  public String produceTextView(Map<String, List<Motion>> nameMotion,
+  public String produceTextView(Map<String, List<IMotion>> nameMotion,
       Map<String, String> nameType) {
     StringBuilder result = new StringBuilder();
-    for (Entry<String, List<Motion>> set : nameMotion.entrySet()) {
+    for (Entry<String, List<IMotion>> set : nameMotion.entrySet()) {
       String key = set.getKey();
-      List<Motion> value = set.getValue();
+      List<IMotion> value = set.getValue();
       result.append("Shape " + key + " " + nameType.get(key) + "\n");
-      for (Motion m : value) {
+      for (IMotion m : value) {
         result.append(m.getTextResult());
       }
     }
