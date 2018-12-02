@@ -2,6 +2,7 @@ package cs3500.animator.view;
 
 
 import cs3500.animator.model.IMotion;
+import cs3500.animator.model.IShape;
 import cs3500.animator.model.Motion;
 import cs3500.animator.model.SimpleShape;
 import java.awt.BorderLayout;
@@ -376,7 +377,7 @@ public class EditorPanel extends JPanel implements ItemListener,
    *
    * @return the shape that the user inputted into the gui.
    */
-  protected SimpleShape getCreatedShape() {
+  protected IShape getCreatedShape() {
     String selectedType = "ellipse";
     if (rectangleButton.isSelected()) {
       selectedType = "rectangle";

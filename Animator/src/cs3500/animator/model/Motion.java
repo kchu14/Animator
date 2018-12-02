@@ -69,6 +69,55 @@ public class Motion implements IMotion {
     this.shape = new SimpleShape(name, type, startX, startY, startWidth, startHeight, startColor);
   }
 
+  @Override
+  public int getStartX() {
+    return startX;
+  }
+
+  @Override
+  public int getStartY() {
+    return startY;
+  }
+
+  @Override
+  public int getStartWidth() {
+    return startWidth;
+  }
+
+  @Override
+  public int getStartHeight() {
+    return startHeight;
+  }
+
+  @Override
+  public Color getStartColor() {
+    return startColor;
+  }
+
+  @Override
+  public int getEndX() {
+    return endX;
+  }
+
+  @Override
+  public int getEndY() {
+    return endY;
+  }
+
+  @Override
+  public int getEndWidth() {
+    return endWidth;
+  }
+
+  @Override
+  public int getEndHeight() {
+    return endHeight;
+  }
+
+  @Override
+  public Color getEndColor() {
+    return endColor;
+  }
 
   @Override
   public String getTextResult() {
@@ -96,13 +145,8 @@ public class Motion implements IMotion {
     return this.startTime - m.getStartTime();
   }
 
-  /**
-   * Mutates the IShape associated with this motion to allow it to accurately represent a shape that
-   * is changing as the tick count is rising.
-   *
-   * @return An updated shape based on the motion that should be happening at this tick.
-   */
-  protected IShape executeMotion(int tick) {
+  @Override
+  public IShape executeMotion(int tick) {
     int totalTicks = endTime - startTime;
     if (totalTicks != 0) {
       shape.changeColor(startColor, endColor, totalTicks, tick, startTime, endTime);
@@ -185,41 +229,33 @@ public class Motion implements IMotion {
    *
    * @param newMotion the given motion that this motion is changing into.
    */
-  protected void changeTo(Motion newMotion) {
-    this.startX = newMotion.startX;
-    this.startY = newMotion.startY;
-    this.startWidth = newMotion.startWidth;
-    this.startHeight = newMotion.startHeight;
-    this.startColor = newMotion.startColor;
+  protected void changeTo(IMotion newMotion) {
+    this.startX = newMotion.getStartX();
+    this.startY = newMotion.getStartY();
+    this.startWidth = newMotion.getStartWidth();
+    this.startHeight = newMotion.getStartHeight();
+    this.startColor = newMotion.getStartColor();
     this.shape = new SimpleShape(name, type, startX, startY, startWidth, startHeight, startColor);
   }
 
-  /**
-   * Fixes the ending attributes of this motion to match the starting ones of the given motion.
-   *
-   * @param m the given motion that this motions ending attributes will align with.
-   */
-  protected void fixEndings(Motion m) {
-    this.endX = m.startX;
-    this.endY = m.startY;
-    this.endWidth = m.startWidth;
-    this.endHeight = m.startHeight;
-    this.endColor = m.startColor;
-    this.endTime = m.startTime;
+  @Override
+  public void fixEndings(IMotion m) {
+    this.endX = m.getStartX();
+    this.endY = m.getStartY();
+    this.endWidth = m.getStartWidth();
+    this.endHeight = m.getStartHeight();
+    this.endColor = m.getStartColor();
+    this.endTime = m.getStartTime();
   }
 
-  /**
-   * Fixes the beginnings of this motion to match the ending attributes of the given motion.
-   *
-   * @param m the given motion for this motion to align with.
-   */
-  protected void fixBeginning(Motion m) {
-    this.startX = m.endX;
-    this.startY = m.endY;
-    this.startWidth = m.endWidth;
-    this.startHeight = m.endHeight;
-    this.startColor = m.endColor;
-    this.startTime = m.endTime;
+    @Override
+    public void fixBeginning(IMotion m) {
+    this.startX = m.getEndX();
+    this.startY = m.getEndY();
+    this.startWidth = m.getEndWidth();
+    this.startHeight = m.getEndHeight();
+    this.startColor = m.getEndColor();
+    this.startTime = m.getEndTime();
   }
 
   @Override
@@ -237,29 +273,19 @@ public class Motion implements IMotion {
     return this.shape;
   }
 
-  /**
-   * Fixes this motions endings to align with the given motions endings. Used when the last motion
-   * on a shape is deleted.
-   *
-   * @param m the given motion to be aligned with.
-   */
-  protected void fixLastEndings(Motion m) {
-    this.endX = m.endX;
-    this.endY = m.endY;
-    this.endWidth = m.endWidth;
-    this.endHeight = m.endHeight;
-    this.endColor = m.endColor;
-    this.endTime = m.endTime;
+  @Override
+  public void fixLastEndings(IMotion m) {
+    this.endX = m.getEndX();
+    this.endY = m.getEndY();
+    this.endWidth = m.getEndWidth();
+    this.endHeight = m.getEndHeight();
+    this.endColor = m.getEndColor();
+    this.endTime = m.getEndTime();
   }
 
-  /**
-   * Converts a motion into a keyframe.
-   *
-   * @param isEndKeyFrame true if this motion is becoming a keyframe based on this motions ending
-   * time.
-   */
 
-  protected void becomesKeyframe(boolean isEndKeyFrame) {
+  @Override
+  public void becomesKeyframe(boolean isEndKeyFrame) {
     if (isEndKeyFrame) {
       this.startX = this.endX;
       this.startY = this.endY;

@@ -1,8 +1,8 @@
 package cs3500.animator.model.adapters;
 
 import cs3500.animator.model.AnimatorModel;
+import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IShape;
-import cs3500.animator.model.Motion;
 import cs3500.animator.model.SimpleShape;
 import cs3500.animator.provider.model.Animation;
 import cs3500.animator.provider.model.AnimationImp;
@@ -77,7 +77,7 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
   public List<AnimationTuple> getMotionsOfShape(String name) {
     List<AnimationTuple> result = new ArrayList<>();
 
-    for (Motion m : ourModel.getMotions().get(name)) {
+    for (IMotion m : ourModel.getMotions().get(name)) {
       ShapeTuple st = new ShapeTuple(m.getName(), new ShapeAdapter((SimpleShape) m.getShape()));
       result.add(new AnimationTuple(new AnimationImp(st), m.getStartTime()));
     }

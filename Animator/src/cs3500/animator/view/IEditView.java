@@ -2,9 +2,7 @@ package cs3500.animator.view;
 
 import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IReadOnlyModel;
-import cs3500.animator.model.Motion;
-import cs3500.animator.model.ReadOnlyModel;
-import cs3500.animator.model.SimpleShape;
+import cs3500.animator.model.IShape;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +88,7 @@ public interface IEditView extends AnimatorView {
    *
    * @return the shape that the user inputted into the gui.
    */
-  SimpleShape getCreatedShape();
+  IShape getCreatedShape();
 
   /**
    * Sets the name type map to the given map.

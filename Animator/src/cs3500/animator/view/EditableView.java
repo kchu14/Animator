@@ -2,9 +2,7 @@ package cs3500.animator.view;
 
 import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IReadOnlyModel;
-import cs3500.animator.model.Motion;
-import cs3500.animator.model.ReadOnlyModel;
-import cs3500.animator.model.SimpleShape;
+import cs3500.animator.model.IShape;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -82,7 +80,7 @@ public class EditableView extends JFrame implements IEditView {
   }
 
   @Override
-  public SimpleShape getCreatedShape() {
+  public IShape getCreatedShape() {
     return ePane.getCreatedShape();
   }
 

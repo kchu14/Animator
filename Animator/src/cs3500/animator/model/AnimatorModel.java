@@ -59,7 +59,7 @@ public interface AnimatorModel {
    *
    * @return A copy of the map of motions of this animation.
    */
-  Map<String, List<Motion>> getMotions();
+  Map<String, List<IMotion>> getMotions();
 
   /**
    * Allows the caller to see a copy of the map of shapes of this animation.
@@ -89,7 +89,7 @@ public interface AnimatorModel {
    *
    * @param shape The given shape to be added to the model.
    */
-  void declareNewShape(SimpleShape shape);
+  void declareNewShape(IShape shape);
 
   /**
    * Removes a given shape from the model.

@@ -24,7 +24,7 @@ public class AnimatorModelImpl implements AnimatorModel {
   // shape name, shape object
   private Map<String, IShape> shapes;
   // shape name, list of motions for the shape
-  private Map<String, List<Motion>> nameMotion;
+  private Map<String, List<IMotion>> nameMotion;
   // shape name, shape type
   private Map<String, String> nameType;
   private int leftMostX;
@@ -49,7 +49,7 @@ public class AnimatorModelImpl implements AnimatorModel {
    * @param tickList the list of ticks (the time of each animation)
    */
   private AnimatorModelImpl(Map<String, IShape> shapes,
-      Map<String, List<Motion>> nameMotion,
+      Map<String, List<IMotion>> nameMotion,
       Map<String, String> nameType, int leftMostX,
       int topMostY, int animationWidth, int animationHeight, ArrayList<Integer> tickList,
       Map<Integer, List<IShape>> tickListShapes) {
@@ -85,23 +85,27 @@ public class AnimatorModelImpl implements AnimatorModel {
     } else {
       keyFrames.clear();
     }
-    for (Entry<String, List<Motion>> set : nameMotion.entrySet()) {
+    for (Entry<String, List<IMotion>> set : nameMotion.entrySet()) {
       List<IMotion> result2 = new ArrayList<>();
       int n = set.getValue().size() - 1;
       int i = 0;
-      for (Motion m : set.getValue()) {
+      for (IMotion m : set.getValue()) {
         result2.add(
-            new Motion(m.name, m.type, m.startTime, m.startX, m.startY, m.startWidth,
-                m.startHeight,
-                m.startColor,
-                m.startTime, m.startX, m.startY, m.startWidth, m.startHeight, m.startColor));
+            new Motion(m.getName(), m.getType(), m.getStartTime(), m.getStartX(), m.getStartY(),
+                m.getStartWidth(),
+                m.getStartHeight(),
+                m.getStartColor(),
+                m.getStartTime(), m.getStartX(), m.getStartY(), m.getStartWidth(),
+                m.getStartHeight(), m.getStartColor()));
 
         if (i == n && (i != 0 || m.getStartTime() != m.getEndTime())) {
 
           result2.add(
-              new Motion(m.name, m.type, m.endTime, m.endX, m.endY, m.endWidth, m.endHeight,
-                  m.endColor,
-                  m.endTime, m.endX, m.endY, m.endWidth, m.endHeight, m.endColor));
+              new Motion(m.getName(), m.getType(), m.getEndTime(), m.getEndX(), m.getEndY(),
+                  m.getEndWidth(), m.getEndHeight(),
+                  m.getEndColor(),
+                  m.getEndTime(), m.getEndX(), m.getEndY(), m.getEndWidth(), m.getEndHeight(),
+                  m.getEndColor()));
         }
 
         i++;
@@ -121,31 +125,31 @@ public class AnimatorModelImpl implements AnimatorModel {
    */
   private void checkForValidMotions() {
     try {
-      for (List<Motion> listOfMotion : nameMotion.values()) {
+      for (List<IMotion> listOfMotion : nameMotion.values()) {
         if (!listOfMotion.isEmpty()) {
           Collections.sort(listOfMotion);
           this.addShape(listOfMotion.get(0));
-          int prevEndTime = listOfMotion.get(0).startTime;
-          int prevX = listOfMotion.get(0).startX;
-          int prevY = listOfMotion.get(0).startY;
-          int prevWidth = listOfMotion.get(0).startWidth;
-          int prevHeight = listOfMotion.get(0).startHeight;
-          Color prevColor = listOfMotion.get(0).startColor;
+          int prevEndTime = listOfMotion.get(0).getStartTime();
+          int prevX = listOfMotion.get(0).getStartX();
+          int prevY = listOfMotion.get(0).getStartY();
+          int prevWidth = listOfMotion.get(0).getStartWidth();
+          int prevHeight = listOfMotion.get(0).getStartHeight();
+          Color prevColor = listOfMotion.get(0).getStartColor();
 
-          for (Motion m : listOfMotion) {
-            if (m.startTime != prevEndTime) {
+          for (IMotion m : listOfMotion) {
+            if (m.getStartTime() != prevEndTime) {
               throw new IllegalArgumentException("added an overlapping or gaping motion");
             }
-            if (m.startX != prevX || m.startY != prevY || m.startWidth != prevWidth
-                || m.startHeight != prevHeight || !m.startColor.equals(prevColor)) {
+            if (m.getStartX() != prevX || m.getStartY() != prevY || m.getStartWidth() != prevWidth
+                || m.getStartHeight() != prevHeight || !m.getStartColor().equals(prevColor)) {
               throw new IllegalArgumentException("shape motion must be continuous");
             }
-            prevEndTime = m.endTime;
-            prevX = m.endX;
-            prevY = m.endY;
-            prevWidth = m.endWidth;
-            prevHeight = m.endHeight;
-            prevColor = m.endColor;
+            prevEndTime = m.getEndTime();
+            prevX = m.getEndX();
+            prevY = m.getEndY();
+            prevWidth = m.getEndWidth();
+            prevHeight = m.getEndHeight();
+            prevColor = m.getEndColor();
           }
         }
       }
@@ -165,9 +169,9 @@ public class AnimatorModelImpl implements AnimatorModel {
     if (nameMotion == null) {
       throw new IllegalArgumentException("no motions created");
     }
-    for (List<Motion> lom : nameMotion.values()) {
-      for (Motion m : lom) {
-        if (tick >= m.startTime && tick <= m.endTime) {
+    for (List<IMotion> lom : nameMotion.values()) {
+      for (IMotion m : lom) {
+        if (tick >= m.getStartTime() && tick <= m.getEndTime()) {
           newShapes.add(m.executeMotion(tick));
         }
       }
@@ -221,7 +225,8 @@ public class AnimatorModelImpl implements AnimatorModel {
   }
 
   @Override
-  public void declareNewShape(SimpleShape shape) {
+  public void declareNewShape(IShape ishape) {
+    SimpleShape shape = (SimpleShape) ishape;
     if (this.nameType == null) {
       this.nameType = new LinkedHashMap<>();
     }
@@ -243,7 +248,7 @@ public class AnimatorModelImpl implements AnimatorModel {
   @Override
   public void addNewMotion(IMotion im) {
     Motion newMotion = (Motion) im;
-    List<Motion> lom = nameMotion.get(newMotion.name);
+    List<IMotion> lom = nameMotion.get(newMotion.name);
     if (lom == null) {
       lom = new ArrayList<>();
       lom.add(newMotion);
@@ -254,18 +259,18 @@ public class AnimatorModelImpl implements AnimatorModel {
     Collections.sort(lom);
     for (int i = 0; i < lom.size(); i++) {
       System.out.println(lom.get(i).getStartTime());
-      Motion curMotion = lom.get(i);
+      IMotion curMotion = lom.get(i);
       if (i == 0 && newMotion.getStartTime() < curMotion.getStartTime()) {
         newMotion.fixEndings(lom.get(0));
       } else if (i == lom.size() - 1 && curMotion.getEndTime() < newMotion.getStartTime()) {
         newMotion.fixBeginning(curMotion);
-      } else if (curMotion.startTime < newMotion.startTime
-          && curMotion.endTime > newMotion.startTime && i == lom.size() - 1) {
+      } else if (curMotion.getStartTime() < newMotion.startTime
+          && curMotion.getEndTime() > newMotion.startTime && i == lom.size() - 1) {
         newMotion.fixBeginning(lom.get(i - 1));
         curMotion.fixBeginning(newMotion);
-      } else if (curMotion.startTime < newMotion.startTime
-          && curMotion.endTime > newMotion.startTime && i < lom.size() - 1) {
-        Motion nextMotion = lom.get(i + 1);
+      } else if (curMotion.getStartTime() < newMotion.startTime
+          && curMotion.getEndTime() > newMotion.startTime && i < lom.size() - 1) {
+        IMotion nextMotion = lom.get(i + 1);
         curMotion.fixEndings(newMotion);
         newMotion.fixEndings(nextMotion);
       }
@@ -281,7 +286,7 @@ public class AnimatorModelImpl implements AnimatorModel {
   public void editMotion(IMotion im) {
     Motion newMotion = (Motion) im;
     for (int i = 0; i < nameMotion.get(newMotion.name).size(); i++) {
-      Motion m = nameMotion.get(newMotion.name).get(i);
+      Motion m = (Motion) nameMotion.get(newMotion.name).get(i);
       if (m.getStartTime() == newMotion.getStartTime()) {
         m.changeTo(newMotion);
         if (i != 0) {
@@ -302,17 +307,17 @@ public class AnimatorModelImpl implements AnimatorModel {
     Motion keyframe = (Motion) im;
     String name = keyframe.name;
     if (this.nameMotion.containsKey(name)) {
-      List<Motion> lom = nameMotion.get(name);
+      List<IMotion> lom = nameMotion.get(name);
       if (lom.size() == 1) {
-        if (lom.get(0).startTime == lom.get(0).endTime && keyframe.startTime == lom
-            .get(0).startTime) {
+        if (lom.get(0).getStartTime() == lom.get(0).getEndTime() && keyframe.startTime == lom
+            .get(0).getStartTime()) {
           nameMotion.get(name).remove(lom.get(0));
           //checkForValidMotions();
           tickList.remove((Integer) keyframe.endTime);
           setTicks();
           return;
         }
-        if (keyframe.startTime == lom.get(0).startTime) {
+        if (keyframe.startTime == lom.get(0).getStartTime()) {
           lom.get(0).becomesKeyframe(true);
         } else {
           lom.get(0).becomesKeyframe(false);
@@ -324,10 +329,10 @@ public class AnimatorModelImpl implements AnimatorModel {
       }
 
       for (int i = 0; i < lom.size(); i++) {
-        Motion motion = lom.get(i);
+        IMotion motion = lom.get(i);
         if (i == 0 && motion.compareTo(keyframe) == 0) {
           nameMotion.get(name).remove(motion);
-        } else if (motion.startTime == keyframe.startTime) {
+        } else if (motion.getStartTime() == keyframe.startTime) {
           if (i < lom.size() - 1) {
             lom.get(i - 1).fixEndings(lom.get(i + 1));
           } else {
@@ -335,7 +340,7 @@ public class AnimatorModelImpl implements AnimatorModel {
 
           }
           nameMotion.get(name).remove(motion);
-        } else if (motion.endTime == keyframe.startTime && i == lom.size() - 1) {
+        } else if (motion.getEndTime() == keyframe.startTime && i == lom.size() - 1) {
           nameMotion.get(name).remove(motion);
         }
       }
@@ -347,7 +352,7 @@ public class AnimatorModelImpl implements AnimatorModel {
   }
 
   @Override
-  public Map<String, List<Motion>> getMotions() {
+  public Map<String, List<IMotion>> getMotions() {
     return new LinkedHashMap<>(this.nameMotion);
   }
 
@@ -368,7 +373,7 @@ public class AnimatorModelImpl implements AnimatorModel {
   public static final class Builder implements AnimationBuilder<AnimatorModel> {
 
     private Map<String, IShape> shapes;
-    private Map<String, List<Motion>> nameMotion;
+    private Map<String, List<IMotion>> nameMotion;
     private Map<String, String> nameType;
     private int leftMostX;
     private int topMostY;
@@ -435,7 +440,7 @@ public class AnimatorModelImpl implements AnimatorModel {
               new Motion(name, nameType.get(name), t1, x1, y1, w1, h1, new Color(r1, g1, b1), t2,
                   x2, y2, w2, h2, new Color(r2, g2, b2)));
         } else {
-          List<Motion> listOfMotion = new ArrayList<>();
+          List<IMotion> listOfMotion = new ArrayList<>();
           listOfMotion.add(
               new Motion(name, nameType.get(name), t1, x1, y1, w1, h1, new Color(r1, g1, b1), t2,
                   x2, y2, w2, h2, new Color(r2, g2, b2)));
