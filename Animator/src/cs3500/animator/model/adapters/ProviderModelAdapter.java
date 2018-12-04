@@ -3,12 +3,14 @@ package cs3500.animator.model.adapters;
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IShape;
+import cs3500.animator.model.Motion;
 import cs3500.animator.model.SimpleShape;
 import cs3500.animator.provider.model.Animation;
 import cs3500.animator.provider.model.AnimationImp;
 import cs3500.animator.provider.model.AnimationTuple;
 import cs3500.animator.provider.model.ExcelAnimatorModel;
 import cs3500.animator.provider.model.Keyframe;
+import cs3500.animator.provider.model.Rectangle;
 import cs3500.animator.provider.model.Shape;
 import cs3500.animator.provider.model.ShapeTuple;
 import java.util.ArrayList;
@@ -44,12 +46,42 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
 
   @Override
   public ExcelAnimatorModel addAnimation(AnimationTuple animT) {
-    throw new UnsupportedOperationException("This method is never used in the provided views.");
+    IMotion m = new Motion(animT.getKey().getOriginalShape().getKey(),
+        (animT.getKey().getOriginalShape().getValue().getTextRepresentation().equals("Rectangle")) ? "rectangle" : "ellipse",
+        animT.getValue(), (int) animT.getKey().getOriginalShape().getValue().getLocation().getX(),
+        (int) animT.getKey().getOriginalShape().getValue().getLocation().getY(),
+        animT.getKey().getOriginalShape().getValue().getWidth(),
+        animT.getKey().getOriginalShape().getValue().getHeight(),
+        animT.getKey().getOriginalShape().getValue().getColor(),
+        animT.getValue(), (int) animT.getKey().getOriginalShape().getValue().getLocation().getX(),
+        (int) animT.getKey().getOriginalShape().getValue().getLocation().getY(),
+        animT.getKey().getOriginalShape().getValue().getWidth(),
+        animT.getKey().getOriginalShape().getValue().getHeight(),
+        animT.getKey().getOriginalShape().getValue().getColor());
+    System.out.println(animT.getKey().getOriginalShape().getValue().getTextRepresentation());
+    ourModel.addShape(m);
+    ourModel.addNewMotion(m);
+    return this;
+
   }
 
   @Override
   public ExcelAnimatorModel removeAnimation(AnimationTuple animT) {
-    throw new UnsupportedOperationException("This method is never used in the provided views.");
+    IMotion m = new Motion(animT.getKey().getOriginalShape().getKey(),
+        (animT.getKey().getOriginalShape().getValue() instanceof Rectangle) ? "rectangle"
+            : "ellipse",
+        animT.getValue(), (int) animT.getKey().getOriginalShape().getValue().getLocation().getX(),
+        (int) animT.getKey().getOriginalShape().getValue().getLocation().getY(),
+        animT.getKey().getOriginalShape().getValue().getWidth(),
+        animT.getKey().getOriginalShape().getValue().getHeight(),
+        animT.getKey().getOriginalShape().getValue().getColor(),
+        animT.getValue(), (int) animT.getKey().getOriginalShape().getValue().getLocation().getX(),
+        (int) animT.getKey().getOriginalShape().getValue().getLocation().getY(),
+        animT.getKey().getOriginalShape().getValue().getWidth(),
+        animT.getKey().getOriginalShape().getValue().getHeight(),
+        animT.getKey().getOriginalShape().getValue().getColor());
+    ourModel.removeMotion(m);
+    return this;
   }
 
   @Override
@@ -78,9 +110,13 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
   public List<AnimationTuple> getMotionsOfShape(String name) {
     List<AnimationTuple> result = new ArrayList<>();
 
+    int count = 0;
     for (IMotion m : ourModel.getMotions().get(name)) {
       ShapeTuple st = new ShapeTuple(m.getName(), new ShapeAdapter((SimpleShape) m.getShape()));
-      MotionAdapter mo = new MotionAdapter(new AnimationImp(st), m.getStartTime());
+      Animation ai = new AnimationImp(st);
+      ai.addFrame(m.getStartTime(), count, m.getStartTime(), st);
+      count++;
+      MotionAdapter mo = new MotionAdapter(ai, m.getStartTime());
       mo.addFrame(m.getStartTime(), 0, 0, st);
       result.add(new AnimationTuple(mo,
           m.getStartTime()));
@@ -97,7 +133,11 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
 
   @Override
   public void addShape(ShapeTuple shape) {
-
+    ourModel.declareNewShape(new SimpleShape(shape.getKey(),
+        (shape.getValue() instanceof Rectangle) ? "rectangle" : "ellipse",
+        shape.getValue().getLocation().getX(),
+        shape.getValue().getLocation().getY(), shape.getValue().getWidth(),
+        shape.getValue().getHeight(), shape.getValue().getColor()));
   }
 
   @Override

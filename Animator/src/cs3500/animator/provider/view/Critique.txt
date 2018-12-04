@@ -4,3 +4,4 @@
 - no comments for private methods
 - thread .sleep instead of timer
 - incomplete functionality
+- addAnimation, removeAnimation could be void

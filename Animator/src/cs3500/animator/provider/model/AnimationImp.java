@@ -4,14 +4,17 @@ package cs3500.animator.provider.model;
 import cs3500.animator.model.IMotion;
 import cs3500.animator.model.Motion;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AnimationImp implements Animation {
 
   private ShapeTuple shapeTuple;
 
+  private List<Keyframe> frames;
   public AnimationImp(ShapeTuple shapeTuple) {
     this.shapeTuple = shapeTuple;
+    this.frames = new ArrayList<>();
   }
 
   @Override
@@ -53,12 +56,14 @@ public class AnimationImp implements Animation {
 
   @Override
   public void deleteFrame(Keyframe keyframe) {
-    throw new UnsupportedOperationException("This method is not called in our implementation.");
+      frames.remove(keyframe);
   }
 
   @Override
   public Keyframe addFrame(int tick, int index, int startN, ShapeTuple name) {
-    throw new UnsupportedOperationException("This method is not called in our implementation.");
+    Keyframe k = new Keyframe(name, tick);
+    frames.add(k);
+    return k;
   }
 
   @Override

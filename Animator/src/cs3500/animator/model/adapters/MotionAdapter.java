@@ -17,7 +17,7 @@ public class MotionAdapter extends Motion implements Animation {
 
   public MotionAdapter(Animation animation, int tick) {
     super(animation.getOriginalShape().getKey(),
-        (animation.getOriginalShape().getValue() instanceof Rectangle) ? "rectangle" : "ellipse",
+        (animation.getOriginalShape().getValue().getTextRepresentation().equals("Rectangle")) ? "rectangle" : "ellipse",
         tick, (int) animation.getOriginalShape().getValue().getLocation().getX(),
         (int) animation.getOriginalShape().getValue().getLocation().getY(),
         animation.getOriginalShape().getValue().getWidth(),
@@ -28,6 +28,7 @@ public class MotionAdapter extends Motion implements Animation {
         animation.getOriginalShape().getValue().getWidth(),
         animation.getOriginalShape().getValue().getHeight(),
         animation.getOriginalShape().getValue().getColor());
+    System.out.println(animation.getOriginalShape().getValue().getTextRepresentation());
     keyframes = new ArrayList<>();
   }
 
