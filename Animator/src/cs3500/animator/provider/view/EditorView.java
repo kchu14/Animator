@@ -30,7 +30,6 @@ import java.util.List;
 import java.awt.BorderLayout;
 
 
-
 /**
  * Represents a Visual view with the added capability of animation playback controls and editing
  * individual shapes and keyframes.
@@ -41,7 +40,6 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
   private ExcelAnimatorController controller;
   private VisualView.VisualPanel panel;
   public InteractivePanel interactPanel;
-
 
 
   public EditorView(ExcelAnimatorController controller) {
@@ -59,7 +57,7 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
     scrollPane = new JScrollPane(this.panel);
     this.interactPanel = new InteractivePanel();
     JScrollPane ipScrollPane = new JScrollPane(this.interactPanel);
-    ipScrollPane.setPreferredSize(new Dimension(1000,200 ));
+    ipScrollPane.setPreferredSize(new Dimension(1000, 200));
     ipScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     container.add(ipScrollPane);
     container.add(this.panel);
@@ -83,6 +81,7 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
   public void setShapes(List<Shape> shapes) {
     this.panel.setShapes(shapes);
   }
+
   public void play() {
     this.controller.play();
   }
@@ -137,8 +136,6 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
     private JLabel labelG;
     private JLabel labelB;
     private JButton updateKeyframe;
-
-
 
 
     private InteractivePanel() {
@@ -320,37 +317,37 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
       Integer newB;
       try {
         newX = Integer.parseInt(this.shapeX.getText());
-      }catch (NumberFormatException nfe) {
+      } catch (NumberFormatException nfe) {
         newX = 0;
       }
       try {
         newY = Integer.parseInt(this.shapeY.getText());
-      }catch (NumberFormatException nfe) {
+      } catch (NumberFormatException nfe) {
         newY = 0;
       }
       try {
         newW = Integer.parseInt(this.shapeW.getText());
-      }catch (NumberFormatException nfe) {
+      } catch (NumberFormatException nfe) {
         newW = 10;
       }
       try {
         newH = Integer.parseInt(this.shapeH.getText());
-      }catch (NumberFormatException nfe) {
+      } catch (NumberFormatException nfe) {
         newH = 10;
       }
       try {
         newR = Integer.parseInt(this.shapeR.getText());
-      }catch (NumberFormatException nfe) {
+      } catch (NumberFormatException nfe) {
         newR = 100;
       }
       try {
         newG = Integer.parseInt(this.shapeG.getText());
-      }catch (NumberFormatException nfe) {
+      } catch (NumberFormatException nfe) {
         newG = 100;
       }
       try {
         newB = Integer.parseInt(this.shapeB.getText());
-      }catch (NumberFormatException nfe) {
+      } catch (NumberFormatException nfe) {
         newB = 100;
       }
       String action = e.getActionCommand();
@@ -430,9 +427,8 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
           int keyframe_n = Integer.parseInt(this.keyframeController.getText());
           if (keyframe_n > 0) {
             Keyframe keyframe = controller.addKeyFrame(this.shapesFromModel.getSelectedValue(),
-                    keyframe_n);
+                keyframe_n);
           }
-
 
           updateModel();
           this.repopulateFrames(this.shapesFromModel.getSelectedValue());
@@ -440,7 +436,7 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
           break;
         case "updateKeyframe":
           ShapeTuple shapeToBeModified = this.shapesFromModel.getSelectedValue();
-          if (! this.shapeFrames.isSelectionEmpty()) {
+          if (!this.shapeFrames.isSelectionEmpty()) {
             int tickOfFrameToBeModified = this.shapeFrames.getSelectedValue().getValue();
             Double newX_d = Double.parseDouble(this.shapeX.getText());
             Double newY_d = Double.parseDouble(this.shapeY.getText());
@@ -450,10 +446,10 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
             Double newG_d = Double.parseDouble(this.shapeG.getText());
             Double newB_d = Double.parseDouble(this.shapeB.getText());
             ShapeTuple updatedShape = new ShapeTuple(shapeToBeModified.getKey(),
-                    shapeToBeModified.getValue()
-                            .remake(newW_d.intValue(), newH_d.intValue(), newX_d.intValue(),
-                                    newY_d.intValue(),
-                                    newR_d.intValue(), newG_d.intValue(), newB_d.intValue()));
+                shapeToBeModified.getValue()
+                    .remake(newW_d.intValue(), newH_d.intValue(), newX_d.intValue(),
+                        newY_d.intValue(),
+                        newR_d.intValue(), newG_d.intValue(), newB_d.intValue()));
             try {
               //System.out.println("tick of frame modified: " + tickOfFrameToBeModified);
               controller.updateKeyframeOfAnimation(updatedShape, tickOfFrameToBeModified);
@@ -482,8 +478,9 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
 
       try {
         interactPanel.shapesFromContainerModel.clear();
-        List<AnimationTuple> motions = model.getMotionsOfShape(interactPanel.shapesFromModel.getSelectedValue()
-            .getKey());
+        List<AnimationTuple> motions = model
+            .getMotionsOfShape(interactPanel.shapesFromModel.getSelectedValue()
+                .getKey());
         for (AnimationTuple motion : motions) {
           for (Keyframe frame : motion.getKey().getFrames()) {
             interactPanel.shapesFromContainerModel.addElement(new Keyframe(frame.getKey(),
@@ -492,8 +489,7 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
         }
 
         interactPanel.updateUI();
-      }
-      catch (NullPointerException npe) {
+      } catch (NullPointerException npe) {
 
       }
 
@@ -508,7 +504,7 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-      if (! interactPanel.shapeFrames.isSelectionEmpty()){
+      if (!interactPanel.shapeFrames.isSelectionEmpty()) {
         Keyframe frame = interactPanel.shapeFrames.getSelectedValue();
         interactPanel.shapeX.setText(frame.getKey().getValue().getLocation().getX() + "");
         interactPanel.shapeY.setText(frame.getKey().getValue().getLocation().getY() + "");

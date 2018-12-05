@@ -148,6 +148,19 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
 
   @Override
   public void updateKeyframeOfAnimation(ShapeTuple shape, int tick) {
-
+    IMotion m = new Motion(shape.getKey(),
+        (shape.getValue().getTextRepresentation().equals("Rectangle"))
+            ? "rectangle" : "ellipse",
+        tick, (int) shape.getValue().getLocation().getX(),
+        (int) shape.getValue().getLocation().getY(),
+        shape.getValue().getWidth(),
+        shape.getValue().getHeight(),
+        shape.getValue().getColor(),
+        tick, (int) shape.getValue().getLocation().getX(),
+        (int) shape.getValue().getLocation().getY(),
+        shape.getValue().getWidth(),
+        shape.getValue().getHeight(),
+        shape.getValue().getColor());
+    ourModel.editMotion(m);
   }
 }
