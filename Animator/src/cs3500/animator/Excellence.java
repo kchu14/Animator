@@ -7,6 +7,8 @@ import cs3500.animator.model.AnimatorModelImpl;
 import cs3500.animator.model.ReadOnlyModel;
 import cs3500.animator.model.adapters.ProviderModelAdapter;
 import cs3500.animator.provider.view.EditorView;
+import cs3500.animator.provider.view.ExcelAnimatorController;
+import cs3500.animator.provider.view.ProviderController;
 import cs3500.animator.util.AnimationReader;
 import cs3500.animator.view.AnimatorView;
 import cs3500.animator.view.EditableView;
@@ -74,8 +76,10 @@ public final class Excellence {
     }
 
     if (viewType.equals("provider")) {
-      EditorView providerView = new EditorView(new ProviderModelAdapter(model), speed);
-      providerView.play();
+      ExcelAnimatorController c = new ProviderController(new ProviderModelAdapter(model), (double) speed);
+      EditorView providerView = new EditorView(c);
+      c.setView(providerView);
+      c.play();
     } else {
       ReadOnlyModel readOnlyModel = new ReadOnlyModel(model);
       view.playAnimation(readOnlyModel);

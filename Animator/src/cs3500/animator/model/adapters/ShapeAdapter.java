@@ -40,7 +40,8 @@ public class ShapeAdapter extends SimpleShape implements Shape {
   }
 
   public ShapeAdapter(String name, Shape shape) {
-    super(name, (shape instanceof Rectangle) ? "rectangle" : "ellipse", shape.getLocation().getX(),
+    super(name, (shape.getTextRepresentation().equals("Rectangle"))
+        ? "rectangle" : "ellipse", shape.getLocation().getX(),
         shape.getLocation().getY(), shape.getWidth(), shape.getHeight(), shape.getColor());
   }
 

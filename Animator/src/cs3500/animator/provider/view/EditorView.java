@@ -1,6 +1,5 @@
 package cs3500.animator.provider.view;
 
-import cs3500.animator.provider.model.AnimationImp;
 import cs3500.animator.provider.model.AnimationTuple;
 import cs3500.animator.provider.model.Ellipse;
 import cs3500.animator.provider.model.Keyframe;
@@ -8,7 +7,6 @@ import cs3500.animator.provider.model.Rectangle;
 import cs3500.animator.provider.model.Shape;
 import cs3500.animator.provider.model.ShapeTuple;
 import cs3500.animator.provider.model.ExcelAnimatorModel;
-import cs3500.animator.view.ExcelAnimatorView;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -28,34 +26,29 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import java.awt.BorderLayout;
 
+
+
+/**
+ * Represents a Visual view with the added capability of animation playback controls and editing
+ * individual shapes and keyframes.
+ */
 public class EditorView extends JFrame implements ExcelAnimatorView {
 
-  private Double speed;
   private ExcelAnimatorModel model;
+  private ExcelAnimatorController controller;
   private VisualView.VisualPanel panel;
-  private InteractivePanel interactPanel;
-  private int currentTick = 0;
-  private boolean isPlaying = true;
-  private boolean playForward = true;
-  private boolean isLooping = true;
-  private boolean isOn = true;
+  public InteractivePanel interactPanel;
 
-  /**
-   * Consutrctor for an editor view.
-   *
-   * @param model model for view
-   * @param speed speed to run preview at
-   */
-  public EditorView(ExcelAnimatorModel model, double speed) {
+
+
+  public EditorView(ExcelAnimatorController controller) {
     super("excelAnimatorEditor");
+    this.controller = controller;
     JScrollPane scrollPane;
-    this.model = model;
-    this.speed = speed;
-    this.isOn = true;
+    this.model = controller.getModel();
     JPanel container = new JPanel();
     this.setPreferredSize(new Dimension(1000, 800));
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +57,6 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
     int[] bounds = this.model.getBounds();
     this.panel.setPreferredSize(new Dimension(bounds[0] + bounds[2], bounds[1] + bounds[3]));
     scrollPane = new JScrollPane(this.panel);
-    //scrollPane.setBounds(0, 0, 3000, 800);
     this.interactPanel = new InteractivePanel();
     JScrollPane ipScrollPane = new JScrollPane(this.interactPanel);
     ipScrollPane.setPreferredSize(new Dimension(1000,200 ));
@@ -79,172 +71,24 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
 
   }
 
-  @Override
+  public void setPlayPauseText(String text) {
+    this.interactPanel.playPause.setText(text);
+  }
+
+  public void setSpeedText(Double speed) {
+    this.interactPanel.speedController.setText("" + speed);
+  }
+
+
+  public void setShapes(List<Shape> shapes) {
+    this.panel.setShapes(shapes);
+  }
   public void play() {
-    List<Shape> shapes;
-    while (this.isOn) {
-      shapes = this.model.getAnimationState(currentTick);
-      this.panel.setShapes(shapes);
-      shapes = this.model.getAnimationState(currentTick);
-      this.panel.setShapes(shapes);
-      this.repaint();
-      try {
-        TimeUnit.MILLISECONDS.sleep(Math.round((1.0 / this.speed) * 1000));
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-
-      if (this.isPlaying) {
-        if (this.playForward) {
-          currentTick++;
-        } else {
-          currentTick--;
-        }
-      }
-
-      if (currentTick == 0 || currentTick == this.model.getLastTick()) {
-        if (!this.isLooping) {
-          this.isPlaying = false;
-        }
-      }
-      if (currentTick < 0 || currentTick > this.model.getLastTick()) {
-        this.restart();
-      }
-    }
+    this.controller.play();
   }
 
-  /**
-   * Mutates this view's "currently playing" field to indicate whether the preview should be paused
-   * or playing.
-   */
-  private void playPause() {
-    boolean current = this.isPlaying;
-    this.isPlaying = !current;
-    if (!current) {
-      this.interactPanel.playPause.setText("Pause");
-    } else {
-      this.interactPanel.playPause.setText("Play");
-    }
-  }
-
-  /**
-   * Mutates this view's "rewind/forward" field to the opposite of its current value to indicate
-   * whether the preview should be playing backwards.
-   */
-  private void toggleDirection() {
-    boolean current = this.playForward;
-    this.playForward = !current;
-  }
-
-  /**
-   * Mutates this view's "loop" field to indicate the opposite of its current value: Either that the
-   * preview should reset to the initial tick and continue playing from there once it reaches its
-   * end or to stop once it reaches its end.
-   */
-  private void toggleLooping() {
-    boolean current = this.isLooping;
-    this.isLooping = !current;
-  }
-
-  /**
-   * Mutates this view's "current tick" field to the initial frame depending on which direction the
-   * animation is playing.
-   */
-  private void restart() {
-    if (playForward) {
-      this.currentTick = 0;
-    } else {
-      this.currentTick = model.getLastTick();
-    }
-  }
-
-  /**
-   * Increments this view's "current tick" field by 1 if it was playing forwards, decrements
-   * otherwise. Pauses the animation if it was playing.
-   */
-  private void stepForward() {
-    this.isPlaying = false;
-    this.interactPanel.playPause.setText("Play");
-    if (playForward) {
-      this.currentTick++;
-    } else {
-      this.currentTick--;
-    }
-  }
-
-  /**
-   * Decrements this view's "current tick" field by 1 if it was playing forwards, increments
-   * otherwise. Pauses the animation if it was playing.
-   */
-  private void stepBack() {
-    this.isPlaying = false;
-    this.interactPanel.playPause.setText("Play");
-    if (playForward) {
-      this.currentTick--;
-    } else {
-      this.currentTick++;
-    }
-  }
-
-  /**
-   * Mutates this view's speed field to reflect what the user enters, does nothing if the entered
-   * speed is <= 0. (Throwing an exception here would be non-ideal)
-   *
-   * @param newSpeed the new ticks/second the animation should play at
-   */
-  private void setSpeed(double newSpeed) {
-    if (newSpeed > 0.0) {
-      this.speed = newSpeed;
-    }
-    this.interactPanel.speedController.setText("" + this.speed);
-  }
-
-
-  private Keyframe addKeyFrame(ShapeTuple shapeTuple, int tick) {
-    for (AnimationTuple animationTuple : this.model.getMotionsOfShape(shapeTuple.getKey())) {
-      //System.out.println(animationTuple.getValue());
-      if (tick > animationTuple.getValue() && tick < animationTuple.getKey().getLength()) {
-
-        for (int i = 0; i < animationTuple.getKey().getFrames().size(); i++) {
-          if (tick != animationTuple.getKey().getFrames().get(i).getValue()) {
-            System.out.println(tick);
-            return animationTuple.getKey().addFrame(tick - animationTuple.getValue(), i,
-                    animationTuple.getValue(),
-                shapeTuple);
-          }
-        }
-
-        break;
-      }
-
-    }
-
-    AnimationTuple temp_tuple = new AnimationTuple(new AnimationImp(shapeTuple), tick);
-    this.model.addAnimation(temp_tuple);
-    System.out.println("addKeyFrame tick: " + tick);
-    return temp_tuple.getKey().addFrame(tick, -1, temp_tuple.getValue(), shapeTuple);
-  }
-
-  private void deleteKeyFrame(ShapeTuple shapeTuple, Keyframe keyframe) {
-
-    //System.out.println(this.model.getMotionsOfShape(shapeTuple.getKey()));
-    //System.out.println(keyframe);
-    for (AnimationTuple animationTuple : this.model.getMotionsOfShape(shapeTuple.getKey())) {
-      //System.out.println(animationTuple.getValue());
-      if (keyframe.getValue() - animationTuple.getValue() >= 0) {
-        animationTuple.getKey().deleteFrame(new Keyframe(keyframe.getKey(),
-            keyframe.getValue() - animationTuple.getValue()));
-        break;
-      } else {
-        //System.out.println("nodelete");
-        //System.out.println(keyframe.getValue());
-      }
-
-    }
-
-    //System.out.println(this.model.getMotionsOfShape(shapeTuple.getKey()).get(0).getKey()
-    // .getFrames());
-
+  private void updateModel() {
+    this.model = this.controller.getModel();
   }
 
   /**
@@ -295,6 +139,8 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
     private JButton updateKeyframe;
 
 
+
+
     private InteractivePanel() {
       playPause = new JButton("Pause");
       togglePlayDirection = new JCheckBox("Forwards", true);
@@ -302,7 +148,7 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
       restart = new JButton("Restart Animation");
       stepForward = new JButton("Step Forward");
       stepBackward = new JButton("Step Back");
-      speedController = new JTextField("" + speed, 10);
+      speedController = new JTextField("" + controller.getSpeed(), 10);
       keyframeController = new JTextField("0", 3);
       newShapeController = new JTextField("", 10);
       setSpeed = new JButton("Set Speed");
@@ -413,6 +259,7 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
 
     }
 
+
     private void populateShapes() {
       shapesFromModelModel = new DefaultListModel<ShapeTuple>();
       for (ShapeTuple shape : model.getShapes()) {
@@ -438,31 +285,26 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
     private void populateFrames(ShapeTuple shape) {
       shapesFromContainerModel = new DefaultListModel<Keyframe>();
       List<AnimationTuple> motions = model.getMotionsOfShape(shape.getKey());
-      //System.out.println(motions);
 
       //Traverse the list of motions then add the keyframes of each motion in model time
       for (AnimationTuple motion : motions) {
         for (Keyframe frame : motion.getKey().getFrames()) {
-          //System.out.println(frame);
           shapesFromContainerModel
               .addElement(new Keyframe(frame.getKey(), frame.getValue() + motion.getValue()));
         }
       }
-      //System.out.println(shapesFromContainerModel);
 
     }
 
     private void repopulateFrames(ShapeTuple shape) {
       shapesFromContainerModel.clear();
       List<AnimationTuple> motions = model.getMotionsOfShape(shape.getKey());
-      //System.out.println(motions);
 
       //Traverse the list of motions then add the keyframes of each motion in model time
       for (AnimationTuple motion : motions) {
         for (Keyframe frame : motion.getKey().getFrames()) {
-          //System.out.println(frame);
           shapesFromContainerModel
-                  .addElement(new Keyframe(frame.getKey(), frame.getValue() + motion.getValue()));
+              .addElement(new Keyframe(frame.getKey(), frame.getValue() + motion.getValue()));
         }
       }
     }
@@ -514,128 +356,118 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
       String action = e.getActionCommand();
       switch (action) {
         case "togglePlay":
-          playPause();
+          controller.playPause();
+          updateModel();
           break;
         case "toggleBackward":
-          toggleDirection();
+          controller.toggleDirection();
+          updateModel();
           break;
         case "toggleLooping":
-          toggleLooping();
+          controller.toggleLooping();
+          updateModel();
           break;
         case "restart":
-          restart();
+          controller.restart();
+          updateModel();
           break;
         case "step+":
-          stepForward();
+          controller.stepForward();
+          updateModel();
           break;
         case "step-":
-          stepBack();
+          controller.stepBack();
+          updateModel();
           break;
         case "updateSpeed":
-          setSpeed(Double.parseDouble(this.speedController.getText()));
+          controller.setSpeed(Double.parseDouble(this.speedController.getText()));
+          updateModel();
           break;
         case "delete":
-          deleteKeyFrame(this.shapesFromModel.getSelectedValue(),
+          controller.deleteKeyFrame(this.shapesFromModel.getSelectedValue(),
               this.shapeFrames.getSelectedValue());
-          this.shapesFromContainerModel.removeElement(this.shapeFrames.getSelectedValue());
+          updateModel();
+          this.repopulateFrames(this.shapeFrames.getSelectedValue().getKey());
           this.updateUI();
           break;
         case "addRect":
           try {
-            model.addShape(
+            controller.addShape(
                 new ShapeTuple(newShapeController.getText(), new Rectangle(newW, newH,
-                        new Point(newX,
+                    new Point(newX,
                         newY),
                     new Color(newR, newG, newB))));
           } catch (IllegalArgumentException except) {
             //nothing
           }
+          updateModel();
           this.repopulateShapes();
-//          this.populateShapes();
-//          shapesFromModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//          shapeContainer = new JScrollPane(shapesFromModel);
           newShapeController.setText("");
-          //this.updateUI();
           break;
         case "addEllipse":
           try {
-            model.addShape(
+            controller.addShape(
                 new ShapeTuple(newShapeController.getText(), new Ellipse(newW, newH, new Point(newX,
-                        newY),
+                    newY),
                     new Color(newR, newG, newB))));
           } catch (IllegalArgumentException except) {
             //Do nothing
           }
-          this.repopulateShapes();
-//          shapesFromModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//          shapeContainer = new JScrollPane(shapesFromModel);
+          updateModel();
           newShapeController.setText("");
-          //this.updateUI();
+          this.repopulateShapes();
           break;
         case "deleteShape":
           try {
-            model.removeShape(this.shapesFromModel.getSelectedValue().getKey());
+            controller.removeShape(this.shapesFromModel.getSelectedValue().getKey());
           } catch (IllegalArgumentException except) {
             //Do Nothing
           }
-
+          updateModel();
           this.repopulateShapes();
-          //this.updateUI();
           break;
         case "addKeyframe":
-          Keyframe keyframe = addKeyFrame(this.shapesFromModel.getSelectedValue(),
-              Integer.parseInt(this.keyframeController.getText()));
-          System.out.println("Keyframe before list index: " + keyframe.getValue());
-
-          int addIndex = 0;
-          for (int i = 0; i < this.shapesFromContainerModel.getSize(); i++) {
-            if (keyframe.getValue() < this.shapesFromContainerModel.get(i).getValue()) {
-              addIndex = i;
-              break;
-            }
-          }
-          if (this.shapesFromContainerModel.getSize() > 0) {
-            if (keyframe.getValue() > this.shapesFromContainerModel.get(this.shapesFromContainerModel.getSize() - 1).getValue()) {
-              addIndex = this.shapesFromContainerModel.getSize();
-            }
-            if (addIndex == 0) {
-              if (keyframe.getValue() > this.shapesFromContainerModel.get(0).getValue()) {
-                addIndex = 1;
-                System.out.println("set index to 1");
-              }
-            }
+          int keyframe_n = Integer.parseInt(this.keyframeController.getText());
+          if (keyframe_n > 0) {
+            Keyframe keyframe = controller.addKeyFrame(this.shapesFromModel.getSelectedValue(),
+                    keyframe_n);
           }
 
-          //this.repopulateShapes();
-          this.shapesFromContainerModel.add(addIndex, keyframe);
+
+          updateModel();
+          this.repopulateFrames(this.shapesFromModel.getSelectedValue());
           this.updateUI();
           break;
         case "updateKeyframe":
           ShapeTuple shapeToBeModified = this.shapesFromModel.getSelectedValue();
-          int tickOfFrameToBeModified = this.shapeFrames.getSelectedValue().getValue();
-          Double newX_d = Double.parseDouble(this.shapeX.getText());
-          Double newY_d = Double.parseDouble(this.shapeY.getText());
-          Double newW_d = Double.parseDouble(this.shapeW.getText());
-          Double newH_d = Double.parseDouble(this.shapeH.getText());
-          Double newR_d = Double.parseDouble(this.shapeR.getText());
-          Double newG_d = Double.parseDouble(this.shapeG.getText());
-          Double newB_d = Double.parseDouble(this.shapeB.getText());
-          ShapeTuple updatedShape = new ShapeTuple(shapeToBeModified.getKey(),
-              shapeToBeModified.getValue()
-                  .remake(newW_d.intValue(), newH_d.intValue(), newX_d.intValue(),
-                          newY_d.intValue(),
-                      newR_d.intValue(), newG_d.intValue(), newB_d.intValue()));
-          try {
-            System.out.println("tick of frame modified: " + tickOfFrameToBeModified);
-            model.updateKeyframeOfAnimation(updatedShape, tickOfFrameToBeModified);
-          } catch (IllegalArgumentException e2) {
+          if (! this.shapeFrames.isSelectionEmpty()) {
+            int tickOfFrameToBeModified = this.shapeFrames.getSelectedValue().getValue();
+            Double newX_d = Double.parseDouble(this.shapeX.getText());
+            Double newY_d = Double.parseDouble(this.shapeY.getText());
+            Double newW_d = Double.parseDouble(this.shapeW.getText());
+            Double newH_d = Double.parseDouble(this.shapeH.getText());
+            Double newR_d = Double.parseDouble(this.shapeR.getText());
+            Double newG_d = Double.parseDouble(this.shapeG.getText());
+            Double newB_d = Double.parseDouble(this.shapeB.getText());
+            ShapeTuple updatedShape = new ShapeTuple(shapeToBeModified.getKey(),
+                    shapeToBeModified.getValue()
+                            .remake(newW_d.intValue(), newH_d.intValue(), newX_d.intValue(),
+                                    newY_d.intValue(),
+                                    newR_d.intValue(), newG_d.intValue(), newB_d.intValue()));
+            try {
+              //System.out.println("tick of frame modified: " + tickOfFrameToBeModified);
+              controller.updateKeyframeOfAnimation(updatedShape, tickOfFrameToBeModified);
+            } catch (IllegalArgumentException e2) {
+            }
+            updateModel();
+            this.updateUI();
+            break;
           }
-          //this.repopulateShapes();
-          this.updateUI();
-          break;
+
         default:
           //Do nothing
       }
+
     }
   }
 
@@ -651,25 +483,19 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
       try {
         interactPanel.shapesFromContainerModel.clear();
         List<AnimationTuple> motions = model.getMotionsOfShape(interactPanel.shapesFromModel.getSelectedValue()
-                .getKey());
-        //System.out.println(motions);
+            .getKey());
         for (AnimationTuple motion : motions) {
           for (Keyframe frame : motion.getKey().getFrames()) {
-            //System.out.println(frame);
             interactPanel.shapesFromContainerModel.addElement(new Keyframe(frame.getKey(),
-                    frame.getValue() + motion.getValue()));
+                frame.getValue() + motion.getValue()));
           }
         }
-        //interactPanel.keyFrameContainer = new JScrollPane(interactPanel.shapeFrames);
-        //Remove the default keyframe list and replace it with the new one, happens to be at index 9
-        //interactPanel.remove(9);
-        //interactPanel.add(interactPanel.keyFrameContainer, 9);
+
         interactPanel.updateUI();
       }
       catch (NullPointerException npe) {
 
       }
-      //Traverse the list of motions then add the keyframes of each motion in model time
 
     }
   }
@@ -682,17 +508,18 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-      Keyframe frame = interactPanel.shapeFrames.getSelectedValue();
-      System.out.println(frame);
-      System.out.println("Update Keyframe Fields");
-      interactPanel.shapeX.setText(frame.getKey().getValue().getLocation().getX() + "");
-      interactPanel.shapeY.setText(frame.getKey().getValue().getLocation().getY() + "");
-      interactPanel.shapeW.setText(frame.getKey().getValue().getWidth() + "");
-      interactPanel.shapeH.setText(frame.getKey().getValue().getHeight() + "");
-      interactPanel.shapeR.setText(frame.getKey().getValue().getColor().getRed() + "");
-      interactPanel.shapeG.setText(frame.getKey().getValue().getColor().getGreen() + "");
-      interactPanel.shapeB.setText(frame.getKey().getValue().getColor().getBlue() + "");
-      interactPanel.updateUI();
+      if (! interactPanel.shapeFrames.isSelectionEmpty()){
+        Keyframe frame = interactPanel.shapeFrames.getSelectedValue();
+        interactPanel.shapeX.setText(frame.getKey().getValue().getLocation().getX() + "");
+        interactPanel.shapeY.setText(frame.getKey().getValue().getLocation().getY() + "");
+        interactPanel.shapeW.setText(frame.getKey().getValue().getWidth() + "");
+        interactPanel.shapeH.setText(frame.getKey().getValue().getHeight() + "");
+        interactPanel.shapeR.setText(frame.getKey().getValue().getColor().getRed() + "");
+        interactPanel.shapeG.setText(frame.getKey().getValue().getColor().getGreen() + "");
+        interactPanel.shapeB.setText(frame.getKey().getValue().getColor().getBlue() + "");
+        interactPanel.updateUI();
+      }
+
     }
   }
 

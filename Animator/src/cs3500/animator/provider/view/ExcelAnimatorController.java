@@ -1,17 +1,8 @@
-package cs3500.animator.provider.updatedView;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+package cs3500.animator.provider.view;
 
-import cs3500.animator.view.EditorView;
-import cs3500.model.ExcelAnimatorModel;
-import cs3500.model.ExcelAnimatorViewModel;
-import cs3500.model.animation.AnimationImp;
-import cs3500.model.animation.AnimationTuple;
-import cs3500.model.animation.Keyframe;
-import cs3500.model.shape.Shape;
-import cs3500.model.shape.ShapeTuple;
-
+import cs3500.animator.provider.model.ExcelAnimatorModel;
+import cs3500.animator.provider.model.Keyframe;
+import cs3500.animator.provider.model.ShapeTuple;
 
 /**
  * Represents an Animation Controller.

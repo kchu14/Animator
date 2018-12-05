@@ -2,7 +2,6 @@ package cs3500.animator.provider.view;
 
 
 import cs3500.animator.provider.model.ExcelAnimatorModel;
-import cs3500.animator.view.ExcelAnimatorView;
 
 public abstract class AbstractExcelAnimatorViewImpl implements ExcelAnimatorView {
 

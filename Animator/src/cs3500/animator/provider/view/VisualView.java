@@ -2,7 +2,6 @@ package cs3500.animator.provider.view;
 
 import cs3500.animator.provider.model.ExcelAnimatorModel;
 import cs3500.animator.provider.model.Shape;
-import cs3500.animator.view.ExcelAnimatorView;
 import java.awt.Graphics2D;
 import java.awt.Graphics;
 import java.awt.Dimension;

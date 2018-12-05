@@ -47,7 +47,8 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
   @Override
   public ExcelAnimatorModel addAnimation(AnimationTuple animT) {
     IMotion m = new Motion(animT.getKey().getOriginalShape().getKey(),
-        (animT.getKey().getOriginalShape().getValue().getTextRepresentation().equals("Rectangle")) ? "rectangle" : "ellipse",
+        (animT.getKey().getOriginalShape().getValue().getTextRepresentation().equals("Rectangle"))
+            ? "rectangle" : "ellipse",
         animT.getValue(), (int) animT.getKey().getOriginalShape().getValue().getLocation().getX(),
         (int) animT.getKey().getOriginalShape().getValue().getLocation().getY(),
         animT.getKey().getOriginalShape().getValue().getWidth(),
@@ -68,8 +69,8 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
   @Override
   public ExcelAnimatorModel removeAnimation(AnimationTuple animT) {
     IMotion m = new Motion(animT.getKey().getOriginalShape().getKey(),
-        (animT.getKey().getOriginalShape().getValue() instanceof Rectangle) ? "rectangle"
-            : "ellipse",
+        (animT.getKey().getOriginalShape().getValue().getTextRepresentation().equals("Rectangle"))
+            ? "rectangle" : "ellipse",
         animT.getValue(), (int) animT.getKey().getOriginalShape().getValue().getLocation().getX(),
         (int) animT.getKey().getOriginalShape().getValue().getLocation().getY(),
         animT.getKey().getOriginalShape().getValue().getWidth(),
