@@ -35,6 +35,9 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
 
   }
 
+  //todo setTicks check for reinstantiating shapes in model data.
+  // check if provider is mutating shapes in model from view indirectly.
+  // interpreting data passed threw incorrectly.
   @Override
   public List<Shape> getAnimationState(int n) {
     List<Shape> shapeList = new ArrayList<>();
