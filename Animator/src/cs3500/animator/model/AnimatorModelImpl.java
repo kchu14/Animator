@@ -248,6 +248,7 @@ public class AnimatorModelImpl implements AnimatorModel {
   @Override
   public void addNewMotion(IMotion im) {
     Motion newMotion = (Motion) im;
+
     List<IMotion> lom = nameMotion.get(newMotion.name);
     if (lom == null) {
       lom = new ArrayList<>();
@@ -260,6 +261,10 @@ public class AnimatorModelImpl implements AnimatorModel {
     for (int i = 0; i < lom.size(); i++) {
       System.out.println(lom.get(i).getStartTime());
       IMotion curMotion = lom.get(i);
+//      if (curMotion.getStartTime() == newMotion.getStartTime()
+//          || curMotion.getEndTime() == newMotion.getStartTime()) {
+//        return;
+//      }
       if (i == 0 && newMotion.getStartTime() < curMotion.getStartTime()) {
         newMotion.fixEndings(lom.get(0));
       } else if (i == lom.size() - 1 && curMotion.getEndTime() < newMotion.getStartTime()) {
