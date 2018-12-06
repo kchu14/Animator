@@ -111,7 +111,7 @@ public class AnimatorModelImpl implements AnimatorModel {
         i++;
       }
 
-      if (result2.get(0).getStartTime() == result2.get(1).getStartTime()) {
+      if (result2.size() > 1 && result2.get(0).getStartTime() == result2.get(1).getStartTime()) {
         result2.remove(0);
       }
       keyFrames.put(set.getKey(), result2);
@@ -247,42 +247,37 @@ public class AnimatorModelImpl implements AnimatorModel {
 
   @Override
   public void addNewMotion(IMotion im) {
-    Motion newMotion = (Motion) im;
-
-    List<IMotion> lom = nameMotion.get(newMotion.name);
+    List<IMotion> lom = nameMotion.get(im.getName());
     if (lom == null) {
       lom = new ArrayList<>();
-      lom.add(newMotion);
-      nameMotion.put(newMotion.name, lom);
-      tickList.add(newMotion.getEndTime());
+      lom.add(im);
+      nameMotion.put(im.getName(), lom);
+      tickList.add(im.getEndTime());
       return;
     }
     Collections.sort(lom);
     for (int i = 0; i < lom.size(); i++) {
       System.out.println(lom.get(i).getStartTime());
       IMotion curMotion = lom.get(i);
-//      if (curMotion.getStartTime() == newMotion.getStartTime()
-//          || curMotion.getEndTime() == newMotion.getStartTime()) {
-//        return;
-//      }
-      if (i == 0 && newMotion.getStartTime() < curMotion.getStartTime()) {
-        newMotion.fixEndings(lom.get(0));
-      } else if (i == lom.size() - 1 && curMotion.getEndTime() < newMotion.getStartTime()) {
-        newMotion.fixBeginning(curMotion);
-      } else if (curMotion.getStartTime() < newMotion.startTime
-          && curMotion.getEndTime() > newMotion.startTime && i == lom.size() - 1) {
-        newMotion.fixBeginning(lom.get(i - 1));
-        curMotion.fixBeginning(newMotion);
-      } else if (curMotion.getStartTime() < newMotion.startTime
-          && curMotion.getEndTime() > newMotion.startTime && i < lom.size() - 1) {
+      if (i == 0 && im.getStartTime() < curMotion.getStartTime()) {
+        im.fixEndings(lom.get(0));
+      } else if (i == lom.size() - 1 && curMotion.getEndTime() < im.getStartTime()) {
+        im.fixBeginning(curMotion);
+      } else if (curMotion.getStartTime() < im.getStartTime()
+          && curMotion.getEndTime() > im.getStartTime() && i == lom.size() - 1) {
+        im.fixBeginning(lom.get(i - 1));
+        curMotion.fixBeginning(im);
+      } else if (curMotion.getStartTime() < im.getStartTime()
+          && curMotion.getEndTime() > im.getStartTime() && i < lom.size() - 1) {
         IMotion nextMotion = lom.get(i + 1);
-        curMotion.fixEndings(newMotion);
-        newMotion.fixEndings(nextMotion);
+        curMotion.fixEndings(im);
+        im.fixEndings(nextMotion);
       }
     }
-    lom.add(newMotion);
-    nameMotion.put(newMotion.name, lom);
-    tickList.add(newMotion.endTime);
+    lom.add(im);
+    nameMotion.put(im.getName(), lom);
+    checkForValidMotions();
+    tickList.add(im.getEndTime());
     setTicks();
   }
 
@@ -302,6 +297,7 @@ public class AnimatorModelImpl implements AnimatorModel {
       }
     }
     tickList.add(newMotion.endTime);
+    checkForValidMotions();
     setTicks();
   }
 
@@ -348,6 +344,7 @@ public class AnimatorModelImpl implements AnimatorModel {
         }
       }
       tickList.remove((Integer) keyframe.endTime);
+      checkForValidMotions();
       setTicks();
     }
 

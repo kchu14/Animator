@@ -44,7 +44,7 @@ public class EditController implements IController, ActionListener {
           view.setKeyFrames(model.getKeyFrames());
         } catch (Exception err) {
           errmsg = "Be sure that you have all of the fields"
-              + " filled out and a shape selected in the top left corner";
+              + " filled out and a shape selected in the top left corner, duplicate keyframes not allowed";
           view.showError(errmsg);
         }
         break;
