@@ -1,4 +1,4 @@
-package cs3500.animator.provider.view;
+package cs3500.animator.model.adapters;
 
 import cs3500.animator.provider.model.AnimationImp;
 import cs3500.animator.provider.model.AnimationTuple;
@@ -6,8 +6,8 @@ import cs3500.animator.provider.model.ExcelAnimatorModel;
 import cs3500.animator.provider.model.Keyframe;
 import cs3500.animator.provider.model.Shape;
 import cs3500.animator.provider.model.ShapeTuple;
-import java.io.IOException;
-import java.util.ArrayList;
+import cs3500.animator.provider.view.EditorView;
+import cs3500.animator.provider.view.ExcelAnimatorController;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -28,11 +28,12 @@ public class ProviderController implements ExcelAnimatorController {
     this.speed = speed;
   }
 
+  @Override
   public void setView(EditorView view) {
     this.view = view;
   }
 
-
+  @Override
   public void play() {
     List<Shape> shapes;
     while (this.isOn) {
@@ -67,10 +68,7 @@ public class ProviderController implements ExcelAnimatorController {
   }
 
 
-  /**
-   * Mutates this view's "currently playing" field to indicate whether the preview should be paused
-   * or playing.
-   */
+  @Override
   public void playPause() {
     boolean current = this.isPlaying;
     this.isPlaying = !current;
@@ -81,34 +79,25 @@ public class ProviderController implements ExcelAnimatorController {
     }
   }
 
+  @Override
   public double getSpeed() {
     return this.speed;
   }
 
 
-  /**
-   * Mutates this view's "rewind/forward" field to the opposite of its current value to indicate
-   * whether the preview should be playing backwards.
-   */
+  @Override
   public void toggleDirection() {
     boolean current = this.playForward;
     this.playForward = !current;
   }
 
-  /**
-   * Mutates this view's "loop" field to indicate the opposite of its current value: Either that the
-   * preview should reset to the initial tick and continue playing from there once it reaches its
-   * end or to stop once it reaches its end.
-   */
+  @Override
   public void toggleLooping() {
     boolean current = this.isLooping;
     this.isLooping = !current;
   }
 
-  /**
-   * Mutates this view's "current tick" field to the initial frame depending on which direction the
-   * animation is playing.
-   */
+  @Override
   public void restart() {
     if (playForward) {
       this.currentTick = 0;
@@ -117,10 +106,7 @@ public class ProviderController implements ExcelAnimatorController {
     }
   }
 
-  /**
-   * Increments this view's "current tick" field by 1 if it was playing forwards, decrements
-   * otherwise. Pauses the animation if it was playing.
-   */
+  @Override
   public void stepForward() {
     this.isPlaying = false;
     view.setPlayPauseText("Play");
@@ -131,10 +117,7 @@ public class ProviderController implements ExcelAnimatorController {
     }
   }
 
-  /**
-   * Decrements this view's "current tick" field by 1 if it was playing forwards, increments
-   * otherwise. Pauses the animation if it was playing.
-   */
+  @Override
   public void stepBack() {
     this.isPlaying = false;
     view.setPlayPauseText("Play");
@@ -145,12 +128,7 @@ public class ProviderController implements ExcelAnimatorController {
     }
   }
 
-  /**
-   * Mutates this view's speed field to reflect what the user enters, does nothing if the entered
-   * speed is <= 0. (Throwing an exception here would be non-ideal)
-   *
-   * @param newSpeed the new ticks/second the animation should play at
-   */
+  @Override
   public void setSpeed(double newSpeed) {
     if (newSpeed > 0.0) {
       this.speed = newSpeed;
@@ -158,35 +136,34 @@ public class ProviderController implements ExcelAnimatorController {
     view.setSpeedText(newSpeed);
   }
 
-
+  @Override
   public Keyframe addKeyFrame(ShapeTuple shapeTuple, int tick) {
     model.addAnimation(new AnimationTuple(new AnimationImp(shapeTuple), tick));
     return new Keyframe(shapeTuple, tick);
   }
 
+  @Override
   public void deleteKeyFrame(ShapeTuple shapeTuple, Keyframe keyframe) {
     model.removeAnimation(new AnimationTuple(new AnimationImp(shapeTuple), keyframe.getValue()));
   }
 
+  @Override
   public void addShape(ShapeTuple shapeTuple) {
     this.model.addShape(shapeTuple);
   }
 
+  @Override
   public void removeShape(String key) {
     this.model.removeShape(key);
   }
 
+  @Override
   public void updateKeyframeOfAnimation(ShapeTuple updatedShape, int tickOfFrameToBeModified) {
     this.model.updateKeyframeOfAnimation(updatedShape, tickOfFrameToBeModified);
   }
 
+  @Override
   public ExcelAnimatorModel getModel() {
-//    List<AnimationTuple> animations = new ArrayList<>();
-//    for (ShapeTuple shapeTuple : this.model.getShapes()) {
-//      for (AnimationTuple animationTuple : this.model.getMotionsOfShape(shapeTuple.getKey())) {
-//        animations.add(animationTuple);
-//      }
-//    }
     return model;
   }
 }

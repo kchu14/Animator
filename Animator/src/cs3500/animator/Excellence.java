@@ -8,7 +8,7 @@ import cs3500.animator.model.ReadOnlyModel;
 import cs3500.animator.model.adapters.ProviderModelAdapter;
 import cs3500.animator.provider.view.EditorView;
 import cs3500.animator.provider.view.ExcelAnimatorController;
-import cs3500.animator.provider.view.ProviderController;
+import cs3500.animator.model.adapters.ProviderController;
 import cs3500.animator.util.AnimationReader;
 import cs3500.animator.view.AnimatorView;
 import cs3500.animator.view.EditableView;

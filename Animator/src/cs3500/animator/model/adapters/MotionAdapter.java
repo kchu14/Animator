@@ -3,7 +3,6 @@ package cs3500.animator.model.adapters;
 import cs3500.animator.model.Motion;
 import cs3500.animator.provider.model.Animation;
 import cs3500.animator.provider.model.Keyframe;
-import cs3500.animator.provider.model.Rectangle;
 import cs3500.animator.provider.model.Shape;
 import cs3500.animator.provider.model.ShapeTuple;
 import java.awt.Color;
@@ -13,7 +12,6 @@ import java.util.List;
 public class MotionAdapter extends Motion implements Animation {
 
  private List<Keyframe> keyframes;
- private ShapeTuple shapeTuple;
 
   public MotionAdapter(Animation animation, int tick) {
     super(animation.getOriginalShape().getKey(),
@@ -50,7 +48,7 @@ public class MotionAdapter extends Motion implements Animation {
 
   @Override
   public ShapeTuple getOriginalShape() {
-    return this.shapeTuple;
+    throw new UnsupportedOperationException("This method is not called in our implementation.");
   }
 
   @Override
@@ -64,14 +62,15 @@ public class MotionAdapter extends Motion implements Animation {
   }
 
   @Override
+  public void deleteFrame(Keyframe keyframe) {
+    throw new UnsupportedOperationException("This method is not called in our implementation.");
+  }
+
+  @Override
   public List<Keyframe> getFrames() {
     return keyframes;
   }
 
-  @Override
-  public void deleteFrame(Keyframe keyframe) {
-    keyframes.remove(keyframe);
-  }
 
   @Override
   public Keyframe addFrame(int tick, int index, int startN, ShapeTuple name) {

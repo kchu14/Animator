@@ -9,8 +9,6 @@ import cs3500.animator.provider.model.Animation;
 import cs3500.animator.provider.model.AnimationImp;
 import cs3500.animator.provider.model.AnimationTuple;
 import cs3500.animator.provider.model.ExcelAnimatorModel;
-import cs3500.animator.provider.model.Keyframe;
-import cs3500.animator.provider.model.Rectangle;
 import cs3500.animator.provider.model.Shape;
 import cs3500.animator.provider.model.ShapeTuple;
 import java.util.ArrayList;

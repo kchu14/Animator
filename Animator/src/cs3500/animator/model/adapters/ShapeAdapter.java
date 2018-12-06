@@ -1,11 +1,9 @@
 package cs3500.animator.model.adapters;
 
 import cs3500.animator.model.SimpleShape;
-import cs3500.animator.provider.model.Rectangle;
 import cs3500.animator.provider.model.Shape;
 import java.awt.Color;
 import java.awt.Point;
-import sun.java2d.pipe.SpanShapeRenderer.Simple;
 
 /**
  * Represents an adapter to allow our SimpleShape implementation to implement the methods from
@@ -65,7 +63,7 @@ public class ShapeAdapter extends SimpleShape implements Shape {
   @Override
   public Shape remake(int newWidth, int newHeight, int newX, int newY, int red, int green,
       int blue) {
-    return new ShapeAdapter(this.name, this.type, newWidth, newHeight, newX, newY,
+    return new ShapeAdapter(this.name, this.type, newX, newY, newWidth, newHeight,
         new Color(red, green, blue));
   }
 
