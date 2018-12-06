@@ -2,8 +2,6 @@ package cs3500.animator.view;
 
 import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IReadOnlyModel;
-import cs3500.animator.model.Motion;
-import cs3500.animator.model.ReadOnlyModel;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;

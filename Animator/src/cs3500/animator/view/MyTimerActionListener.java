@@ -1,7 +1,6 @@
 package cs3500.animator.view;
 
 import cs3500.animator.model.IReadOnlyModel;
-import cs3500.animator.model.ReadOnlyModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;

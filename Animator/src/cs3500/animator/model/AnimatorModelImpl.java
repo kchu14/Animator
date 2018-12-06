@@ -277,7 +277,6 @@ public class AnimatorModelImpl implements AnimatorModel {
     }
     lom.add(newMotion);
     nameMotion.put(newMotion.name, lom);
-    checkForValidMotions();
     tickList.add(newMotion.endTime);
     setTicks();
   }
@@ -297,7 +296,6 @@ public class AnimatorModelImpl implements AnimatorModel {
         m.fixEndings(newMotion);
       }
     }
-    checkForValidMotions();
     tickList.add(newMotion.endTime);
     setTicks();
   }
@@ -344,17 +342,16 @@ public class AnimatorModelImpl implements AnimatorModel {
           nameMotion.get(name).remove(motion);
         }
       }
-      checkForValidMotions();
       tickList.remove((Integer) keyframe.endTime);
       setTicks();
     }
 
   }
 
-  @Override
-  public Map<String, List<IMotion>> getMotions() {
-    return new LinkedHashMap<>(this.nameMotion);
-  }
+//  @Override
+//  public Map<String, List<IMotion>> getMotions() {
+//    return new LinkedHashMap<>(this.nameMotion);
+//  }
 
   @Override
   public Map<String, IShape> getShapes() {
@@ -424,8 +421,8 @@ public class AnimatorModelImpl implements AnimatorModel {
         int b2) {
       if (tickList == null) {
         tickList = new ArrayList<>();
+        tickList.add(t1);
       }
-      tickList.add(t1);
       tickList.add(t2);
 
       if (this.nameMotion == null || this.shapes == null || this.tickListShapes == null) {

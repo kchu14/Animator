@@ -1,7 +1,6 @@
 package cs3500.animator.view;
 
 import cs3500.animator.model.IReadOnlyModel;
-import cs3500.animator.model.ReadOnlyModel;
 
 /**
  * This interface represents the broadest interpretation of an animator view. Each individual

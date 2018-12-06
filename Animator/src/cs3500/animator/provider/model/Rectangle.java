@@ -32,7 +32,7 @@ public class Rectangle implements Shape {
 
   @Override
   public String getTextRepresentation() {
-    throw new UnsupportedOperationException("Non necessary operation");
+    return "Rectangle";
   }
 
   @Override

@@ -56,10 +56,10 @@ public class ReadOnlyModel implements IReadOnlyModel {
     return model.getWindowY();
   }
 
-  @Override
-  public Map<String, List<IMotion>> getMotions() {
-    return Collections.unmodifiableMap(model.getMotions());
-  }
+//  @Override
+//  public Map<String, List<IMotion>> getMotions() {
+//    return Collections.unmodifiableMap(model.getMotions());
+//  }
 
   @Override
   public Map<String, IShape> getShapes() {

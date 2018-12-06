@@ -5,8 +5,6 @@ import static java.nio.file.StandardOpenOption.CREATE;
 
 import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IReadOnlyModel;
-import cs3500.animator.model.Motion;
-import cs3500.animator.model.ReadOnlyModel;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;

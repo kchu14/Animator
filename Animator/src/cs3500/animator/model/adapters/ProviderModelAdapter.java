@@ -35,9 +35,8 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
 
   }
 
-  //todo setTicks check for reinstantiating shapes in model data.
-  // check if provider is mutating shapes in model from view indirectly.
-  // interpreting data passed threw incorrectly.
+
+
   @Override
   public List<Shape> getAnimationState(int n) {
     List<Shape> shapeList = new ArrayList<>();
@@ -115,16 +114,22 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
     List<AnimationTuple> result = new ArrayList<>();
 
     int count = 0;
-    for (IMotion m : ourModel.getMotions().get(name)) {
-      ShapeTuple st = new ShapeTuple(m.getName(), new ShapeAdapter((SimpleShape) m.getShape()));
-      Animation ai = new AnimationImp(st);
-      ai.addFrame(m.getStartTime(), count, m.getStartTime(), st);
-      count++;
-      MotionAdapter mo = new MotionAdapter(ai, m.getStartTime());
-      mo.addFrame(m.getStartTime(), 0, 0, st);
-      result.add(new AnimationTuple(mo,
-          m.getStartTime()));
+    if(ourModel.getMotions().get(name) != null) {
+      for (IMotion m : ourModel.getMotions().get(name)) {
+        ShapeTuple st = new ShapeTuple(m.getName(), new ShapeAdapter((SimpleShape) m.getShape()));
+        Animation ai = new AnimationImp(st);
+        ai.addFrame(m.getStartTime(), count, m.getStartTime(), st);
+        count++;
+        MotionAdapter mo = new MotionAdapter(ai, m.getStartTime());
+        mo.addFrame(m.getStartTime(), 0, 0, st);
+        result.add(new AnimationTuple(mo,
+            0));
 
+        if (count == ourModel.getMotions().get(name).size()) {
+          result.add(new AnimationTuple(mo, m.getEndTime() - m.getStartTime()));
+        }
+
+      }
     }
 
     return result;
@@ -138,10 +143,25 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
   @Override
   public void addShape(ShapeTuple shape) {
     ourModel.declareNewShape(new SimpleShape(shape.getKey(),
-        (shape.getValue() instanceof Rectangle) ? "rectangle" : "ellipse",
+        (shape.getValue().getTextRepresentation().equals("Rectangle"))
+            ? "rectangle" : "ellipse",
         shape.getValue().getLocation().getX(),
         shape.getValue().getLocation().getY(), shape.getValue().getWidth(),
         shape.getValue().getHeight(), shape.getValue().getColor()));
+    IMotion m = new Motion(shape.getKey(),
+        (shape.getValue().getTextRepresentation().equals("Rectangle"))
+            ? "rectangle" : "ellipse",
+        0, (int) shape.getValue().getLocation().getX(),
+        (int) shape.getValue().getLocation().getY(),
+        shape.getValue().getWidth(),
+        shape.getValue().getHeight(),
+        shape.getValue().getColor(),
+        0, (int) shape.getValue().getLocation().getX(),
+        (int) shape.getValue().getLocation().getY(),
+        shape.getValue().getWidth(),
+        shape.getValue().getHeight(),
+        shape.getValue().getColor());
+    ourModel.addShape(m);
   }
 
   @Override

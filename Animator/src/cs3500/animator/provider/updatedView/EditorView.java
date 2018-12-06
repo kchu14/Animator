@@ -436,7 +436,7 @@ public class EditorView extends JFrame implements ExcelAnimatorView {
           break;
         case "updateKeyframe":
           ShapeTuple shapeToBeModified = this.shapesFromModel.getSelectedValue();
-            if (!this.shapeFrames.isSelectionEmpty()) {
+          if (!this.shapeFrames.isSelectionEmpty()) {
             int tickOfFrameToBeModified = this.shapeFrames.getSelectedValue().getValue();
             Double newX_d = Double.parseDouble(this.shapeX.getText());
             Double newY_d = Double.parseDouble(this.shapeY.getText());
