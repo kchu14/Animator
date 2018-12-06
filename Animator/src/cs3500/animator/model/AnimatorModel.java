@@ -54,12 +54,12 @@ public interface AnimatorModel {
    */
   int getWindowY();
 
-//  /**
-//   * Allows the caller to see a copy of the map of motions of this animation.
-//   *
-//   * @return A copy of the map of motions of this animation.
-//   */
-//  Map<String, List<IMotion>> getMotions();
+  /**
+   * Allows the caller to see a copy of the map of motions of this animation.
+   *
+   * @return A copy of the map of motions of this animation.
+   */
+  Map<String, List<IMotion>> getMotions();
 
   /**
    * Allows the caller to see a copy of the map of shapes of this animation.

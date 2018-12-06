@@ -348,10 +348,10 @@ public class AnimatorModelImpl implements AnimatorModel {
 
   }
 
-//  @Override
-//  public Map<String, List<IMotion>> getMotions() {
-//    return new LinkedHashMap<>(this.nameMotion);
-//  }
+  @Override
+  public Map<String, List<IMotion>> getMotions() {
+    return new LinkedHashMap<>(this.nameMotion);
+  }
 
   @Override
   public Map<String, IShape> getShapes() {
