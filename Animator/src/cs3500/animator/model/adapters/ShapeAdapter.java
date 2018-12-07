@@ -37,6 +37,12 @@ public class ShapeAdapter extends SimpleShape implements Shape {
     super(shape);
   }
 
+
+  /**
+   * Constrcuts a ShapeAdapter given a name of a shape and a shape.
+   * @param name  The name of this shape.
+   * @param shape The shape that is being used to draw an image.
+   */
   public ShapeAdapter(String name, Shape shape) {
     super(name, (shape.getTextRepresentation().equals("Rectangle"))
         ? "rectangle" : "ellipse", shape.getLocation().getX(),

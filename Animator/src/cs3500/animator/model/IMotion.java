@@ -44,7 +44,7 @@ public interface IMotion extends Comparable<IMotion> {
   int getEndTime();
 
   /**
-   * Allows the user to get the name of the shape of this motion
+   * Allows the user to get the name of the shape of this motion.
    *
    * @return the name of the shape.
    */
@@ -85,7 +85,7 @@ public interface IMotion extends Comparable<IMotion> {
    * Converts a motion into a keyframe.
    *
    * @param isEndKeyFrame true if this motion is becoming a keyframe based on this motions ending
-   * time.
+   *        time.
    */
   void becomesKeyframe(boolean isEndKeyFrame);
 
@@ -99,62 +99,72 @@ public interface IMotion extends Comparable<IMotion> {
 
   /**
    * Gets the starting x value of the shape.
-   * @return  The x location
+   *
+   * @return The x location
    */
-   int getStartX();
+  int getStartX();
 
 
   /**
    * Gets the starting y value of the shape.
-   * @return  The y location
+   *
+   * @return The y location
    */
-   int getStartY();
+  int getStartY();
 
   /**
    * Gets the starting width value of the shape.
-   * @return  The starting width
+   *
+   * @return The starting width
    */
-   int getStartWidth();
+  int getStartWidth();
 
   /**
    * Gets the starting height value of the shape.
-   * @return  The starting height
+   *
+   * @return The starting height
    */
-   int getStartHeight();
+  int getStartHeight();
 
   /**
    * Gets the starting Color value of the shape.
-   * @return  The starting Color
+   *
+   * @return The starting Color
    */
-   Color getStartColor();
+  Color getStartColor();
 
   /**
    * Gets the ending X value of the shape.
-   * @return  The ending X location
+   *
+   * @return The ending X location
    */
-   int getEndX();
+  int getEndX();
 
   /**
    * Gets the ending Y value of the shape.
-   * @return  The ending Y location
+   *
+   * @return The ending Y location
    */
-   int getEndY();
+  int getEndY();
 
   /**
    * Gets the ending Width value of the shape.
-   * @return  The Width Color
+   *
+   * @return The Width Color
    */
-   int getEndWidth();
+  int getEndWidth();
 
   /**
    * Gets the ending Height value of the shape.
-   * @return  The ending Height
+   *
+   * @return The ending Height
    */
-   int getEndHeight();
+  int getEndHeight();
 
   /**
    * Gets the ending Color value of the shape.
-   * @return  The ending Color
+   *
+   * @return The ending Color
    */
-   Color getEndColor();
+  Color getEndColor();
 }

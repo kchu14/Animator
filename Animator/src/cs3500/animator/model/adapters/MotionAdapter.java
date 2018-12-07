@@ -9,13 +9,22 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapts the provider's "Animation" interface to our Motion class.
+ */
 public class MotionAdapter extends Motion implements Animation {
 
- private List<Keyframe> keyframes;
+  private List<Keyframe> keyframes;
 
+  /**
+   * Constructs a motionAdapter.
+   * @param animation The animation storing shape and values of it from the view.
+   * @param tick      The tick of this motion.
+   */
   public MotionAdapter(Animation animation, int tick) {
     super(animation.getOriginalShape().getKey(),
-        (animation.getOriginalShape().getValue().getTextRepresentation().equals("Rectangle")) ? "rectangle" : "ellipse",
+        (animation.getOriginalShape().getValue().getTextRepresentation().equals("Rectangle"))
+            ? "rectangle" : "ellipse",
         tick, (int) animation.getOriginalShape().getValue().getLocation().getX(),
         (int) animation.getOriginalShape().getValue().getLocation().getY(),
         animation.getOriginalShape().getValue().getWidth(),
@@ -83,8 +92,6 @@ public class MotionAdapter extends Motion implements Animation {
   public int getLength() {
     return keyframes.size();
   }
-
-
 
 
 }

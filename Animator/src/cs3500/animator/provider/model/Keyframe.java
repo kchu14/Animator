@@ -18,9 +18,6 @@ public class Keyframe implements Tuple<ShapeTuple, Integer> {
     this.tick = tick;
 
   }
-//
-//getFrames
-//  getTextRepresentation
 
   @Override
   public ShapeTuple getKey() {

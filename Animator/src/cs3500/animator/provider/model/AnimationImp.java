@@ -1,17 +1,23 @@
 package cs3500.animator.provider.model;
 
 
-import cs3500.animator.model.IMotion;
-import cs3500.animator.model.Motion;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents an implementation of an Animation which has a shapeTuple and stored frames.
+ */
 public class AnimationImp implements Animation {
 
   private ShapeTuple shapeTuple;
 
   private List<Keyframe> frames;
+
+  /**
+   * Constructs an AnimationImp.
+   * @param shapeTuple  A shape and its name which will have keyframes.
+   */
   public AnimationImp(ShapeTuple shapeTuple) {
     this.shapeTuple = shapeTuple;
     this.frames = new ArrayList<>();
@@ -56,7 +62,7 @@ public class AnimationImp implements Animation {
 
   @Override
   public void deleteFrame(Keyframe keyframe) {
-      frames.remove(keyframe);
+    frames.remove(keyframe);
   }
 
   @Override

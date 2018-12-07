@@ -1,0 +1,66 @@
+DESIGN CRITIQUE
+
+Originally, the provider's views took in a model and directly mutated it inside of the view. Also,
+they would often mutate an object (like ShapeTuple / KeyFrame) in the view and pass that updated
+version of the object to the model. We believe they should have encapsulated all of the mutation in
+their model and had the view pass the raw data to allow the model to handle it. Later, on Tuesday
+night, they refactored their code based on Assignment 7 grading to have a controller that mutated
+the model, but they still had issues of mutating some parts of the data in a class before sending
+it to the model. Also, their refactored view had a controller, and their controller had a
+setView(). We think that they could have made better use of Java's pre-built classes like Map
+instead of creating "Tuple" where they used methods "getKey()" and "getValue()".
+
+
+IMPLEMENTATION CRITIQUE
+
+The interfaces we were given before tuesday were okay, but our providers were directly referencing
+the concrete classes in the views. We had to tell them to change this and instead create/ refer to
+interface types for each class. Some of their concrete classes were used so often and were coupled
+so tightly to their views that we actually had to implement a version of these classes directly.
+
+One example of this was the use of a "Tuple" interface that was implemented by three different
+concrete classes. These were "ShapeTuple", "AnimationTuple", and "Keyframe". These tuple classes
+acted the same as the Java Map interface but were specific to their types and implemented poorly
+throughout the code. The only two methods in the "Tuple" interface were getKey() and getValue().
+However, we were expected to implement methods like "toString()" in order to properly display a
+shape's name and keyframe tick in the editor frame. The use of these tuples was inconsistent. Mainly,
+our providers iterated through lists of Tuples checking if the key was what they were looking for.
+
+Another issue we had with the implementation was the fact that our providers were catching a lot of
+errors and doing nothing in the catch statement other than a comment saying "//do nothing". Also,
+instead of displaying an error message on the screen when user input was invalid, the view would
+set default values and not give the user any notification about it.
+
+Also, some methods that were used frequently in the view expected a return type but would never set
+anything equal to that value and instead were just using the method for its side effects. These
+methods should have been void.
+
+DOCUMENTATION CRITIQUE
+
+Most of the methods had javadocs, but occasionally there were incomplete or missing javadocs. This
+made it extremely confusing and we had to contact them to understand their code.
+
+Javadocs that were there could have been more specific on how the code was implemented.
+
+
+DESIGN/CODE LIMITATIONS AND SUGGESTIONS
+
+We were thoroughly disappointed with the code that we were given for this assignment. When we first
+opened the code given to us by our providers, we saw that not very much of assignment 7 was
+completed. Specifically, adding, deleting, and modifying keyframes were incomplete. The code had
+been started, but most of it was not working at all. Their view was originally comprised of a
+model object that they were directly mutating inside of the view. We worked with this functionality
+until tuesday night when they refactored their view to have a controller which modified the model
+instead. By this point we had spent at least 15 hours working on adapting their code.
+
+As for suggestions, we recommend planning out the design of an assignment before jumping in. When we
+met with one of the providers he told us that he knew that their implementation and design was poor
+because they didn't take the time to refactor it after the first animator assignment. Additionally,
+they should follow the model-view-controller layout and use delegation as a way to encapsulate
+functionality between each of the classes.
+
+The changes that we emailed our providers about were for the use of interface types and clarification
+on implementation when javadocs were incomplete or unclear. They changed a lot of the assignment on
+their own as we progressed through the week, and that made it hard for us since we had to keep up
+with them.
+

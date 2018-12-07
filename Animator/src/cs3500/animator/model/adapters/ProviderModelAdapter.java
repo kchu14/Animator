@@ -34,7 +34,6 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
   }
 
 
-
   @Override
   public List<Shape> getAnimationState(int n) {
     List<Shape> shapeList = new ArrayList<>();
@@ -112,7 +111,7 @@ public class ProviderModelAdapter implements ExcelAnimatorModel {
     List<AnimationTuple> result = new ArrayList<>();
 
     int count = 0;
-    if(ourModel.getMotions().get(name) != null) {
+    if (ourModel.getMotions().get(name) != null) {
       for (IMotion m : ourModel.getMotions().get(name)) {
         ShapeTuple st = new ShapeTuple(m.getName(), new ShapeAdapter((SimpleShape) m.getShape()));
         Animation ai = new AnimationImp(st);

@@ -1,10 +1,13 @@
 package cs3500.animator.provider.model;
 
-import cs3500.animator.model.adapters.ShapeAdapter;
 import java.awt.Color;
 import java.awt.Point;
 
+/**
+ * Represents a Rectangle object that will be drawn on the visual view.
+ */
 public class Rectangle implements Shape {
+
   private int width;
   private int height;
   private Point anchor;
@@ -19,10 +22,10 @@ public class Rectangle implements Shape {
    * @param color color of shape
    */
   public Rectangle(int width, int height, Point anchor, Color color) {
-     this.width = width;
-     this.height = height;
-     this.anchor = anchor;
-     this.color = color;
+    this.width = width;
+    this.height = height;
+    this.anchor = anchor;
+    this.color = color;
   }
 
   @Override

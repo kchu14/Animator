@@ -1,8 +1,11 @@
 package cs3500.animator.provider.view;
 
+
 import cs3500.animator.provider.model.ExcelAnimatorModel;
 import cs3500.animator.provider.model.Keyframe;
 import cs3500.animator.provider.model.ShapeTuple;
+import cs3500.animator.view.EditorView;
+
 
 /**
  * Represents an Animation Controller.
@@ -13,11 +16,14 @@ public interface ExcelAnimatorController {
 
   /**
    * Sets the view for this controller.
-   * @param view
+   * @param view view to interact with
    */
   public void setView(EditorView view);
 
 
+  /**
+   * Plays the animation.
+   */
   public void play();
 
 

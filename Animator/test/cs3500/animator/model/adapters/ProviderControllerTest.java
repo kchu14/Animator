@@ -10,7 +10,6 @@ import cs3500.animator.provider.model.Keyframe;
 import cs3500.animator.provider.model.ShapeTuple;
 import cs3500.animator.provider.view.EditorView;
 import cs3500.animator.provider.view.ExcelAnimatorController;
-import cs3500.animator.provider.view.ExcelAnimatorView;
 import java.awt.Color;
 import org.junit.Test;
 
@@ -122,10 +121,6 @@ public class ProviderControllerTest {
     c.updateKeyframeOfAnimation(s, 10);
     assertEquals(20.0, m.getAnimationState(10).get(0).getWidth(), .001);
     assertEquals(2.0, m.getAnimationState(10).get(0).getLocation().getY(), .001);
-  }
-  @Test
-  public void testPlayPause() {
-
   }
 
 }

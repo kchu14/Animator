@@ -57,7 +57,7 @@ public final class Excellence {
 
     AnimatorModel model;
     AnimatorView view = null;
-    if (viewType != "provider") {
+    if (!viewType.equals("provider")) {
       view = constructView(viewType, outType, speed);
     } else {
       if (view == null || error) {
@@ -76,7 +76,8 @@ public final class Excellence {
     }
 
     if (viewType.equals("provider")) {
-      ExcelAnimatorController c = new ProviderController(new ProviderModelAdapter(model), (double) speed);
+      ExcelAnimatorController c = new ProviderController(new ProviderModelAdapter(model),
+          (double) speed);
       EditorView providerView = new EditorView(c);
       c.setView(providerView);
       c.play();

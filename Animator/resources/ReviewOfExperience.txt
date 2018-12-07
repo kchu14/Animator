@@ -1,0 +1,13 @@
+Review of Experience:
+We felt that this assignment was much harder for us than many of our classmates. We talked to
+other groups and they explained that the code that they received was implemented and designed
+much better and that made it easier to adapt to their models. Our providers were nice and
+responsive, but that did not help when their code was incomplete. Furthermore, our providers
+were working on finishing assignment 7 up until a day before the assignment was due.
+
+As far as our code goes, we think we had a decent design structure in regards to delegation
+and things we discussed in class. It definitely would have been easier if we structured our data
+as a map of motions where the key was the time instead of storing those motions as a list. That
+would have made it easier to find the correct motion and modify it. Additionally, restructuring our
+motion data to be in the form of keyframes was not implemented in a efficient way. Looking back,
+it would have been worth it to convert to keyframes from the start.

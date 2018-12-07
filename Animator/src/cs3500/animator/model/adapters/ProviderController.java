@@ -11,6 +11,9 @@ import cs3500.animator.provider.view.ExcelAnimatorController;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Adapts the provider's controller class to work with our model.
+ */
 public class ProviderController implements ExcelAnimatorController {
 
   private Double speed;
@@ -22,9 +25,13 @@ public class ProviderController implements ExcelAnimatorController {
   private boolean isLooping = true;
   private boolean isOn = true;
 
+  /**
+   * Constructs a controller for this animator.
+   * @param model The model being used for this animation.
+   * @param speed The speed of this animation passed in from the command line arguments.
+   */
   public ProviderController(ExcelAnimatorModel model, Double speed) {
     this.model = model;
-    //this.view = view;
     this.speed = speed;
   }
 

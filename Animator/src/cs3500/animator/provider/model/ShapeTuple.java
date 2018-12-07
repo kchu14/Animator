@@ -6,9 +6,8 @@ import cs3500.animator.model.adapters.ShapeAdapter;
 public class ShapeTuple implements Tuple<String, Shape> {
 
   /**
-   * Maps a string to the reference of a Shape.
-   *
-   * Constructs an animation tuple given an animation and start tick.
+   * Maps a string to the reference of a Shape. Constructs an animation tuple given an animation and
+   * start tick.
    *
    * @param name string to be mapped to the reference of the shape
    * @param shape shape being named

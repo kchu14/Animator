@@ -248,8 +248,8 @@ public class Motion implements IMotion {
     this.endTime = m.getStartTime();
   }
 
-    @Override
-    public void fixBeginning(IMotion m) {
+  @Override
+  public void fixBeginning(IMotion m) {
     this.startX = m.getEndX();
     this.startY = m.getEndY();
     this.startWidth = m.getEndWidth();
