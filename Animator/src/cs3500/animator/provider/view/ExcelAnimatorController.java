@@ -4,7 +4,6 @@ package cs3500.animator.provider.view;
 import cs3500.animator.provider.model.ExcelAnimatorModel;
 import cs3500.animator.provider.model.Keyframe;
 import cs3500.animator.provider.model.ShapeTuple;
-import cs3500.animator.view.EditorView;
 
 
 /**

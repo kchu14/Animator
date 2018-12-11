@@ -4,6 +4,8 @@ import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.view.IEditView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 /**
  * CHANGE LOG Added the controller class and interface to allow the view to pass inputs to the
  * model. The controller then updates the view with the new model information.
@@ -13,7 +15,7 @@ import java.awt.event.ActionListener;
  * This class represents the implementation of a IController. This controller takes in the mouse and
  * keyboard commands given from the view and delegates them to the model to be handled.
  */
-public class EditController implements IController, ActionListener {
+public class EditController implements IController, ActionListener, ChangeListener {
 
   private AnimatorModel model;
   private IEditView view;
@@ -31,6 +33,7 @@ public class EditController implements IController, ActionListener {
     this.view = view;
     this.isAnimationOver = false;
     view.setButtonListeners(this);
+    view.setSliderListener(this);
   }
 
 
@@ -122,5 +125,21 @@ public class EditController implements IController, ActionListener {
         view.showError(errmsg);
         break;
     }
+  }
+
+  @Override
+  public void stateChanged(ChangeEvent e) {
+//    JSlider source = (JSlider)e.getSource();
+//    if (!source.getValueIsAdjusting()) {
+//      int fps = (int)source.getValue();
+//      if (fps == 0) {
+//        if (!frozen) stopAnimation();
+//      } else {
+//        delay = 1000 / fps;
+//        timer.setDelay(delay);
+//        timer.setInitialDelay(delay * 10);
+//        if (frozen) startAnimation();
+//      }
+//    }
   }
 }

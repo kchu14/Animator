@@ -1,5 +1,6 @@
 package cs3500.animator.view;
 
+import cs3500.animator.controller.EditController;
 import cs3500.animator.model.IReadOnlyModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +26,7 @@ class MyTimerActionListener implements ActionListener {
   private boolean endOnNextLoop;
   private boolean isForward;
   private boolean isPaused;
+  private EditorPanel v;
 
 
   /**
@@ -33,6 +35,29 @@ class MyTimerActionListener implements ActionListener {
    * @param tick the current tick
    * @param model the model to be displayed
    * @param t the timer
+   * @param animatorPanel the panel being acted upon
+   * @param v the editable panel which has a scrubber.
+   */
+  public MyTimerActionListener(int tick, IReadOnlyModel model, Timer t,
+      AnimatorPanel animatorPanel, EditorPanel v) {
+    this.tick = tick;
+    this.originalTick = tick;
+    this.model = model;
+    this.t = t;
+    this.animatorPanel = animatorPanel;
+    this.isAnimationOver = false;
+    this.endOnNextLoop = false;
+    this.isForward = true;
+    this.v = v;
+  }
+
+  /**
+   * Constructs a action listener to be used in the display of the animation.
+   *
+   * @param tick the current tick
+   * @param model the model to be displayed
+   * @param t the timer
+   * @param animatorPanel the panel being acted upon
    */
   public MyTimerActionListener(int tick, IReadOnlyModel model, Timer t,
       AnimatorPanel animatorPanel) {
@@ -44,7 +69,6 @@ class MyTimerActionListener implements ActionListener {
     this.isAnimationOver = false;
     this.endOnNextLoop = false;
     this.isForward = true;
-
   }
 
   @Override
@@ -70,6 +94,9 @@ class MyTimerActionListener implements ActionListener {
     } else if (tick < 1) {
       tick = model.getLastTick();
     }
+    if(v != null) {
+      v.setCurrentTick(tick);
+    }
   }
 
   /**
@@ -93,7 +120,7 @@ class MyTimerActionListener implements ActionListener {
    * Speeds up the rate at which the animation is displayed.
    */
   protected void fastforward() {
-    if (t.getDelay() == 1) {
+    if (t.getDelay() <= 1) {
       t.setDelay(t.getInitialDelay());
     } else {
       t.setDelay(t.getDelay() / 5);

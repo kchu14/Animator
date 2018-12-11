@@ -79,4 +79,10 @@ public interface IReadOnlyModel {
    * @return A copy of the map shape names and the keyframes for the shape.
    */
   Map<String, List<IMotion>> getKeyFrames();
+
+  /**
+   * Allows the caller to get the value of the first tick of the animation.
+   * @return the time of the first tick.
+   */
+  int getFirstTick();
 }

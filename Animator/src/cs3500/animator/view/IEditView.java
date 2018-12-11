@@ -1,5 +1,7 @@
 package cs3500.animator.view;
 
+import cs3500.animator.controller.EditController;
+import cs3500.animator.controller.IController;
 import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IReadOnlyModel;
 import cs3500.animator.model.IShape;
@@ -125,4 +127,12 @@ public interface IEditView extends AnimatorView {
    * @param value the given string to be set to.
    */
   void setTextFields(String name, String value);
+
+  /**
+   * Sets the changeListener for our view's slider.
+   *
+   * @param editController the view's changeListener.
+   */
+  void setSliderListener(EditController editController);
+
 }

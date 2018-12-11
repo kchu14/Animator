@@ -1,11 +1,14 @@
 package cs3500.animator.view;
 
+import cs3500.animator.controller.EditController;
+import cs3500.animator.controller.IController;
 import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IReadOnlyModel;
 import cs3500.animator.model.IShape;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JFrame;
@@ -45,7 +48,7 @@ public class EditableView extends JFrame implements IEditView {
     this.keyFrames = model.getKeyFrames();
     setEPane(model);
     this.animatorPanel = new AnimatorPanel();
-    graphicsView.initiateTimer(model, animatorPanel);
+    graphicsView.initiateTimerWithView(model, animatorPanel, ePane);
     animatorPanel.setPreferredSize(new Dimension(model.getWidth(), model.getHeight()));
     JScrollPane animatorScrollPane = new JScrollPane(animatorPanel);
     animatorScrollPane.setVerticalScrollBarPolicy(
@@ -59,7 +62,9 @@ public class EditableView extends JFrame implements IEditView {
 
   @Override
   public void setEPane(IReadOnlyModel model) {
-    ePane = new EditorPanel(keyFrames, model.getNameType());
+    ePane = new EditorPanel(keyFrames, model.getNameType(), model.getFirstTick(),
+        model.getLastTick());
+    System.out.println(model.getFirstTick() + " " + model.getLastTick() + "");
     this.add(ePane);
   }
 
@@ -67,6 +72,9 @@ public class EditableView extends JFrame implements IEditView {
   public void setKeyFrames(Map<String, List<IMotion>> keyFrames) {
     this.keyFrames = keyFrames;
     ePane.setKeyFrames(keyFrames);
+    ePane.setTicks(model.getFirstTick(), model.getLastTick());
+    System.out.println(model.getFirstTick() + " " + model.getLastTick() + "");
+
   }
 
   @Override
@@ -113,8 +121,9 @@ public class EditableView extends JFrame implements IEditView {
   @Override
   public void restart() {
     this.remove(animatorPanel);
+    graphicsView.
     this.animatorPanel = new AnimatorPanel();
-    graphicsView.initiateTimer(model, animatorPanel);
+    graphicsView.initiateTimerWithView(model, animatorPanel, ePane);
     this.add(animatorPanel);
   }
 
@@ -147,4 +156,10 @@ public class EditableView extends JFrame implements IEditView {
   public void setTextFields(String name, String s) {
     ePane.setTextFields(name, s);
   }
+
+  @Override
+  public void setSliderListener(EditController editController) {
+    ePane.setSliderListener(editController);
+  }
+
 }

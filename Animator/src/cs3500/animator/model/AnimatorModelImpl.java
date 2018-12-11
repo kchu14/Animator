@@ -63,14 +63,20 @@ public class AnimatorModelImpl implements AnimatorModel {
     this.tickList = tickList;
     this.tickListShapes = tickListShapes;
     this.checkForValidMotions();
+    Collections.sort(tickList);
     this.setTicks();
+
   }
 
 
   @Override
   public int getLastTick() {
-    Collections.sort(tickList);
     return tickList.get(tickList.size() - 1);
+  }
+
+  @Override
+  public int getFirstTick() {
+    return tickList.get(0);
   }
 
   @Override
@@ -184,7 +190,6 @@ public class AnimatorModelImpl implements AnimatorModel {
    * drawn on each tick.
    */
   private void setTicks() {
-    Collections.sort(tickList);
     int lastTick = tickList.get(tickList.size() - 1);
     for (int i = 0; i <= lastTick; i++) {
       this.update(i);
@@ -253,6 +258,7 @@ public class AnimatorModelImpl implements AnimatorModel {
       lom.add(im);
       nameMotion.put(im.getName(), lom);
       tickList.add(im.getEndTime());
+      Collections.sort(tickList);
       return;
     }
     Collections.sort(lom);
@@ -278,6 +284,7 @@ public class AnimatorModelImpl implements AnimatorModel {
     nameMotion.put(im.getName(), lom);
     checkForValidMotions();
     tickList.add(im.getEndTime());
+    Collections.sort(tickList);
     setTicks();
   }
 
@@ -297,6 +304,7 @@ public class AnimatorModelImpl implements AnimatorModel {
       }
     }
     tickList.add(newMotion.endTime);
+    Collections.sort(tickList);
     checkForValidMotions();
     setTicks();
   }

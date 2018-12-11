@@ -1,6 +1,7 @@
 package cs3500.animator.view;
 
 
+import cs3500.animator.controller.EditController;
 import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IShape;
 import cs3500.animator.model.Motion;
@@ -26,6 +27,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -63,6 +65,10 @@ public class EditorPanel extends JPanel implements ItemListener,
   private JPanel shapeNamesPanel;
   private Map<String, String> nameType;
   private JScrollPane losScroll;
+  private int firstTick;
+  private int lastTick;
+  private int currentTick;
+  private JSlider scrubber;
 
 
   /**
@@ -72,7 +78,8 @@ public class EditorPanel extends JPanel implements ItemListener,
    * @param nameType the name and type of the shape to be displayed in the panel.
    */
 
-  protected EditorPanel(Map<String, List<IMotion>> keyFrames, Map<String, String> nameType) {
+  protected EditorPanel(Map<String, List<IMotion>> keyFrames, Map<String, String> nameType,
+      int firstTick, int lastTick) {
     super();
     // Sets layout
     this.nameType = nameType;
@@ -213,6 +220,9 @@ public class EditorPanel extends JPanel implements ItemListener,
     middleButtonsPanel.add(newMotionShapeButtonsPanel, BorderLayout.SOUTH);
     this.add(middleButtonsPanel, BorderLayout.CENTER);
 
+    JPanel playBackCommandsandSlider = new JPanel();
+    playBackCommandsandSlider.setLayout(new BoxLayout(playBackCommandsandSlider, BoxLayout.Y_AXIS));
+
     // Video control buttons
     JPanel playBackCommands = new JPanel();
     playBackCommands.setLayout(new FlowLayout());
@@ -234,7 +244,20 @@ public class EditorPanel extends JPanel implements ItemListener,
     playBackCommands.add(slowDown);
     playBackCommands.add(restart);
     playBackCommands.add(loop);
-    this.add(playBackCommands, BorderLayout.SOUTH);
+    scrubber = new JSlider(JSlider.HORIZONTAL,
+        firstTick, lastTick, firstTick);
+    //Turn on labels at major tick marks.
+    scrubber.setPreferredSize(new Dimension(600, 100));
+    scrubber.setMajorTickSpacing(lastTick - firstTick);
+    scrubber.setMinorTickSpacing(lastTick / 4);
+    scrubber.setPaintTicks(true);
+    scrubber.setPaintLabels(true);
+    JPanel scrubberPanel = new JPanel();
+    scrubberPanel.add(scrubber);
+    playBackCommandsandSlider.add(scrubberPanel);
+    playBackCommandsandSlider.add(playBackCommands);
+
+    this.add(playBackCommandsandSlider, BorderLayout.SOUTH);
 
 
   }
@@ -399,6 +422,36 @@ public class EditorPanel extends JPanel implements ItemListener,
     }
 
     return listOfShapes.getSelectedValue();
+  }
+
+  /**
+   * Sets the first and last tick for this panel.
+   *
+   * @param firstTick the first tick of the animation.
+   * @param lastTick the last tick of the animation.
+   */
+  protected void setTicks(int firstTick, int lastTick) {
+    this.firstTick = firstTick;
+    this.lastTick = lastTick;
+  }
+
+  /**
+   * Sets the current tick for this panel.
+   *
+   * @param tick the current tick of the animation.
+   */
+  protected void setCurrentTick(int tick) {
+    this.currentTick = tick;
+    scrubber.setValue(tick);
+  }
+
+  /**
+   * Sets the changeListener for our panel's slider.
+   *
+   * @param editController the panel's changeListener.
+   */
+  protected void setSliderListener(EditController editController) {
+    scrubber.addChangeListener(editController);
   }
 
   /**

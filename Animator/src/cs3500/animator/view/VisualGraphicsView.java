@@ -76,6 +76,15 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
   }
 
   @Override
+  public void initiateTimerWithView(IReadOnlyModel model, AnimatorPanel animatorPanel, EditorPanel v) {
+    int i = 0;
+    Timer t = new Timer(1000 / speed, null);
+    listener = new MyTimerActionListener(i, model, t, animatorPanel, v);
+    t.addActionListener(listener);
+    t.start();
+  }
+
+  @Override
   public void setIsAnimationOver(Boolean b) {
     listener.setIsAnimationOver(b);
   }

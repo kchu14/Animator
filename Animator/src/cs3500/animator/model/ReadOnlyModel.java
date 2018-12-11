@@ -76,4 +76,9 @@ public class ReadOnlyModel implements IReadOnlyModel {
     return Collections.unmodifiableMap(model.getKeyFrames());
   }
 
+  @Override
+  public int getFirstTick() {
+    return model.getFirstTick();
+  }
+
 }

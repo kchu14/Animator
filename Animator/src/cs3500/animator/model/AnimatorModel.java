@@ -76,9 +76,9 @@ public interface AnimatorModel {
   Map<String, String> getNameType();
 
   /**
-   * Allows the caller to see a copy of the keyframes map. Converts our motions which contain
-   * a start and end time into keyframe variations which have the same start and end time. These
-   * key frames are used in displaying the editable keyframes in the editable view.
+   * Allows the caller to see a copy of the keyframes map. Converts our motions which contain a
+   * start and end time into keyframe variations which have the same start and end time. These key
+   * frames are used in displaying the editable keyframes in the editable view.
    *
    * @return A copy of the map shape names and the keyframes for the shape.
    */
@@ -126,4 +126,10 @@ public interface AnimatorModel {
    */
   void addShape(IMotion m);
 
+  /**
+   * Allows the caller to get the value of the first tick of the animation.
+   *
+   * @return the time of the first tick.
+   */
+  int getFirstTick();
 }

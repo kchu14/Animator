@@ -32,6 +32,15 @@ public interface IVisualGraphicsView extends AnimatorView {
   void initiateTimer(IReadOnlyModel model, AnimatorPanel animatorPanel);
 
   /**
+   * Starts the timer on which the animation runs.
+   *
+   * @param model the given model of the animation to be run.
+   * @param animatorPanel the given panel that the animation is drawn on.
+   * @param v The editable view with the scrubber to be manipulated.
+   */
+  void initiateTimerWithView(IReadOnlyModel model, AnimatorPanel animatorPanel, EditorPanel v);
+
+  /**
    * Sets if the animation is over.
    *
    * @param b boolean stating whether or not the animation is over.
