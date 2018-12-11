@@ -4,6 +4,7 @@ import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.view.IEditView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 /**
@@ -129,17 +130,14 @@ public class EditController implements IController, ActionListener, ChangeListen
 
   @Override
   public void stateChanged(ChangeEvent e) {
-//    JSlider source = (JSlider)e.getSource();
-//    if (!source.getValueIsAdjusting()) {
-//      int fps = (int)source.getValue();
-//      if (fps == 0) {
-//        if (!frozen) stopAnimation();
-//      } else {
-//        delay = 1000 / fps;
-//        timer.setDelay(delay);
-//        timer.setInitialDelay(delay * 10);
-//        if (frozen) startAnimation();
-//      }
-//    }
+    JSlider source = (JSlider)e.getSource();
+    if (source.getValueIsAdjusting()) {
+      view.setPaused(true);
+      System.out.println(source.getValue());
+      view.showSpecificTime(source.getValue());
+    }
+    else {
+      view.setPaused(false);
+    }
   }
 }

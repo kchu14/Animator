@@ -1,7 +1,6 @@
 package cs3500.animator.view;
 
 import cs3500.animator.controller.EditController;
-import cs3500.animator.controller.IController;
 import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IReadOnlyModel;
 import cs3500.animator.model.IShape;
@@ -135,4 +134,17 @@ public interface IEditView extends AnimatorView {
    */
   void setSliderListener(EditController editController);
 
+  /**
+   * Sets the value of the view to be paused.
+   *
+   * @param paused True if paused, false if resumed.
+   */
+  void setPaused(boolean paused);
+
+  /**
+   * Displays a specific tick on the visual representation of the model.
+   *
+   * @param tick The tick meant to be displayed.
+   */
+  void showSpecificTime(int tick);
 }

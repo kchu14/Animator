@@ -65,9 +65,6 @@ public class EditorPanel extends JPanel implements ItemListener,
   private JPanel shapeNamesPanel;
   private Map<String, String> nameType;
   private JScrollPane losScroll;
-  private int firstTick;
-  private int lastTick;
-  private int currentTick;
   private JSlider scrubber;
 
 
@@ -246,12 +243,7 @@ public class EditorPanel extends JPanel implements ItemListener,
     playBackCommands.add(loop);
     scrubber = new JSlider(JSlider.HORIZONTAL,
         firstTick, lastTick, firstTick);
-    //Turn on labels at major tick marks.
     scrubber.setPreferredSize(new Dimension(600, 100));
-    scrubber.setMajorTickSpacing(lastTick - firstTick);
-    scrubber.setMinorTickSpacing(lastTick / 4);
-    scrubber.setPaintTicks(true);
-    scrubber.setPaintLabels(true);
     JPanel scrubberPanel = new JPanel();
     scrubberPanel.add(scrubber);
     playBackCommandsandSlider.add(scrubberPanel);
@@ -431,8 +423,9 @@ public class EditorPanel extends JPanel implements ItemListener,
    * @param lastTick the last tick of the animation.
    */
   protected void setTicks(int firstTick, int lastTick) {
-    this.firstTick = firstTick;
-    this.lastTick = lastTick;
+    scrubber.setMaximum(lastTick);
+    scrubber.setMinimum(firstTick);
+
   }
 
   /**
@@ -441,7 +434,6 @@ public class EditorPanel extends JPanel implements ItemListener,
    * @param tick the current tick of the animation.
    */
   protected void setCurrentTick(int tick) {
-    this.currentTick = tick;
     scrubber.setValue(tick);
   }
 
@@ -517,7 +509,7 @@ public class EditorPanel extends JPanel implements ItemListener,
    * @param s the given string to be set to.
    */
 
-  public void setTextFields(String name, String s) {
+  protected void setTextFields(String name, String s) {
     redText.setText(s);
     greenText.setText(s);
     blueText.setText(s);

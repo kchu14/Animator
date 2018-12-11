@@ -5,11 +5,14 @@ import static org.junit.Assert.assertEquals;
 import cs3500.animator.model.AnimatorModel;
 import cs3500.animator.model.AnimatorModelImpl;
 import cs3500.animator.model.ReadOnlyModel;
+import cs3500.animator.view.AnimatorPanel;
 import cs3500.animator.view.EditableView;
 import cs3500.animator.view.VisualGraphicsView;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
 import org.junit.Test;
 
 public class EditControllerTest {
@@ -132,5 +135,30 @@ public class EditControllerTest {
     modifyMotionButton.doClick();
     assertEquals("motion r 0 12 12 12 21 21 21 12 10 12 12 12 12 12 12 12 \n",
         model.getMotions().get("r").get(0).getTextResult());
+  }
+
+  @Test
+  public void testChangeListener() {
+    model = new AnimatorModelImpl.Builder().setBounds(0, 0, 500, 500)
+        .declareShape("r", "rectangle")
+        .declareShape("c", "ellipse")
+        .addMotion("r", 0, 100, 100, 50, 50, 255, 0, 0,
+            10, 100, 100, 50, 50, 0, 0, 255)
+        .addMotion("c", 5, 100, 100, 50, 50, 255, 0, 0,
+            15, 100, 100, 50, 50, 0, 0, 255).build();
+    VisualGraphicsView v = new VisualGraphicsView(1);
+    v.initiateTimer(new ReadOnlyModel(model), new AnimatorPanel());
+    view = new EditableView(v);
+    view.setEPane(new ReadOnlyModel(model));
+    controller = new EditController(model, view);
+    JSlider scrubber = new JSlider();
+    scrubber.addChangeListener(controller);
+    scrubber.setValueIsAdjusting(true);
+    scrubber.setValue(0);
+    controller.stateChanged(new ChangeEvent(scrubber));
+    assertEquals(1, model.getTickListShapes().get(scrubber.getValue()).size());
+    scrubber.setValue(8);
+    controller.stateChanged(new ChangeEvent(scrubber));
+    assertEquals(2, model.getTickListShapes().get(scrubber.getValue()).size());
   }
 }

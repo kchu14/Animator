@@ -19,7 +19,7 @@ public class AnimatorPanel extends JPanel {
   /**
    * Constructs the animation panel and sets the shapes list to an array list.
    */
-  protected AnimatorPanel() {
+  public AnimatorPanel() {
     super();
     this.shapes = new ArrayList<>();
 

@@ -1,6 +1,5 @@
 package cs3500.animator.view;
 
-import cs3500.animator.controller.EditController;
 import cs3500.animator.model.IReadOnlyModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -75,11 +74,18 @@ class MyTimerActionListener implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     animatorPanel.updateUI();
     animatorPanel.setShapes(model.getTickListShapes().get(tick));
+
     if (!isPaused) {
       if (this.isForward) {
         tick++;
+        if (v != null) {
+          v.setCurrentTick(tick);
+        }
       } else {
         tick--;
+        if (v != null) {
+          v.setCurrentTick(tick);
+        }
       }
     }
     if (isAnimationOver) {
@@ -94,9 +100,7 @@ class MyTimerActionListener implements ActionListener {
     } else if (tick < 1) {
       tick = model.getLastTick();
     }
-    if(v != null) {
-      v.setCurrentTick(tick);
-    }
+
   }
 
   /**
@@ -144,5 +148,23 @@ class MyTimerActionListener implements ActionListener {
    */
   protected void pause() {
     isPaused = !isPaused;
+  }
+
+  /**
+   * Sets the value of the view to be paused.
+   *
+   * @param paused True if paused, false if resumed.
+   */
+  void setPaused(boolean paused) {
+    isPaused = paused;
+  }
+
+  /**
+   * Sets the tick of the animation (used in scrubbing).
+   *
+   * @param tick the tick to be set.
+   */
+  void setTick(int tick) {
+    this.tick = tick;
   }
 }

@@ -1,14 +1,12 @@
 package cs3500.animator.view;
 
 import cs3500.animator.controller.EditController;
-import cs3500.animator.controller.IController;
 import cs3500.animator.model.IMotion;
 import cs3500.animator.model.IReadOnlyModel;
 import cs3500.animator.model.IShape;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JFrame;
@@ -26,7 +24,7 @@ public class EditableView extends JFrame implements IEditView {
   private Map<String, List<IMotion>> keyFrames;
   private EditorPanel ePane;
   private IReadOnlyModel model;
-  private AnimatorPanel animatorPanel;
+  private JScrollPane animatorScrollPane;
 
   /**
    * Constructs an editable view.
@@ -47,10 +45,14 @@ public class EditableView extends JFrame implements IEditView {
     this.model = model;
     this.keyFrames = model.getKeyFrames();
     setEPane(model);
-    this.animatorPanel = new AnimatorPanel();
+    initiateAnimatorPanel();
+  }
+
+  private void initiateAnimatorPanel() {
+    AnimatorPanel animatorPanel = new AnimatorPanel();
     graphicsView.initiateTimerWithView(model, animatorPanel, ePane);
     animatorPanel.setPreferredSize(new Dimension(model.getWidth(), model.getHeight()));
-    JScrollPane animatorScrollPane = new JScrollPane(animatorPanel);
+    animatorScrollPane = new JScrollPane(animatorPanel);
     animatorScrollPane.setVerticalScrollBarPolicy(
         ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     animatorScrollPane
@@ -64,7 +66,6 @@ public class EditableView extends JFrame implements IEditView {
   public void setEPane(IReadOnlyModel model) {
     ePane = new EditorPanel(keyFrames, model.getNameType(), model.getFirstTick(),
         model.getLastTick());
-    System.out.println(model.getFirstTick() + " " + model.getLastTick() + "");
     this.add(ePane);
   }
 
@@ -73,7 +74,6 @@ public class EditableView extends JFrame implements IEditView {
     this.keyFrames = keyFrames;
     ePane.setKeyFrames(keyFrames);
     ePane.setTicks(model.getFirstTick(), model.getLastTick());
-    System.out.println(model.getFirstTick() + " " + model.getLastTick() + "");
 
   }
 
@@ -120,11 +120,9 @@ public class EditableView extends JFrame implements IEditView {
 
   @Override
   public void restart() {
-    this.remove(animatorPanel);
-    graphicsView.
-    this.animatorPanel = new AnimatorPanel();
-    graphicsView.initiateTimerWithView(model, animatorPanel, ePane);
-    this.add(animatorPanel);
+    this.remove(animatorScrollPane);
+    repaint();
+    initiateAnimatorPanel();
   }
 
   @Override
@@ -160,6 +158,16 @@ public class EditableView extends JFrame implements IEditView {
   @Override
   public void setSliderListener(EditController editController) {
     ePane.setSliderListener(editController);
+  }
+
+  @Override
+  public void setPaused(boolean paused) {
+    graphicsView.setPaused(paused);
+  }
+
+  @Override
+  public void showSpecificTime(int tick) {
+    graphicsView.displayTick(tick);
   }
 
 }

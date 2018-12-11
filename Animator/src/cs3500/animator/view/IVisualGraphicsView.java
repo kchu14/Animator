@@ -65,7 +65,21 @@ public interface IVisualGraphicsView extends AnimatorView {
   void slowDown();
 
   /**
-   * Pauses the animation.
+   * Toggles Pause/Play for the animation.
    */
   void pause();
+
+  /**
+   * Sets the value of the view to be paused.
+   *
+   * @param paused True if paused, false if resumed.
+   */
+  void setPaused(boolean paused);
+
+  /**
+   * Displays the current tick in the animation.
+   *
+   * @param tick The tick meant to be displayed.
+   */
+  void displayTick(int tick);
 }

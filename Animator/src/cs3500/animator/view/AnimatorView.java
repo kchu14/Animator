@@ -7,6 +7,7 @@ import cs3500.animator.model.IReadOnlyModel;
  * implementation of the view inherits the methods inside of this interface.
  */
 public interface AnimatorView {
+
   /**
    * This model executes the animation and begins the drawing process.
    *

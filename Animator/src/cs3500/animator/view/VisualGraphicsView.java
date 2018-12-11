@@ -23,6 +23,7 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
   private AnimatorPanel animatorPanel;
   private int speed;
   private MyTimerActionListener listener;
+  private Timer t;
 
 
   /**
@@ -68,18 +69,27 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
 
   @Override
   public void initiateTimer(IReadOnlyModel model, AnimatorPanel animatorPanel) {
+    if (t != null) {
+      t.stop();
+    }
     int i = 0;
-    Timer t = new Timer(1000 / speed, null);
+    t = new Timer(1000 / speed, null);
     listener = new MyTimerActionListener(i, model, t, animatorPanel);
     t.addActionListener(listener);
     t.start();
   }
 
   @Override
-  public void initiateTimerWithView(IReadOnlyModel model, AnimatorPanel animatorPanel, EditorPanel v) {
+  public void initiateTimerWithView(IReadOnlyModel model, AnimatorPanel animatorPanel,
+      EditorPanel v) {
+    if (t != null) {
+      t.stop();
+    }
     int i = 0;
-    Timer t = new Timer(1000 / speed, null);
+    t = new Timer(1000 / speed, null);
+
     listener = new MyTimerActionListener(i, model, t, animatorPanel, v);
+
     t.addActionListener(listener);
     t.start();
   }
@@ -115,4 +125,13 @@ public class VisualGraphicsView extends JFrame implements IVisualGraphicsView {
     return animatorPanel;
   }
 
+  @Override
+  public void setPaused(boolean paused) {
+    listener.setPaused(paused);
+  }
+
+  @Override
+  public void displayTick(int tick) {
+    listener.setTick(tick);
+  }
 }
